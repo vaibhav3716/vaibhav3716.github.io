@@ -201,9 +201,10 @@ sub { line-height: 0; }
   position: relative; overflow: hidden; isolation: isolate;
   background: var(--night);
   color: var(--night-ink);
-  min-height: min(92vh, 860px);
+  min-height: calc(100vh - var(--header-h));
+  min-height: calc(100svh - var(--header-h));
   display: flex; flex-direction: column; justify-content: center;
-  padding: clamp(3rem, 8vw, 5.5rem) 0 clamp(4.5rem, 10vw, 6.5rem);
+  padding: clamp(2.5rem, 5vw, 4rem) 0 clamp(3rem, 5vw, 4rem);
 }
 .sky { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -2; }
 .hero-scrim {
@@ -234,21 +235,20 @@ sub { line-height: 0; }
 .hero :focus-visible { outline-color: var(--night-wd); }
 .btn-ghost { backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
 
-/* Pinned hero: the sky stays put while the page scrolls through it */
-.hero-pin { position: relative; height: 150vh; }
-.hero-pin > .hero { position: sticky; top: var(--header-h); height: calc(100vh - var(--header-h)); height: calc(100svh - var(--header-h)); min-height: 0; }
-.no-pin .hero-pin { height: auto; }
-.no-pin .hero-pin > .hero { position: relative; height: auto; min-height: min(92vh, 860px); }
 .hero-inner { pointer-events: none; }
-.hero-text { pointer-events: auto; will-change: transform, opacity; }
+.hero-text { pointer-events: auto; transition: opacity .45s ease, transform .45s cubic-bezier(.2, .7, .2, 1); }
 .hero-scrim { transition: opacity .3s linear; }
-.hero-fade { position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: 0; background: var(--bg); }
 /* Soft blend from the ground into the page below */
 .hero::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 48px; z-index: 1; pointer-events: none; background: linear-gradient(to bottom, transparent, var(--bg)); }
 :root[data-theme="light"] .hero::after { display: none; }
 @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .hero::after { display: none; } }
 .sky-bar { z-index: 2; }
-.sky { cursor: grab; touch-action: pan-y; }
+.sky { touch-action: pan-y; }
+/* Explore mode: the intro steps aside so the whole sky can be explored */
+.hero.exploring .hero-text { opacity: 0; transform: translateX(-24px); pointer-events: none; }
+.hero.exploring .hero-scrim { opacity: 0; }
+.sky-btn-primary { border-color: rgba(140, 192, 255, .55); }
+.sky-btn-primary[aria-pressed="true"] { background: rgba(140, 192, 255, .22); border-color: var(--night-wd); }
 
 .sky-bar {
   position: absolute; right: var(--gutter); bottom: 1rem; max-width: 36rem;
@@ -557,8 +557,6 @@ sub { line-height: 0; }
 ------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .hero-pin { height: auto !important; }
-  .hero-pin > .hero { position: relative !important; height: auto !important; min-height: min(92vh, 860px) !important; }
   *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
 }
 

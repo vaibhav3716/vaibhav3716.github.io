@@ -202,7 +202,7 @@
   }
 
   function loadCatalogue() {
-    fetch('assets/data/sky-data.json?v=20260924b').then(function (r) { return r.json(); }).then(function (data) {
+    fetch('assets/data/sky-data.json?v=20260924c').then(function (r) { return r.json(); }).then(function (data) {
       var stars = [];
       for (var i = 0; i < data.stars.length; i += 4) {
         var c = bvColour(data.stars[i + 3]);
@@ -294,23 +294,61 @@
   // Projection (stereographic, as planetarium software uses)
   // ---------------------------------------------------------------
   var P = { c: null, r: null, u: null, cx: 0, cy: 0, k: 1, F: null };
-  var zoom = 0, zoomTarget = null;    // scroll-driven zoom toward one object
   function setupProjection(F) {
     var az = view.az * D2R, al = view.alt * D2R;
     var h = add(mul(F.E, Math.sin(az)), mul(F.N, Math.cos(az)));
     var c = add(mul(h, Math.cos(al)), mul(F.U, Math.sin(al)));
-    var z = zoom * zoom * (3 - 2 * zoom);
-    if (zoomTarget && z > 0) c = norm(add(mul(c, 1 - z), mul(zoomTarget.v, z)));
     var r = norm(cross(c, F.U));
     P.F = F; P.c = c; P.r = r; P.u = cross(r, c);
-    P.cx = W * lerp(view.cx, 0.62, z); P.cy = H * lerp(view.cy, 0.5, z);
-    P.k = Math.max(W * view.kW, H * view.kH) * (1 + 1.6 * z);
+    P.cx = W * view.cx; P.cy = H * view.cy;
+    P.k = Math.max(W * view.kW, H * view.kH);
   }
   function project(v) {
     var dc = dot(v, P.c);
     if (dc < -0.35) return null;
     var f = 2 / (1 + dc);
     return [P.cx + P.k * f * dot(v, P.r), P.cy - P.k * f * dot(v, P.u)];
+  }
+  // Like project(), but without the far-side cut-off (used for the horizon)
+  function projectRaw(v) {
+    var dc = dot(v, P.c);
+    if (dc < -0.999) return null;
+    var f = 2 / (1 + dc);
+    return [P.cx + P.k * f * dot(v, P.r), P.cy - P.k * f * dot(v, P.u)];
+  }
+  function horizonDir(F, aDeg) { var a = aDeg * D2R; return add(mul(F.E, Math.sin(a)), mul(F.N, Math.cos(a))); }
+  // In a stereographic view the horizon is exactly a circle (a straight line when looking dead level).
+  // Looking above the horizon, the sky is inside the circle and the ground outside it.
+  function horizonShape(F) {
+    var A = projectRaw(horizonDir(F, view.az)), B = projectRaw(horizonDir(F, view.az + 90)), C = projectRaw(horizonDir(F, view.az - 90));
+    var d = 2 * (A[0] * (B[1] - C[1]) + B[0] * (C[1] - A[1]) + C[0] * (A[1] - B[1]));
+    if (Math.abs(d) > 1e-6) {
+      var a2 = A[0] * A[0] + A[1] * A[1], b2 = B[0] * B[0] + B[1] * B[1], c2 = C[0] * C[0] + C[1] * C[1];
+      var ux = (a2 * (B[1] - C[1]) + b2 * (C[1] - A[1]) + c2 * (A[1] - B[1])) / d;
+      var uy = (a2 * (C[0] - B[0]) + b2 * (A[0] - C[0]) + c2 * (B[0] - A[0])) / d;
+      var r = Math.sqrt((A[0] - ux) * (A[0] - ux) + (A[1] - uy) * (A[1] - uy));
+      if (r < 60000) return { circle: true, x: ux, y: uy, r: r };
+    }
+    // Level view: a straight line through B and C, with the sky on the zenith side
+    var z = projectRaw(F.U) || [P.cx, 0];
+    var tx = C[0] - B[0], ty = C[1] - B[1], tl = Math.sqrt(tx * tx + ty * ty) || 1;
+    var nx = -ty / tl, ny = tx / tl;
+    if ((z[0] - B[0]) * nx + (z[1] - B[1]) * ny < 0) { nx = -nx; ny = -ny; }
+    return { circle: false, x: B[0], y: B[1], nx: nx, ny: ny, tx: tx / tl, ty: ty / tl };
+  }
+  // Screen y of the horizon directly below screen x
+  function horizonYAt(hz, x) {
+    if (hz.circle) {
+      var dx = x - hz.x;
+      return Math.abs(dx) < hz.r ? hz.y + Math.sqrt(hz.r * hz.r - dx * dx) : H;
+    }
+    return Math.abs(hz.ty) > 1e-6 && Math.abs(hz.tx) > 1e-6 ? hz.y + (x - hz.x) * hz.ty / hz.tx : hz.y;
+  }
+  // Unit vector pointing from the horizon toward the sky, at screen point p
+  function skyward(hz, p) {
+    if (!hz.circle) return [hz.nx, hz.ny];
+    var dx = hz.x - p[0], dy = hz.y - p[1], l = Math.sqrt(dx * dx + dy * dy) || 1;
+    return [dx / l, dy / l];
   }
   function onScreen(p, m) { m = m || 0; return !!p && p[0] > -m && p[0] < W + m && p[1] > -m && p[1] < H + m; }
 
@@ -380,7 +418,7 @@
     refreshEphemeris();
     var F = frameAt(theta, currentGmst());
     setupProjection(F);
-    labelBoxes = textBoxes.slice();
+    labelBoxes = exploring ? barBoxes.slice() : textBoxes.concat(barBoxes);
 
     var sunAlt = altOf(eph.sun, F);
     var night = clamp01((-sunAlt - 4) / 12);
@@ -388,14 +426,8 @@
     var cols = skyColours(sunAlt);
     var tw = reduceMotion.matches ? 0 : t * 0.001;
 
-    // Horizon (altitude 0) across the part of the sky that faces us
-    var hpts = [];
-    for (var a = view.az - 115; a <= view.az + 115; a += 1.5) {
-      var hp = project(add(mul(F.E, Math.sin(a * D2R)), mul(F.N, Math.cos(a * D2R))));
-      if (hp) hpts.push([hp[0], hp[1], a]);
-    }
-    var centreH = project(add(mul(F.E, Math.sin(view.az * D2R)), mul(F.N, Math.cos(view.az * D2R))));
-    var gy = centreH ? centreH[1] : H;
+    var hz = horizonShape(F);
+    var gy = Math.min(H, horizonYAt(hz, W * view.cx));
 
     var g = ctx.createLinearGradient(0, 0, 0, Math.max(gy, H * 0.6));
     g.addColorStop(0, rgb(cols[0])); g.addColorStop(0.62, rgb(cols[1])); g.addColorStop(1, rgb(cols[2]));
@@ -498,26 +530,11 @@
       ctx.fillStyle = '#FFF6E4'; ctx.beginPath(); ctx.arc(sunP[0], sunP[1], sr, 0, 6.2832); ctx.fill();
     }
 
-    drawGround(hpts, gy, sunAlt, twilight, sunP, moonP, moonAlt);
+    drawGround(F, hz, gy, sunAlt, twilight, sunP, moonP, moonAlt);
 
-    // Flying into the target as the page scrolls
-    if (zoomTarget && zoom > 0.02) {
-      var tp = project(zoomTarget.v);
-      if (tp) {
-        // The target brightens and gains a soft halo; the rest of the sky stays visible
-        var zr = 6 + zoom * Math.min(W, H) * 0.16;
-        var zg = ctx.createRadialGradient(tp[0], tp[1], 0, tp[0], tp[1], zr);
-        zg.addColorStop(0, zoomTarget.col + 0.9 * zoom + ')');
-        zg.addColorStop(0.12, zoomTarget.col + 0.45 * zoom + ')');
-        zg.addColorStop(1, zoomTarget.col + '0)');
-        ctx.fillStyle = zg; ctx.beginPath(); ctx.arc(tp[0], tp[1], zr, 0, 6.2832); ctx.fill();
-        ctx.fillStyle = 'rgba(255,255,255,' + Math.min(1, 0.4 + zoom) + ')';
-        ctx.beginPath(); ctx.arc(tp[0], tp[1], 2.5 + zoom * 3, 0, 6.2832); ctx.fill();
-      }
-    }
 
     // Labels: desktop only; the phone layout keeps the sky as a backdrop
-    if (!narrow() && zoom < 0.05) {
+    if (!narrow() || exploring) {
       var la = clamp01((night - 0.35) / 0.5);
       if (sunP && dayA > 0.5 && sunAlt > 0) {
         var pl = project(sunPathPoint(1.2));
@@ -610,38 +627,71 @@
     if (Math.sin(r * 57) > 0.9) h += 7;
     return h * Math.min(1.4, P.k / 420);
   }
-  function drawGround(hpts, gy, sunAlt, twilight, sunP, moonP, moonAlt) {
-    if (!hpts.length) return;
+  function drawGround(F, hz, gy, sunAlt, twilight, sunP, moonP, moonAlt) {
     var flat = clamp01((theta - 60) / 60);         // hills at the origin, a flat horizon at its antipode
     var sea = origin.mumbai ? flat : 0;            // Mumbai's antipode is open Pacific Ocean
     var day = clamp01((sunAlt + 8) / 14);
     var top = mixC(mixC([8, 11, 20], [34, 38, 58], day), mixC([6, 14, 30], [30, 74, 116], day), sea);
     var bot = mixC(mixC([3, 5, 10], [18, 20, 32], day), mixC([3, 8, 18], [14, 40, 70], day), sea);
-    var gg = ctx.createLinearGradient(0, gy - 20, 0, H);
+    var gTop = Math.max(0, Math.min(gy, H) - 30);
+    var gg = ctx.createLinearGradient(0, gTop, 0, H);
     gg.addColorStop(0, rgb(top)); gg.addColorStop(1, rgb(bot));
     ctx.fillStyle = gg;
-    function hy(pt) { return pt[1] - skyline(pt[2]) * (1 - flat); }
-    var first = hpts[0], last = hpts[hpts.length - 1];
-    ctx.beginPath();
-    ctx.moveTo(-10, H + 10);
-    ctx.lineTo(-10, Math.min(hy(first), H));
-    hpts.forEach(function (pt) { ctx.lineTo(pt[0], hy(pt)); });
-    ctx.lineTo(W + 10, Math.min(hy(last), H));
-    ctx.lineTo(W + 10, H + 10);
-    ctx.closePath(); ctx.fill();
 
-    if (twilight > 0.05) {
-      ctx.strokeStyle = 'rgba(255,190,140,' + 0.35 * twilight + ')';
-      ctx.lineWidth = 1; ctx.beginPath();
-      hpts.forEach(function (pt, i) { if (i) ctx.lineTo(pt[0], hy(pt)); else ctx.moveTo(pt[0], hy(pt)); });
-      ctx.stroke();
+    // Everything on the ground side of the horizon
+    ctx.beginPath();
+    if (hz.circle) {
+      ctx.rect(-20, -20, W + 40, H + 40);
+      ctx.moveTo(hz.x + hz.r, hz.y);
+      ctx.arc(hz.x, hz.y, hz.r, 0, 6.2832, true);
+      ctx.fill('evenodd');
+    } else {
+      var L = 1e5, gx = -hz.nx, gyy = -hz.ny;
+      ctx.moveTo(hz.x - hz.tx * L, hz.y - hz.ty * L);
+      ctx.lineTo(hz.x + hz.tx * L, hz.y + hz.ty * L);
+      ctx.lineTo(hz.x + hz.tx * L + gx * L, hz.y + hz.ty * L + gyy * L);
+      ctx.lineTo(hz.x - hz.tx * L + gx * L, hz.y - hz.ty * L + gyy * L);
+      ctx.closePath(); ctx.fill();
     }
+
+    // A low skyline of hills sitting on the horizon, carried along as the view turns
+    var hill = 1 - flat;
+    var runs = [], run = [];
+    for (var a = view.az - 180; a <= view.az + 180; a += 0.75) {
+      var p = projectRaw(horizonDir(F, a));
+      if (p && p[0] > -80 && p[0] < W + 80 && p[1] > -80 && p[1] < H + 80) run.push([p[0], p[1], a]);
+      else if (run.length) { runs.push(run); run = []; }
+    }
+    if (run.length) runs.push(run);
+    runs.forEach(function (pts) {
+      if (pts.length < 2) return;
+      var tops = pts.map(function (pt) {
+        var n = skyward(hz, pt), h = skyline(pt[2]) * hill;
+        return [pt[0] + n[0] * h, pt[1] + n[1] * h];
+      });
+      if (hill > 0.02) {
+        ctx.beginPath();
+        tops.forEach(function (q, i) { if (i) ctx.lineTo(q[0], q[1]); else ctx.moveTo(q[0], q[1]); });
+        for (var i = pts.length - 1; i >= 0; i--) {
+          var n2 = skyward(hz, pts[i]);
+          ctx.lineTo(pts[i][0] - n2[0] * 2, pts[i][1] - n2[1] * 2);   // overlap the ground edge slightly
+        }
+        ctx.closePath(); ctx.fill();
+      }
+      if (twilight > 0.05) {
+        ctx.strokeStyle = 'rgba(255,190,140,' + 0.35 * twilight + ')';
+        ctx.lineWidth = 1; ctx.beginPath();
+        tops.forEach(function (q, i) { if (i) ctx.lineTo(q[0], q[1]); else ctx.moveTo(q[0], q[1]); });
+        ctx.stroke();
+      }
+    });
+
     // Glitter on the ocean below the Sun or the Moon
     if (sea > 0.2) {
       var src = sunP && sunAlt > 0 ? { p: sunP, c: '255,226,180', a: 0.55 }
         : (moonP && moonAlt > 0 ? { p: moonP, c: '220,228,255', a: 0.35 * eph.moonLit } : null);
       if (src && src.p[0] > 0 && src.p[0] < W) {
-        var base = gy + 4, depth = H - base;
+        var base = Math.min(H, horizonYAt(hz, src.p[0])) + 4, depth = H - base;
         for (var i = 0; i < 26; i++) {
           var y = base + Math.pow(i / 26, 1.6) * depth;
           var w = 6 + (i / 26) * 70 * (0.6 + 0.4 * Math.sin(i * 7.3));
@@ -724,11 +774,9 @@
   function recheck() {
     refreshEphemeris(true);
     var target = thetaFor(chosenTheme);
-    if (target !== theta) { goTo(target, true); return; }
-    if (Date.now() < manualUntil) { updateCaption(); return; }
-    var v1 = viewFor(theta);
-    if (Math.abs(((v1.az - view.az + 540) % 360) - 180) > 25 || Math.abs(v1.alt - view.alt) > 6) goTo(theta, true);
-    else updateCaption();
+    // Only sunrise or sunset changes the scene; otherwise the view stays where it is
+    if (target !== theta && Date.now() >= manualUntil) { goTo(target, true); return; }
+    updateCaption();
   }
 
   function currentTheme() {
@@ -741,6 +789,9 @@
   // Exploring: drag to look around, click or tap an object to identify it
   // ---------------------------------------------------------------
   var manualUntil = 0;
+  var exploring = false;
+  var exploreBtn = document.getElementById('sky-explore');
+  var hero = canvas.closest('.hero');
   var card = document.getElementById('sky-card');
   var resetBtn = document.getElementById('sky-reset');
 
@@ -814,12 +865,12 @@
   var drag = null;
   function canvasXY(e) { var r = canvas.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; }
   canvas.addEventListener('pointerdown', function (e) {
-    if (zoom > 0.05) return;
+    if (!exploring) return;
     drag = { x: e.clientX, y: e.clientY, az: view.az, alt: view.alt, moved: false, touch: e.pointerType !== 'mouse', id: e.pointerId };
   });
   window.addEventListener('pointermove', function (e) {
     if (!drag) {
-      if (e.target === canvas && e.pointerType === 'mouse') { var q = canvasXY(e); canvas.style.cursor = pick(q[0], q[1]) ? 'pointer' : 'grab'; }
+      if (exploring && e.target === canvas && e.pointerType === 'mouse') { var q = canvasXY(e); canvas.style.cursor = pick(q[0], q[1]) ? 'pointer' : 'grab'; }
       return;
     }
     var dx = e.clientX - drag.x, dy = e.clientY - drag.y;
@@ -828,7 +879,7 @@
     if (!drag.moved) { drag.moved = true; hideCard(); canvas.style.cursor = 'grabbing'; try { canvas.setPointerCapture(drag.id); } catch (err) {} }
     var k = Math.max(W * view.kW, H * view.kH);
     view.az = rev(drag.az - dx / k * R2D);
-    if (!drag.touch) view.alt = Math.max(0, Math.min(75, drag.alt + dy / k * R2D));
+    if (!drag.touch) view.alt = Math.max(0, Math.min(55, drag.alt + dy / k * R2D));
     tween = null;
     manualUntil = Date.now() + 120000;
     if (resetBtn) resetBtn.hidden = false;
@@ -843,38 +894,44 @@
     if (hit) showCard(hit); else hideCard();
   });
   if (resetBtn) resetBtn.addEventListener('click', function () {
-    manualUntil = 0; resetBtn.hidden = true; hideCard(); goTo(theta, true);
+    manualUntil = 0; resetBtn.hidden = true; hideCard();
+    var v = viewFor(theta);
+    if (exploring) { var f = exploreFrame(); f.az = v.az; f.alt = Math.min(v.alt, 40); tweenView(f, 900); } else goTo(theta, true);
   });
 
-  function chooseZoomTarget() {
-    var F = frameAt(theta, currentGmst());
-    setupProjection(F);
-    if (altOf(eph.sun, F) > 0) return { v: eph.sun, col: 'rgba(255,238,210,' };
-    // The brightest object on screen, preferring the right-hand side
-    var best = null, bestScore = -Infinity;
-    function consider(v, mag, col) {
-      if (dot(v, F.U) < 0.15) return;
-      var p = project(v); if (!onScreen(p)) return;
-      var score = -mag + (p[0] / W) * 1.5;
-      if (score > bestScore) { bestScore = score; best = { v: v, col: col }; }
-    }
-    eph.planets.forEach(function (pl) { consider(pl.v, pl.mag, 'rgba(255,240,220,'); });
-    if (CAT) CAT.stars.forEach(function (st) { if (st.mag < 2) consider(st.v, st.mag, st.col); });
-    return best || { v: P.c, col: 'rgba(220,230,255,' };
+  // The sky only responds to dragging and clicking after "Explore the sky"
+  // While exploring, centre the view and narrow it a little so the horizon curves evenly
+  function exploreFrame() {
+    return narrow()
+      ? { az: view.az, alt: Math.min(view.alt, 40), cx: 0.5, cy: 0.6, kW: 0.85, kH: 0.42 }
+      : { az: view.az, alt: Math.min(view.alt, 40), cx: 0.5, cy: 0.58, kW: 0.34, kH: 0.55 };
   }
+  function tweenView(v1, dur) {
+    if (reduceMotion.matches || !running) { view = v1; draw(performance.now()); return; }
+    tween = { from: theta, to: theta, v0: view, v1: v1, t0: performance.now(), dur: dur };
+  }
+  function setExploring(on) {
+    exploring = on;
+    if (on) tweenView(exploreFrame(), 900);
+    if (hero) hero.classList.toggle('exploring', on);
+    canvas.style.cursor = on ? 'grab' : '';
+    if (exploreBtn) {
+      exploreBtn.setAttribute('aria-pressed', String(on));
+      exploreBtn.querySelector('span').textContent = on ? 'Done exploring' : 'Explore the sky';
+    }
+    if (!on) {
+      hideCard();
+      if (resetBtn) resetBtn.hidden = true;
+      manualUntil = 0; goTo(theta, true);
+    }
+  }
+  if (exploreBtn) exploreBtn.addEventListener('click', function () { setExploring(!exploring); });
+
 
   window.Sky = {
     set: function (theme, animate) {
       chosenTheme = theme;
       goTo(thetaFor(theme), animate);
-    },
-    // p in [0, 1]: how far the page has scrolled through the pinned hero
-    setZoom: function (p) {
-      p = clamp01(p);
-      if (p > 0 && !zoomTarget) { zoomTarget = chooseZoomTarget(); hideCard(); }
-      if (p === 0) zoomTarget = null;
-      zoom = p;
-      if (!running) draw(performance.now());
     },
     useLocation: function (lat, lon) {
       origin = { lat: lat, lon: lon, mumbai: false };
@@ -890,7 +947,7 @@
     }
   };
 
-  var textBoxes = [];
+  var textBoxes = [], barBoxes = [];
   function resize() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     W = canvas.clientWidth; H = canvas.clientHeight;
@@ -898,10 +955,14 @@
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     // Labels must not sit under the intro text or the caption
     var cr = canvas.getBoundingClientRect();
-    textBoxes = Array.prototype.map.call(document.querySelectorAll('.hero-text, .sky-bar'), function (el) {
-      var r = el.getBoundingClientRect();
-      return [r.left - cr.left - 10, r.top - cr.top - 10, r.width + 20, r.height + 20];
-    });
+    function boxes(sel) {
+      return Array.prototype.map.call(document.querySelectorAll(sel), function (el) {
+        var r = el.getBoundingClientRect();
+        return [r.left - cr.left - 10, r.top - cr.top - 10, r.width + 20, r.height + 20];
+      });
+    }
+    textBoxes = boxes('.hero-text');
+    barBoxes = boxes('.sky-bar');
   }
 
   resize();

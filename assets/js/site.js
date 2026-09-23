@@ -390,46 +390,6 @@
 
 
   /* ---------------------------------------------------------------
-     Pinned hero: as the page scrolls through it, the intro lifts
-     away, the sky flies toward one star (or the Sun by day), and
-     the scene fades into the next section.
-  ---------------------------------------------------------------- */
-  var pin = document.querySelector('.hero-pin');
-  var heroText = document.querySelector('.hero-text');
-  var heroFade = document.querySelector('.hero-fade');
-  var skyBar = document.querySelector('.sky-bar');
-  var heroScrim = document.querySelector('.hero-scrim');
-  function pinnable() {
-    if (!pin || reduceMotion.matches) return false;
-    var inner = document.querySelector('.hero-inner');
-    // Only pin when the intro fits on screen with room for the header
-    return inner && inner.offsetHeight + 140 < window.innerHeight && window.innerWidth >= 720;
-  }
-  function applyPinMode() { root.classList.toggle('no-pin', !pinnable()); heroFrame(); }
-  applyPinMode();
-  window.addEventListener('resize', applyPinMode);
-  function smooth(a, b, x) { var t = Math.max(0, Math.min(1, (x - a) / (b - a))); return t * t * (3 - 2 * t); }
-  function heroFrame() {
-    if (!pin) return;
-    if (root.classList.contains('no-pin')) {
-      heroText.style.opacity = ''; heroText.style.transform = ''; heroFade.style.opacity = 0;
-      if (skyBar) skyBar.style.opacity = '';
-      if (window.Sky && window.Sky.setZoom) window.Sky.setZoom(0);
-      return;
-    }
-    var r = pin.getBoundingClientRect();
-    var span = pin.offsetHeight - window.innerHeight;
-    var p = span > 0 ? Math.max(0, Math.min(1, -r.top / span)) : 0;
-    var lift = smooth(0, 0.6, p);
-    heroText.style.opacity = String(1 - lift);
-    heroText.style.transform = 'translate3d(0,' + (-70 * lift).toFixed(1) + 'px,0) scale(' + (1 - 0.04 * lift).toFixed(3) + ')';
-    if (skyBar) skyBar.style.opacity = String(1 - smooth(0, 0.2, p));
-    if (heroScrim) heroScrim.style.opacity = String(1 - lift);
-    heroFade.style.opacity = String(0.35 * smooth(0.6, 1, p));
-    if (window.Sky && window.Sky.setZoom) window.Sky.setZoom(smooth(0.05, 1, p));
-  }
-
-  /* ---------------------------------------------------------------
      "See the sky above you": uses the browser's location, which
      stays on the device.
   ---------------------------------------------------------------- */
@@ -468,7 +428,6 @@
   var scrollTick = false;
   function onScrollFrame() {
     scrollTick = false;
-    heroFrame();
     var max = document.documentElement.scrollHeight - window.innerHeight;
     if (bar) bar.style.transform = 'scaleX(' + (max > 0 ? window.scrollY / max : 0) + ')';
     // Safety net for fast scrolling: reveal anything that has reached or passed the viewport

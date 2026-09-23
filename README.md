@@ -38,8 +38,8 @@ Plain HTML, CSS and JavaScript. There is no build step: edit a file, push, and t
 `sky.js` computes the sky from the visitor's clock: star positions from the catalogue, the Sun, Moon and
 planets from orbital elements (checked against NASA JPL Horizons), and Earth's rotation. Dark theme shows
 wherever it is night right now; light theme wherever it is day (Mumbai or the point opposite it on Earth).
-Visitors can drag to look around, click objects to identify them, and choose to see the sky above their own
-location. The location never leaves their browser.
+The view stays still until a visitor presses "Explore the sky"; then they can drag to look around and click
+objects to identify them. They can also choose to see the sky above their own location. The location never leaves their browser.
 
 ## Preview locally
 
