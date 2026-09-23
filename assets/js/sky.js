@@ -202,7 +202,7 @@
   }
 
   function loadCatalogue() {
-    fetch('assets/data/sky-data.json').then(function (r) { return r.json(); }).then(function (data) {
+    fetch('assets/data/sky-data.json?v=20260924b').then(function (r) { return r.json(); }).then(function (data) {
       var stars = [];
       for (var i = 0; i < data.stars.length; i += 4) {
         var c = bvColour(data.stars[i + 3]);
@@ -304,7 +304,7 @@
     var r = norm(cross(c, F.U));
     P.F = F; P.c = c; P.r = r; P.u = cross(r, c);
     P.cx = W * lerp(view.cx, 0.62, z); P.cy = H * lerp(view.cy, 0.5, z);
-    P.k = Math.max(W * view.kW, H * view.kH) * (1 + 6 * z * z);
+    P.k = Math.max(W * view.kW, H * view.kH) * (1 + 1.6 * z);
   }
   function project(v) {
     var dc = dot(v, P.c);
@@ -504,13 +504,15 @@
     if (zoomTarget && zoom > 0.02) {
       var tp = project(zoomTarget.v);
       if (tp) {
-        var zr = 4 + Math.pow(zoom, 2.2) * Math.max(W, H) * 1.1;
-        var za = Math.min(1, zoom * 1.4);
+        // The target brightens and gains a soft halo; the rest of the sky stays visible
+        var zr = 6 + zoom * Math.min(W, H) * 0.16;
         var zg = ctx.createRadialGradient(tp[0], tp[1], 0, tp[0], tp[1], zr);
-        zg.addColorStop(0, zoomTarget.col + za + ')');
-        zg.addColorStop(0.35, zoomTarget.col + 0.55 * za + ')');
+        zg.addColorStop(0, zoomTarget.col + 0.9 * zoom + ')');
+        zg.addColorStop(0.12, zoomTarget.col + 0.45 * zoom + ')');
         zg.addColorStop(1, zoomTarget.col + '0)');
         ctx.fillStyle = zg; ctx.beginPath(); ctx.arc(tp[0], tp[1], zr, 0, 6.2832); ctx.fill();
+        ctx.fillStyle = 'rgba(255,255,255,' + Math.min(1, 0.4 + zoom) + ')';
+        ctx.beginPath(); ctx.arc(tp[0], tp[1], 2.5 + zoom * 3, 0, 6.2832); ctx.fill();
       }
     }
 

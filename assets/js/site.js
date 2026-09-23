@@ -420,13 +420,13 @@
     var r = pin.getBoundingClientRect();
     var span = pin.offsetHeight - window.innerHeight;
     var p = span > 0 ? Math.max(0, Math.min(1, -r.top / span)) : 0;
-    var lift = smooth(0, 0.45, p);
+    var lift = smooth(0, 0.6, p);
     heroText.style.opacity = String(1 - lift);
     heroText.style.transform = 'translate3d(0,' + (-70 * lift).toFixed(1) + 'px,0) scale(' + (1 - 0.04 * lift).toFixed(3) + ')';
     if (skyBar) skyBar.style.opacity = String(1 - smooth(0, 0.2, p));
     if (heroScrim) heroScrim.style.opacity = String(1 - lift);
-    heroFade.style.opacity = String(smooth(0.72, 1, p));
-    if (window.Sky && window.Sky.setZoom) window.Sky.setZoom(smooth(0.08, 0.95, p));
+    heroFade.style.opacity = String(0.35 * smooth(0.6, 1, p));
+    if (window.Sky && window.Sky.setZoom) window.Sky.setZoom(smooth(0.05, 1, p));
   }
 
   /* ---------------------------------------------------------------
