@@ -16,15 +16,29 @@
     if (!themeBtn) return;
     themeBtn.setAttribute('aria-label', currentTheme() === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
   }
+  function applyTheme(next) {
+    root.dataset.theme = next;
+    try { localStorage.setItem('theme', next); } catch (e) {}
+    syncThemeLabel();
+    drawSED();
+    drawPageStars();
+  }
   if (themeBtn) {
     themeBtn.addEventListener('click', function () {
       var next = currentTheme() === 'dark' ? 'light' : 'dark';
-      root.dataset.theme = next;
-      try { localStorage.setItem('theme', next); } catch (e) {}
-      syncThemeLabel();
-      drawSED();
       // Turn the hero sky to match (it jumps straight to the end if the hero is off-screen)
       if (window.Sky) window.Sky.set(next, true);
+      if (!document.startViewTransition || reduceMotion.matches) { applyTheme(next); return; }
+      var r = themeBtn.getBoundingClientRect();
+      var x = r.left + r.width / 2, y = r.top + r.height / 2;
+      var radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+      var vt = document.startViewTransition(function () { applyTheme(next); });
+      vt.ready.then(function () {
+        document.documentElement.animate(
+          { clipPath: ['circle(0px at ' + x + 'px ' + y + 'px)', 'circle(' + radius + 'px at ' + x + 'px ' + y + 'px)'] },
+          { duration: 750, easing: 'cubic-bezier(.2,.7,.2,1)', pseudoElement: '::view-transition-new(root)' }
+        );
+      });
     });
     syncThemeLabel();
   }
@@ -57,6 +71,14 @@
   var navAnchors = Array.prototype.slice.call(document.querySelectorAll('.nav-links a[href^="#"]'));
   var navSections = navAnchors.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
   var navTicking = false;
+  var where = document.querySelector('.nav-where'), whereText = where && where.querySelector('span'), whereNow = null;
+  function setWhere(text) {
+    if (!where || text === whereNow) return;
+    whereNow = text;
+    where.classList.toggle('none', !text);
+    where.classList.add('swap');
+    requestAnimationFrame(function () { whereText.textContent = text; requestAnimationFrame(function () { where.classList.remove('swap'); }); });
+  }
   function updateCurrent() {
     navTicking = false;
     var line = window.scrollY + window.innerHeight * 0.4;
@@ -67,6 +89,7 @@
     navAnchors.forEach(function (a, i) {
       if (i === idx) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
     });
+    setWhere(idx >= 0 ? navAnchors[idx].textContent : '');
   }
   if (navAnchors.length) {
     window.addEventListener('scroll', function () {
@@ -304,7 +327,7 @@
     ['.prose, .interests, .portrait, .paper-card, .side-project, .results h4, .pipeline h4, .sed-card, .blog, .coursework, .gallery-title', ''],
     ['.interest-list li, .steps li, .result-list li, .project, .pub-list li, .plain-list li, .semesters > li, .course-feature, .edu-list li, .skills div, .contact-links li, .blog-list li', 'stagger'],
     ['.fig, .g-item', 'scale-stagger'],
-    ['.interlude blockquote, .interlude figcaption', 'left'],
+    ['.quote-panel blockquote, .quote-panel figcaption', 'fade'],
     ['.andromeda-quote blockquote, .andromeda-quote figcaption', 'fade']
   ];
   if ('IntersectionObserver' in window && !reduceMotion.matches) {
@@ -365,15 +388,87 @@
     });
   }
 
+
+  /* ---------------------------------------------------------------
+     Pinned hero: as the page scrolls through it, the intro lifts
+     away, the sky flies toward one star (or the Sun by day), and
+     the scene fades into the next section.
+  ---------------------------------------------------------------- */
+  var pin = document.querySelector('.hero-pin');
+  var heroText = document.querySelector('.hero-text');
+  var heroFade = document.querySelector('.hero-fade');
+  var skyBar = document.querySelector('.sky-bar');
+  var heroScrim = document.querySelector('.hero-scrim');
+  function pinnable() {
+    if (!pin || reduceMotion.matches) return false;
+    var inner = document.querySelector('.hero-inner');
+    // Only pin when the intro fits on screen with room for the header
+    return inner && inner.offsetHeight + 140 < window.innerHeight && window.innerWidth >= 720;
+  }
+  function applyPinMode() { root.classList.toggle('no-pin', !pinnable()); heroFrame(); }
+  applyPinMode();
+  window.addEventListener('resize', applyPinMode);
+  function smooth(a, b, x) { var t = Math.max(0, Math.min(1, (x - a) / (b - a))); return t * t * (3 - 2 * t); }
+  function heroFrame() {
+    if (!pin) return;
+    if (root.classList.contains('no-pin')) {
+      heroText.style.opacity = ''; heroText.style.transform = ''; heroFade.style.opacity = 0;
+      if (skyBar) skyBar.style.opacity = '';
+      if (window.Sky && window.Sky.setZoom) window.Sky.setZoom(0);
+      return;
+    }
+    var r = pin.getBoundingClientRect();
+    var span = pin.offsetHeight - window.innerHeight;
+    var p = span > 0 ? Math.max(0, Math.min(1, -r.top / span)) : 0;
+    var lift = smooth(0, 0.45, p);
+    heroText.style.opacity = String(1 - lift);
+    heroText.style.transform = 'translate3d(0,' + (-70 * lift).toFixed(1) + 'px,0) scale(' + (1 - 0.04 * lift).toFixed(3) + ')';
+    if (skyBar) skyBar.style.opacity = String(1 - smooth(0, 0.2, p));
+    if (heroScrim) heroScrim.style.opacity = String(1 - lift);
+    heroFade.style.opacity = String(smooth(0.72, 1, p));
+    if (window.Sky && window.Sky.setZoom) window.Sky.setZoom(smooth(0.08, 0.95, p));
+  }
+
+  /* ---------------------------------------------------------------
+     "See the sky above you": uses the browser's location, which
+     stays on the device.
+  ---------------------------------------------------------------- */
+  var hereBtn = document.getElementById('sky-here');
+  if (hereBtn) {
+    var usingHere = false;
+    var hereLabel = hereBtn.querySelector('span');
+    if (!('geolocation' in navigator)) hereBtn.hidden = true;
+    hereBtn.addEventListener('click', function () {
+      if (!window.Sky) return;
+      if (usingHere) {
+        window.Sky.useMumbai(); usingHere = false;
+        hereLabel.textContent = 'See the sky above you'; hereBtn.setAttribute('aria-pressed', 'false');
+        return;
+      }
+      hereLabel.textContent = 'Finding you…';
+      navigator.geolocation.getCurrentPosition(function (pos) {
+        // Rounded to about 10 km: plenty for the sky, and it never leaves the page
+        var lat = Math.round(pos.coords.latitude * 10) / 10, lon = Math.round(pos.coords.longitude * 10) / 10;
+        window.Sky.useLocation(lat, lon); usingHere = true;
+        hereLabel.textContent = 'Back to Mumbai'; hereBtn.setAttribute('aria-pressed', 'true');
+      }, function () {
+        hereLabel.textContent = 'Location not available';
+        setTimeout(function () { hereLabel.textContent = 'See the sky above you'; }, 2500);
+      }, { enableHighAccuracy: false, timeout: 10000, maximumAge: 600000 });
+    });
+  }
+
   /* ---------------------------------------------------------------
      Scroll progress bar and the Andromeda parallax
   ---------------------------------------------------------------- */
   var bar = document.querySelector('.progress span');
-  var andro = document.querySelector('.andromeda');
-  var androImg = document.querySelector('.andromeda-img');
+  var parallax = Array.prototype.map.call(document.querySelectorAll('.andromeda, .quote-panel'), function (box) {
+    return { box: box, img: box.querySelector('.andromeda-img, .quote-panel-img') };
+  });
   var scrollTick = false;
   function onScrollFrame() {
     scrollTick = false;
+    heroFrame();
     var max = document.documentElement.scrollHeight - window.innerHeight;
     if (bar) bar.style.transform = 'scaleX(' + (max > 0 ? window.scrollY / max : 0) + ')';
     // Safety net for fast scrolling: reveal anything that has reached or passed the viewport
@@ -381,18 +476,59 @@
     for (var i = 0; i < pending.length; i++) {
       if (pending[i].getBoundingClientRect().top < window.innerHeight * 0.92) pending[i].classList.add('in');
     }
-    if (andro && androImg && !reduceMotion.matches) {
-      var r = andro.getBoundingClientRect();
-      if (r.bottom > 0 && r.top < window.innerHeight) {
+    if (!reduceMotion.matches) {
+      parallax.forEach(function (item) {
+        var r = item.box.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > window.innerHeight) return;
         var prog = (r.top + r.height / 2 - window.innerHeight / 2) / window.innerHeight;
-        androImg.style.transform = 'translate3d(0,' + (prog * -60).toFixed(1) + 'px,0) scale(1.04)';
-      }
+        item.img.style.transform = 'translate3d(0,' + (prog * -50).toFixed(1) + 'px,0) scale(1.04)';
+      });
     }
   }
   window.addEventListener('scroll', function () {
     if (!scrollTick) { scrollTick = true; requestAnimationFrame(onScrollFrame); }
   }, { passive: true });
   onScrollFrame();
+
+
+  /* ---------------------------------------------------------------
+     A faint star field behind the whole page. It stays fixed while
+     the content scrolls over it.
+  ---------------------------------------------------------------- */
+  var pageStars = document.querySelector('.page-stars');
+  function drawPageStars() {
+    if (!pageStars || !pageStars.getContext) return;
+    var c = pageStars.getContext('2d'), dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var w = pageStars.clientWidth, h = pageStars.clientHeight;
+    pageStars.width = Math.round(w * dpr); pageStars.height = Math.round(h * dpr);
+    c.setTransform(dpr, 0, 0, dpr, 0, 0);
+    c.clearRect(0, 0, w, h);
+    var dark = currentTheme() === 'dark';
+    var seed = 11;
+    function rnd() { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
+    var n = Math.round(w * h / 3200);
+    for (var i = 0; i < n; i++) {
+      var x = rnd() * w, y = rnd() * h, m = rnd(), r = 0.35 + Math.pow(m, 6) * 1.6;
+      var a = dark ? 0.12 + m * 0.5 : 0.08 + m * 0.22;
+      var warm = rnd() < 0.3;
+      c.fillStyle = dark ? (warm ? 'rgba(255,220,190,' : 'rgba(215,226,255,') + a + ')' : (warm ? 'rgba(150,100,40,' : 'rgba(50,80,140,') + a + ')';
+      c.beginPath(); c.arc(x, y, r, 0, 6.2832); c.fill();
+    }
+  }
+  drawPageStars();
+  var psTimer;
+  window.addEventListener('resize', function () { clearTimeout(psTimer); psTimer = setTimeout(drawPageStars, 200); });
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', drawPageStars);
+
+  /* ---------------------------------------------------------------
+     Smooth, momentum scrolling for mouse and trackpad (Lenis).
+     Touch devices and reduced-motion users keep native scrolling.
+  ---------------------------------------------------------------- */
+  if (window.Lenis && !reduceMotion.matches && window.matchMedia('(pointer: fine)').matches) {
+    try {
+      new window.Lenis({ autoRaf: true, lerp: 0.11, anchors: { offset: -72 } });
+    } catch (e) { /* native scrolling still works */ }
+  }
 
   var yr = document.getElementById('year');
   if (yr) yr.textContent = new Date().getFullYear();

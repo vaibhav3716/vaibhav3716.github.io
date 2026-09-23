@@ -17,6 +17,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+  <link rel="stylesheet" href="assets/js/vendor/lenis.css">
   <link rel="stylesheet" href="assets/css/site.css">
 
   <script>
@@ -48,6 +49,7 @@
   </script>
 </head>
 <body>
+  <canvas class="page-stars" aria-hidden="true"></canvas>
   <a class="skip" href="#main">Skip to content</a>
 
   <!-- SVG icon sprite -->
@@ -63,6 +65,7 @@
     <symbol id="i-moon" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></symbol>
     <symbol id="i-menu" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></symbol>
     <symbol id="i-close" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-locate" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.2" fill="currentColor"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></g></symbol>
     <symbol id="i-expand" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></symbol>
   </svg>
 
@@ -70,10 +73,11 @@
   <header class="site-header" id="top">
     <nav class="nav" aria-label="Main">
       <a class="brand" href="#top">Vaibhav Yenare</a>
+      <span class="nav-where" aria-hidden="true"><span></span></span>
       <button class="icon-btn nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
         <svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg>
       </button>
-      <ul class="nav-links" id="nav-links">
+      <ul class="nav-links" id="nav-links" data-lenis-prevent>
         <li><a href="#about">About</a></li>
         <li><a href="#research">Research</a></li>
         <li><a href="#projects">Projects</a></li>
@@ -97,9 +101,16 @@
 
   <main id="main">
     <!-- Hero: a live sky over Mumbai. Sunrise in light theme, the December night sky in dark theme -->
+    <div class="hero-pin">
     <section class="hero" aria-labelledby="hero-name">
       <canvas class="sky" aria-hidden="true"></canvas>
       <div class="hero-scrim" aria-hidden="true"></div>
+      <div class="sky-card" id="sky-card" hidden role="dialog" aria-label="About this object">
+        <button class="sky-card-close" type="button" aria-label="Close"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button>
+        <p class="sky-card-title"></p>
+        <p class="sky-card-kind"></p>
+        <dl></dl>
+      </div>
       <div class="wrap hero-inner">
         <div class="hero-text">
           <h1 id="hero-name">Vaibhav Yenare</h1>
@@ -125,12 +136,21 @@
           </ul>
         </div>
       </div>
-      <p class="sky-caption">
-        <span class="sky-cap-light">Sunrise over Mumbai, 16 December. The dashed line is the Sun's path across the sky.</span>
-        <span class="sky-cap-dark">The sky over Mumbai on a December evening, looking east. Stars are at their real positions.</span>
-        <span class="sky-cap-hint">Switch the theme to turn the sky.</span>
-      </p>
+      <div class="sky-bar">
+        <p class="sky-caption">
+          <span id="sky-live" aria-live="off">A live view of the sky from Mumbai, or from the opposite side of Earth when it is daytime there.</span>
+          <span class="sky-cap-hint">Drag the sky to look around and click a star to identify it. Switch the theme to fly to the other side of Earth.</span>
+        </p>
+        <div class="sky-actions">
+          <button class="sky-btn" type="button" id="sky-here" title="Uses your browser's location. It stays on your device and is never sent anywhere.">
+            <svg class="icon" aria-hidden="true"><use href="#i-locate"/></svg><span>See the sky above you</span>
+          </button>
+          <button class="sky-btn" type="button" id="sky-reset" hidden>Reset view</button>
+        </div>
+      </div>
+      <div class="hero-fade" aria-hidden="true"></div>
     </section>
+    </div>
 
     <!-- About and interests -->
     <section class="section" id="about" aria-labelledby="about-h">
@@ -171,7 +191,7 @@
         </blockquote>
         <figcaption>Edwin Hubble, <cite>The Nature of Science</cite>, 1954. Hubble showed in 1925 that Andromeda is a galaxy far beyond our own.</figcaption>
       </figure>
-      <p class="andromeda-credit">Andromeda Galaxy, Hubble Space Telescope. NASA, ESA, J. Dalcanton, B.F. Williams, L.C. Johnson (University of Washington), the PHAT team, and R. Gendler.</p>
+      <p class="andromeda-credit">Andromeda Galaxy, Hubble Space Telescope. Image: <a href="https://esahubble.org/images/heic1502a/" target="_blank" rel="noopener">NASA, ESA, J. Dalcanton, B.F. Williams, L.C. Johnson (University of Washington), the PHAT team, and R. Gendler</a> (CC BY 4.0)</p>
     </section>
 
     <!-- Current research -->
@@ -287,12 +307,14 @@
       </div>
     </section>
 
-    <figure class="interlude">
-      <div class="wrap">
+    <section class="quote-panel quote-ring img-right" aria-label="A quote from Subrahmanyan Chandrasekhar" style="--img:url('../../assets/img/esa/ring-nebula-webb.webp'); --img-small:url('../../assets/img/esa/ring-nebula-webb-small.webp')">
+      <div class="quote-panel-img" aria-hidden="true"></div>
+      <figure class="wrap quote-panel-inner">
         <blockquote><p>The black holes of nature are the most perfect macroscopic objects there are in the universe: the only elements in their construction are our concepts of space and time.</p></blockquote>
         <figcaption>Subrahmanyan Chandrasekhar, <cite>The Mathematical Theory of Black Holes</cite>, 1983. His limit sets the largest mass a white dwarf can have.</figcaption>
-      </div>
-    </figure>
+      </figure>
+      <p class="panel-credit">Ring Nebula, a dying Sun-like star with a white dwarf at its centre. James Webb Space Telescope. Image: <a href="https://esawebb.org/images/weic2320b/" target="_blank" rel="noopener">ESA/Webb, NASA, CSA, M. Barlow, N. Cox, R. Wesson</a> (CC BY 4.0)</p>
+    </section>
 
     <!-- Short projects across the spectrum -->
     <section class="section" id="projects" aria-labelledby="projects-h">
@@ -385,12 +407,14 @@
       </div>
     </section>
 
-    <figure class="interlude">
-      <div class="wrap">
+    <section class="quote-panel quote-pillars img-left" aria-label="A quote from Cecilia Payne-Gaposchkin" style="--img:url('../../assets/img/esa/pillars-hubble.webp'); --img-small:url('../../assets/img/esa/pillars-hubble-small.webp')">
+      <div class="quote-panel-img" aria-hidden="true"></div>
+      <figure class="wrap quote-panel-inner">
         <blockquote><p>The reward of the young scientist is the emotional thrill of being the first person in the history of the world to see something or to understand something.</p></blockquote>
         <figcaption>Cecilia Payne-Gaposchkin, who showed in 1925 that stars are made mostly of hydrogen and helium</figcaption>
-      </div>
-    </figure>
+      </figure>
+      <p class="panel-credit">Pillars of Creation, clouds of hydrogen where new stars are forming. Hubble Space Telescope. Image: <a href="https://esahubble.org/images/heic1501a/" target="_blank" rel="noopener">NASA, ESA/Hubble and the Hubble Heritage Team</a> (CC BY 4.0)</p>
+    </section>
 
     <!-- Teaching -->
     <section class="section" id="teaching" aria-labelledby="teaching-h">
@@ -431,12 +455,14 @@
       </div>
     </section>
 
-    <figure class="interlude">
-      <div class="wrap">
+    <section class="quote-panel quote-crab img-right" aria-label="A quote from Carl Sagan" style="--img:url('../../assets/img/esa/crab-nebula-hubble.webp'); --img-small:url('../../assets/img/esa/crab-nebula-hubble-small.webp')">
+      <div class="quote-panel-img" aria-hidden="true"></div>
+      <figure class="wrap quote-panel-inner">
         <blockquote><p>The cosmos is within us. We are made of star-stuff. We are a way for the universe to know itself.</p></blockquote>
         <figcaption>Carl Sagan, <cite>Cosmos</cite>, 1980</figcaption>
-      </div>
-    </figure>
+      </figure>
+      <p class="panel-credit">Crab Nebula, the remains of a star that exploded in 1054, seeding space with new elements. Hubble Space Telescope. Image: <a href="https://esahubble.org/images/heic0515a/" target="_blank" rel="noopener">NASA, ESA and Allison Loll/Jeff Hester (Arizona State University). Acknowledgement: Davide De Martin (ESA/Hubble)</a> (CC BY 4.0)</p>
+    </section>
 
     <!-- Outreach and blog -->
     <section class="section section-alt" id="outreach" aria-labelledby="outreach-h">
@@ -531,12 +557,12 @@
         </div>
         <div id="skills">
           <h2>Tools</h2>
-          <dl class="skills">
-            <div><dt>Programming</dt><dd>Python, Bash, SQL</dd></div>
-            <div><dt>Astronomy software</dt><dd>VOSA, HEASoft (XSPEC), CASA, CARTA, CIAO, MESA, SAOImage DS9</dd></div>
-            <div><dt>Python libraries</dt><dd>Astropy, galpy, mwdust, Bagpipes, Bilby, GWpy, EinsteinPy, scikit-learn, OpenCV</dd></div>
-            <div><dt>Writing</dt><dd>LaTeX</dd></div>
-          </dl>
+          <div class="skills">
+            <div class="skill-group"><h3>Programming</h3><ul class="chips"><li class="chip"><span class="chip-logo logo-python" aria-hidden="true"></span>Python</li><li class="chip"><span class="chip-logo logo-gnubash" aria-hidden="true"></span>Bash</li><li class="chip"><span class="chip-mono" aria-hidden="true">SQL</span>SQL</li></ul></div>
+            <div class="skill-group"><h3>Astronomy software</h3><ul class="chips"><li class="chip"><span class="chip-mono" aria-hidden="true">Vo</span>VOSA</li><li class="chip"><span class="chip-mono" aria-hidden="true">He</span>HEASoft (XSPEC)</li><li class="chip"><span class="chip-mono" aria-hidden="true">Ca</span>CASA</li><li class="chip"><span class="chip-mono" aria-hidden="true">Ct</span>CARTA</li><li class="chip"><span class="chip-mono" aria-hidden="true">Ci</span>CIAO</li><li class="chip"><span class="chip-mono" aria-hidden="true">Me</span>MESA</li><li class="chip"><span class="chip-mono" aria-hidden="true">D9</span>SAOImage DS9</li></ul></div>
+            <div class="skill-group"><h3>Python libraries</h3><ul class="chips"><li class="chip"><img class="chip-img" src="assets/img/logos/astropy.svg" alt="" width="18" height="18">Astropy</li><li class="chip"><span class="chip-mono" aria-hidden="true">ga</span>galpy</li><li class="chip"><span class="chip-mono" aria-hidden="true">mw</span>mwdust</li><li class="chip"><span class="chip-mono" aria-hidden="true">Bp</span>Bagpipes</li><li class="chip"><span class="chip-mono" aria-hidden="true">Bi</span>Bilby</li><li class="chip"><span class="chip-mono" aria-hidden="true">GW</span>GWpy</li><li class="chip"><span class="chip-mono" aria-hidden="true">Ei</span>EinsteinPy</li><li class="chip"><span class="chip-logo logo-scikitlearn" aria-hidden="true"></span>scikit-learn</li><li class="chip"><span class="chip-logo logo-opencv" aria-hidden="true"></span>OpenCV</li></ul></div>
+            <div class="skill-group"><h3>Writing</h3><ul class="chips"><li class="chip"><span class="chip-logo logo-latex" aria-hidden="true"></span>LaTeX</li></ul></div>
+          </div>
         </div>
       </div>
     </section>
@@ -546,7 +572,7 @@
       <div class="wrap">
         <h2 id="contact-h">Contact</h2>
         <p class="section-intro">I'm happy to talk about white dwarfs, binaries, teaching or collaboration. Email is the best way to reach me.</p>
-        <a class="contact-mail" href="mailto:vaibhavyenare3142@gmail.com">vaibhavyenare3142@gmail.com</a>
+        <a class="contact-mail" href="mailto:vaibhavyenare3142@gmail.com"><span class="contact-mail-icon" aria-hidden="true"><svg class="icon"><use href="#i-mail"/></svg></span><span>vaibhavyenare3142@gmail.com</span></a>
         <ul class="contact-links">
           <li><a href="https://orcid.org/0009-0002-3670-1370" target="_blank" rel="me noopener"><svg class="icon" aria-hidden="true" style="--icon-cut:var(--bg)"><use href="#i-orcid"/></svg>ORCID</a></li>
           <li><a href="https://www.linkedin.com/in/vaibhav-yenare-6a0941225" target="_blank" rel="me noopener"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg>LinkedIn</a></li>
@@ -561,12 +587,13 @@
 
   <footer class="site-footer">
     <div class="wrap">
-      <p>© <span id="year">2026</span> Vaibhav Yenare. Figures are from work in preparation. Please ask before reusing them.</p>
+      <p>© <span id="year">2026</span> Vaibhav Yenare. Figures are from work in preparation. Please ask before reusing them.<br>
+        <span class="footer-credits">Space images from ESA/Hubble and ESA/Webb under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>; credits appear on each image. Star catalogue from <a href="https://github.com/ofrohn/d3-celestial" target="_blank" rel="noopener">d3-celestial</a> by Olaf Frohn (<a href="assets/data/d3-celestial-LICENSE.txt">BSD licence</a>), based on the HYG database. Astropy logo by Kyle Barbary (<a href="assets/img/logos/astropy-LICENSE.txt">CC BY-SA 3.0</a>); other tool logos from Simple Icons (CC0).</span></p>
       <a href="#top">Back to top</a>
     </div>
   </footer>
 
-  <dialog class="lightbox" id="lightbox" aria-label="Enlarged figure">
+  <dialog class="lightbox" id="lightbox" aria-label="Enlarged figure" data-lenis-prevent>
     <button class="icon-btn lightbox-close" type="button" aria-label="Close figure">
       <svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>
     </button>
@@ -574,6 +601,7 @@
     <p id="lightbox-cap"></p>
   </dialog>
 
+  <script src="assets/js/vendor/lenis.min.js" defer></script>
   <script src="assets/js/sky.js" defer></script>
   <script src="assets/js/site.js" defer></script>
 </body>
