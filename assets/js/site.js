@@ -461,9 +461,9 @@
       navigator.geolocation.getCurrentPosition(function (pos) {
         // Rounded to about 10 km: plenty for the sky, and it never leaves the page
         var lat = Math.round(pos.coords.latitude * 10) / 10, lon = Math.round(pos.coords.longitude * 10) / 10;
+        // First the theme turns to day or night where the visitor is, then the sky turns to their own
+        if (window.DayNight) window.DayNight.follow(lat, lon);
         window.Sky.useLocation(lat, lon); usingHere = true;
-        // Sunrise and sunset for the theme now come from the real location too
-        if (window.DayNight) window.DayNight.setPlace(lat, lon);
         hereLabel.textContent = 'Back to Mumbai'; hereBtn.setAttribute('aria-pressed', 'true');
       }, function () {
         hereLabel.textContent = 'Location not available';

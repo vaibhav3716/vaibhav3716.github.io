@@ -53,6 +53,8 @@ In daytime a small box beside the Sun gives that place's sunrise and sunset and 
 from their location, if they have already let the site use it), computes the Sun's altitude there, and
 picks the paper theme while the Sun is up and the dark theme after sunset. It switches by itself at sunrise
 and sunset. If a visitor uses the theme switch, their choice holds until they close the tab.
+Pressing "See the sky above you" uses the visitor's exact location: the theme turns to day or night
+there (even over a theme they picked), and the hero shows their own sky.
 
 ## Preview locally
 

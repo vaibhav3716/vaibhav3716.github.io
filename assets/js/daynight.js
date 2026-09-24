@@ -111,6 +111,13 @@
       try { sessionStorage.setItem('theme', theme); } catch (e) {}
     },
     setPlace: function (lat, lon) { place = { lat: lat, lon: lon }; check(); },
+    // "See the sky above you": follow day or night at the visitor's real location,
+    // even over a theme they picked with the switch
+    follow: function (lat, lon) {
+      place = { lat: lat, lon: lon }; chosen = null;
+      try { sessionStorage.removeItem('theme'); } catch (e) {}
+      check();
+    },
     onChange: function (fn) { listeners.push(fn); },
     sunAltitude: sunAltitude
   };

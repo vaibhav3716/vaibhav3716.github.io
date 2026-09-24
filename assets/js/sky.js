@@ -1024,13 +1024,13 @@
     },
     useLocation: function (lat, lon) {
       origin = { lat: lat, lon: lon, mumbai: false };
-      manualUntil = 0; if (resetBtn) resetBtn.hidden = true; hideCard();
+      tween = null; manualUntil = 0; if (resetBtn) resetBtn.hidden = true; hideCard();
       theta = thetaFor(chosenTheme); view = viewFor(theta);
       draw(performance.now()); updateCaption();
     },
     useMumbai: function () {
       origin = MUMBAI;
-      manualUntil = 0; if (resetBtn) resetBtn.hidden = true; hideCard();
+      tween = null; manualUntil = 0; if (resetBtn) resetBtn.hidden = true; hideCard();
       theta = thetaFor(chosenTheme); view = viewFor(theta);
       draw(performance.now()); updateCaption();
     }
