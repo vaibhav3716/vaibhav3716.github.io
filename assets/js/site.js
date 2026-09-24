@@ -324,7 +324,7 @@
   ---------------------------------------------------------------- */
   var revealGroups = [
     ['.section h2, .feature-title, .section-intro, .meta-line', ''],
-    ['.prose, .interests, .portrait, .paper-card, .side-project, .results h4, .pipeline h4, .sed-card, .blog, .coursework, .gallery-title', ''],
+    ['.prose, .interests, .paper-card, .side-project, .results h4, .pipeline h4, .sed-card, .blog, .coursework, .gallery-title', ''],
     ['.interest-list li, .steps li, .result-list li, .project, .pub-list li, .plain-list li, .semesters > li, .course-feature, .edu-list li, .skills div, .contact-links li, .blog-list li', 'stagger'],
     ['.fig, .g-item', 'scale-stagger'],
     ['.quote-panel blockquote, .quote-panel figcaption', 'fade'],

@@ -4,36 +4,36 @@
    main sequence companion (amber, optical).
 ------------------------------------------------------------------- */
 :root {
-  --bg: #F4F6FA;
-  --surface: #FFFFFF;
-  --surface-2: #EBEFF6;
-  --ink: #121A2B;
-  --ink-2: #4A5670;
-  --rule: #D6DCE7;
-  --wd: #1D5FC4;
-  --ms: #A4570A;
-  --wd-soft: rgba(29, 95, 196, .10);
-  --ms-soft: rgba(164, 87, 10, .10);
-  --focus: #1D5FC4;
-  --plate: #FFFFFF;
+  --bg: #F3ECDA;
+  --surface: #FAF5E7;
+  --surface-2: #ECE3CB;
+  --ink: #2A2318;
+  --ink-2: #66583F;
+  --rule: #DCCFB0;
+  --wd: #1B55AE;
+  --ms: #94500B;
+  --wd-soft: rgba(27, 85, 174, .10);
+  --ms-soft: rgba(148, 80, 11, .11);
+  --focus: #1B55AE;
+  --plate: #FFFDF6;
   --shadow: 0 1px 2px rgba(18, 26, 43, .06), 0 8px 24px rgba(18, 26, 43, .06);
 
   /* The hero is a night sky in both themes */
-  --night: #0A1020;
+  --night: #03050B;
   --night-ink: #E9EDF6;
   --night-ink-2: #AAB5CC;
   --night-wd: #8CC0FF;
   --night-ms: #FFB45C;
 
-  --serif: 'Spectral', Georgia, 'Times New Roman', serif;
-  --sans: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --serif: 'EB Garamond', 'Cormorant Garamond', Garamond, Georgia, 'Times New Roman', serif;
+  --sans: 'Figtree', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   --step--1: .875rem;
   --step-0: 1.0625rem;
   --step-1: 1.25rem;
   --step-2: 1.5rem;
-  --step-3: clamp(1.75rem, 1.4rem + 1.4vw, 2.375rem);
-  --step-4: clamp(2.75rem, 1.9rem + 4vw, 4.75rem);
+  --step-3: clamp(1.95rem, 1.55rem + 1.6vw, 2.7rem);
+  --step-4: clamp(3rem, 2.1rem + 4.4vw, 5.25rem);
 
   --gutter: 16px;
   --max: 1120px;
@@ -46,12 +46,12 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0D1424;
-    --surface: #131C30;
-    --surface-2: #18223A;
-    --ink: #E6EAF3;
-    --ink-2: #A3AEC6;
-    --rule: #25304A;
+    --bg: #000000;
+    --surface: #0E0E11;
+    --surface-2: #17171B;
+    --ink: #EDEDF0;
+    --ink-2: #A3A3AC;
+    --rule: #232328;
     --wd: #8CC0FF;
     --ms: #FFB45C;
     --wd-soft: rgba(140, 192, 255, .12);
@@ -63,12 +63,12 @@
   }
 }
 :root[data-theme="dark"] {
-  --bg: #0D1424;
-  --surface: #131C30;
-  --surface-2: #18223A;
-  --ink: #E6EAF3;
-  --ink-2: #A3AEC6;
-  --rule: #25304A;
+  --bg: #000000;
+  --surface: #0E0E11;
+  --surface-2: #17171B;
+  --ink: #EDEDF0;
+  --ink-2: #A3A3AC;
+  --rule: #232328;
   --wd: #8CC0FF;
   --ms: #FFB45C;
   --wd-soft: rgba(140, 192, 255, .12);
@@ -301,26 +301,47 @@ sub { line-height: 0; }
 /* ------------------------------------------------------------------
    About
 ------------------------------------------------------------------- */
-.about-grid { display: grid; gap: 2.5rem; }
-@media (min-width: 760px) {
-  .about-grid { grid-template-columns: 220px minmax(0, 1fr); gap: 3rem; align-items: start; }
-  .about-grid .interests { grid-column: 1 / -1; }
+.about-grid { display: grid; gap: 2.5rem; align-items: center; }
+.about-grid .interests { grid-column: 1 / -1; }
+@media (min-width: 860px) {
+  .about-grid { grid-template-columns: auto minmax(0, 1fr); gap: 3.5rem 4rem; }
 }
-@media (min-width: 1100px) {
-  .about-grid { grid-template-columns: 250px minmax(0, 1.4fr) minmax(0, 1fr); gap: 3.25rem; }
-  .about-grid .interests { grid-column: auto; }
+
+/* Portrait at the centre of its own little solar system */
+.orbit-stage { position: relative; width: clamp(290px, 34vw, 460px); aspect-ratio: 1; margin: 0 auto; }
+.orbit-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.orbit-stage .portrait {
+  position: absolute; left: 50%; top: 50%; width: 44%; aspect-ratio: 1; margin: 0;
+  transform: translate(-50%, -50%) scale(var(--ps, 1));
 }
-.portrait { margin: 0; width: min(100%, 300px); position: relative; }
-.portrait img { border-radius: 50% 50% 16px 16px / 36% 36% 16px 16px; aspect-ratio: 4 / 5; object-fit: cover; width: 100%; }
-.portrait::before {
-  content: ""; position: absolute; inset: -12px; border-radius: 50% 50% 24px 24px / 38% 38% 24px 24px;
-  border: 1px solid color-mix(in srgb, var(--wd) 40%, transparent); pointer-events: none;
+.orbit-stage .portrait::before {
+  content: ""; position: absolute; inset: -18%; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--ms) 30%, transparent), transparent 72%);
+  opacity: var(--glow, 1);
 }
-.portrait::after {
-  content: ""; position: absolute; width: 10px; height: 10px; border-radius: 50%;
-  top: 14%; right: -17px; background: var(--wd); box-shadow: 0 0 14px 3px color-mix(in srgb, var(--wd) 60%, transparent);
+.orbit-stage .portrait img {
+  position: relative; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%;
+  clip-path: inset(0 round var(--pr, 50%));
 }
-@media (max-width: 759.98px) { .portrait { width: min(62%, 240px); } }
+@media (max-width: 859.98px) { .orbit-stage { width: min(88vw, 380px); } }
+.planet { position: absolute; left: 0; top: 0; opacity: 0; will-change: transform; pointer-events: none; }
+.planet svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.planet-shade {
+  position: absolute; border-radius: 50%; pointer-events: none;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0) 30%, rgba(4, 6, 12, .5) 68%, rgba(4, 6, 12, .78) 100%);
+}
+.planet-saturn .planet-shade { background: linear-gradient(90deg, rgba(0, 0, 0, 0) 35%, rgba(4, 6, 12, .45) 75%, rgba(4, 6, 12, .7) 100%); }
+.planet-moon {
+  position: absolute; left: 50%; top: 50%; width: 26%; height: 26%; margin: -13% 0 0 -13%; border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #F2F0EA, #A9A59C 70%, #6F6B64);
+}
+
+
+.interest-list { display: grid; gap: 0; }
+@media (min-width: 860px) {
+  .about-grid .interest-list { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1.5rem; }
+  .about-grid .interest-list li, .about-grid .interest-list li:first-child { border-top: 0; padding: 0; }
+}
 .interests { background: var(--surface); border: 1px solid var(--rule); border-radius: var(--radius-m); padding: 1.5rem; }
 .interests h3 { margin-bottom: 1rem; }
 .interest-list { list-style: none; padding: 0; margin: 0; }

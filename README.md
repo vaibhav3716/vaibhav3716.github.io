@@ -17,6 +17,7 @@ Plain HTML, CSS and JavaScript. There is no build step: edit a file, push, and t
 | Smooth scrolling | `assets/js/vendor/lenis.min.js` (Lenis, MIT licence, see `lenis-LICENSE.txt`) |
 | Tool logos | `assets/img/logos/` (Simple Icons, CC0; Astropy logo CC BY-SA 3.0) |
 | Portrait | `assets/img/portrait.jpg` and `assets/img/portrait.webp` |
+| About: portrait with orbiting vector planets | `assets/js/orbits.js` |
 | Paper figures | `assets/img/research/` |
 | Stargazing photos | `assets/img/stargazing/` |
 | Quote backgrounds (ESA/Hubble, ESA/Webb) | `assets/img/andromeda-hst.webp`, `assets/img/esa/` |

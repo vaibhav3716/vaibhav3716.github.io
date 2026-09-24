@@ -356,8 +356,8 @@
   // Sky colour from the Sun's altitude (degrees)
   // ---------------------------------------------------------------
   var SKY_STOPS = [
-    [-90, [6, 10, 22], [9, 15, 32], [16, 24, 46]],
-    [-18, [6, 10, 22], [9, 15, 32], [16, 24, 46]],
+    [-90, [2, 3, 8], [5, 8, 18], [12, 17, 34]],
+    [-18, [2, 3, 8], [5, 8, 18], [12, 17, 34]],
     [-10, [10, 18, 40], [22, 34, 70], [58, 58, 92]],
     [-4, [18, 36, 74], [52, 66, 118], [180, 110, 96]],
     [2, [28, 58, 108], [86, 112, 164], [246, 170, 110]],
@@ -393,9 +393,9 @@
     labelBoxes.push([x, y, w, h]);
     return true;
   }
-  var FONT = '500 12px "IBM Plex Sans", system-ui, sans-serif';
-  var FONT_SUB = '400 11.5px "IBM Plex Sans", system-ui, sans-serif';
-  var FONT_CON = 'italic 400 14px "Spectral", Georgia, serif';
+  var FONT = '500 12.5px "Figtree", system-ui, sans-serif';
+  var FONT_SUB = '400 12px "Figtree", system-ui, sans-serif';
+  var FONT_CON = 'italic 400 15px "EB Garamond", Georgia, serif';
   function label(p, text, sub, a, colour) {
     ctx.font = FONT;
     var w = ctx.measureText(text).width;
@@ -631,8 +631,8 @@
     var flat = clamp01((theta - 60) / 60);         // hills at the origin, a flat horizon at its antipode
     var sea = origin.mumbai ? flat : 0;            // Mumbai's antipode is open Pacific Ocean
     var day = clamp01((sunAlt + 8) / 14);
-    var top = mixC(mixC([8, 11, 20], [34, 38, 58], day), mixC([6, 14, 30], [30, 74, 116], day), sea);
-    var bot = mixC(mixC([3, 5, 10], [18, 20, 32], day), mixC([3, 8, 18], [14, 40, 70], day), sea);
+    var top = mixC(mixC([5, 6, 11], [34, 38, 58], day), mixC([6, 14, 30], [30, 74, 116], day), sea);
+    var bot = mixC(mixC([1, 1, 3], [18, 20, 32], day), mixC([3, 8, 18], [14, 40, 70], day), sea);
     var gTop = Math.max(0, Math.min(gy, H) - 30);
     var gg = ctx.createLinearGradient(0, gTop, 0, H);
     gg.addColorStop(0, rgb(top)); gg.addColorStop(1, rgb(bot));
