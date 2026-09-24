@@ -17,15 +17,23 @@
     themeBtn.setAttribute('aria-label', currentTheme() === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
   }
   function applyTheme(next) {
-    root.dataset.theme = next;
-    try { localStorage.setItem('theme', next); } catch (e) {}
+    if (window.DayNight) window.DayNight.paint(next); else root.dataset.theme = next;
     syncThemeLabel();
     drawSED();
     drawPageStars();
   }
+  // The theme follows sunrise and sunset where the visitor is (daynight.js) until they pick one
+  if (window.DayNight) {
+    window.DayNight.onChange(function (next) {
+      if (window.Sky) window.Sky.set(next, true);
+      if (!document.startViewTransition || reduceMotion.matches || document.hidden) { applyTheme(next); return; }
+      document.startViewTransition(function () { applyTheme(next); });
+    });
+  }
   if (themeBtn) {
     themeBtn.addEventListener('click', function () {
       var next = currentTheme() === 'dark' ? 'light' : 'dark';
+      if (window.DayNight) window.DayNight.choose(next);
       // Turn the hero sky to match (it jumps straight to the end if the hero is off-screen)
       if (window.Sky) window.Sky.set(next, true);
       if (!document.startViewTransition || reduceMotion.matches) { applyTheme(next); return; }
@@ -410,6 +418,8 @@
         // Rounded to about 10 km: plenty for the sky, and it never leaves the page
         var lat = Math.round(pos.coords.latitude * 10) / 10, lon = Math.round(pos.coords.longitude * 10) / 10;
         window.Sky.useLocation(lat, lon); usingHere = true;
+        // Sunrise and sunset for the theme now come from the real location too
+        if (window.DayNight) window.DayNight.setPlace(lat, lon);
         hereLabel.textContent = 'Back to Mumbai'; hereBtn.setAttribute('aria-pressed', 'true');
       }, function () {
         hereLabel.textContent = 'Location not available';

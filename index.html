@@ -18,13 +18,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
-  <link rel="stylesheet" href="assets/js/vendor/lenis.css?v=20260924f">
-  <link rel="stylesheet" href="assets/css/site.css?v=20260924f">
+  <link rel="stylesheet" href="assets/js/vendor/lenis.css?v=20260924g">
+  <link rel="stylesheet" href="assets/css/site.css?v=20260924g">
 
-  <script>
-    // Apply a saved theme before first paint to avoid a flash.
-    try { var t = localStorage.getItem('theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
-  </script>
+  <!-- Picks the theme from day or night where the visitor is, before the first paint -->
+  <script src="assets/js/daynight.js?v=20260924g"></script>
 
   <script type="application/ld+json">
   {
@@ -93,7 +91,7 @@
         <a class="btn btn-small" href="files/Vaibhav_Yenare_CV.pdf" download>
           <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>CV
         </a>
-        <button class="icon-btn theme-toggle" type="button" aria-label="Switch to light theme">
+        <button class="icon-btn theme-toggle" type="button" aria-label="Switch to light theme" title="The theme follows day and night where you are. Click to switch it yourself.">
           <svg class="icon icon-sun" aria-hidden="true"><use href="#i-sun"/></svg>
           <svg class="icon icon-moon" aria-hidden="true"><use href="#i-moon"/></svg>
         </button>
@@ -140,7 +138,7 @@
       <div class="sky-bar">
         <p class="sky-caption">
           <span id="sky-live" aria-live="off">A live view of the sky from Mumbai, or from the opposite side of Earth when it is daytime there.</span>
-          <span class="sky-cap-hint">Switch the theme to fly to the other side of Earth, where it is day when it is night here.</span>
+          <span class="sky-cap-hint">The theme follows day and night where you are. Switch it to fly to the other side of Earth, where it is day when it is night here.</span>
         </p>
         <div class="sky-actions">
           <button class="sky-btn sky-btn-primary" type="button" id="sky-explore" aria-pressed="false" title="Drag to look around, and click a star, planet or galaxy to identify it">
@@ -603,9 +601,9 @@
     <p id="lightbox-cap"></p>
   </dialog>
 
-  <script src="assets/js/vendor/lenis.min.js?v=20260924f" defer></script>
-  <script src="assets/js/sky.js?v=20260924f" defer></script>
-  <script src="assets/js/orbits.js?v=20260924f" defer></script>
-  <script src="assets/js/site.js?v=20260924f" defer></script>
+  <script src="assets/js/vendor/lenis.min.js?v=20260924g" defer></script>
+  <script src="assets/js/sky.js?v=20260924g" defer></script>
+  <script src="assets/js/orbits.js?v=20260924g" defer></script>
+  <script src="assets/js/site.js?v=20260924g" defer></script>
 </body>
 </html>

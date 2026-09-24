@@ -3,8 +3,12 @@
 
    Drawn in a single ink colour, like an old engraving: black on the
    paper theme, white on the dark theme. Dash-dot orbits circle the
-   portrait and six line-art planets revolve, shaded with engraved
-   hatching as if lit from the upper left.
+   portrait and six line-art planets revolve slowly, shaded with
+   engraved hatching as if lit from the upper left.
+
+   The orbits are spaced from the planets' sizes (the Moon and
+   Saturn's rings included), so neighbours pass each other with a
+   clear gap and can never overlap.
 
    When the section scrolls into view the photo rounds into a circle,
    the orbits sweep in one after another, and the planets appear.
@@ -21,19 +25,20 @@
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   var TAU = Math.PI * 2;
-  var PORTRAIT = 0.44;   // portrait radius as a fraction of the stage half-width (matches the CSS)
 
-  // f = orbit radius, r = planet radius (both fractions of the stage half-width), period in seconds
+  // size = relative radius, period = seconds for one orbit (inner planets are faster, as in Kepler's third law)
   var PLANETS = [
-    { kind: 'craters', f: 0.565, r: 0.032, period: 22, start: 0.4 },    // Mercury
-    { kind: 'swirl', f: 0.655, r: 0.047, period: 34, start: 2.6 },       // Venus
-    { kind: 'earth', f: 0.75, r: 0.051, period: 48, start: 4.9, moon: true },
-    { kind: 'stipple', f: 0.84, r: 0.040, period: 66, start: 1.5 },    // Mars
-    { kind: 'bands', f: 0.94, r: 0.086, period: 110, start: 3.7 },       // Jupiter
-    { kind: 'saturn', f: 1.05, r: 0.066, period: 160, start: 5.6 }       // Saturn
+    { kind: 'craters', size: 0.55, period: 80, start: 0.4 },     // Mercury
+    { kind: 'swirl', size: 0.8, period: 120, start: 2.6 },        // Venus
+    { kind: 'earth', size: 0.85, period: 165, start: 4.9, moon: true },
+    { kind: 'stipple', size: 0.65, period: 225, start: 1.5 },     // Mars
+    { kind: 'bands', size: 1.6, period: 320, start: 3.7 },        // Jupiter
+    { kind: 'saturn', size: 1.25, period: 440, start: 5.6 }       // Saturn
   ];
+  var MOON_ORBIT = 1.55, MOON_SIZE = 0.27, MOON_PERIOD = 28;   // relative to Earth's radius
+  var RING = [2.1, 1.88, 1.62, 1.4];                           // Saturn's rings, relative to its radius
 
-  var CS = 0, R = 0, dpr = 1, ink = '#1E1A13', paper = '#F3ECDA';
+  var CS = 0, R = 0, PR = 0, dpr = 1, ink = '#1E1A13', paper = '#F3ECDA';
   var rimSprite = null;
   var LIGHT = Math.PI * 0.25;   // shading as if lit from the upper left
   var started = false, t0 = 0, visible = false, running = false, raf = 0;
@@ -106,7 +111,7 @@
     var lw = Math.max(0.55, r * 0.045);
     g.lineWidth = lw; g.strokeStyle = ink; g.fillStyle = ink;
     if (kind === 'swirl') {
-      var n = Math.max(5, Math.round(r * r / 14));
+      var n = Math.max(3, Math.round(r * r / 14));
       for (var i = 0; i < n; i++) {
         var a = rand() * TAU, d = Math.sqrt(rand()) * r * 0.9;
         spiral(g, x + Math.cos(a) * d, y + Math.sin(a) * d, r * (0.18 + rand() * 0.2), 1.6 + rand(), rand() * TAU, rand() < 0.5 ? 1 : -1);
@@ -133,7 +138,7 @@
         g.beginPath(); g.ellipse(x + r * 0.3, y + r * 0.38, r * 0.13, r * 0.06, 0, 0, TAU); g.stroke();
       }
     } else if (kind === 'craters') {
-      var cn = Math.max(6, Math.round(r * 0.9));
+      var cn = Math.max(4, Math.round(r * 0.9));
       for (var k = 0; k < cn; k++) {
         var ca = rand() * TAU, cd = Math.sqrt(rand()) * r * 0.85, cr = r * (0.08 + rand() * 0.16);
         var kx = x + Math.cos(ca) * cd, ky = y + Math.sin(ca) * cd;
@@ -174,15 +179,15 @@
     }
   }
 
-  function paintPlanet(p) {
-    var r = R * p.r, rand = rng(Math.round(p.f * 1e4));
+  function paintPlanet(p, i) {
+    var r = p.rp, rand = rng(101 + i * 7919);
     var ring = p.kind === 'saturn';
-    var w = ring ? r * 4.8 : r * 2 + 6, h = ring ? r * 3 : r * 2 + 6;
+    var w = ring ? r * RING[0] * 2 + 8 : r * 2 + 6, h = ring ? r * 2.4 + 6 : r * 2 + 6;
     var s = sprite(w, h), g = s.g, x = w / 2, y = h / 2;
     var tilt = -0.32;
     function ringPath(front) {
       g.save(); g.translate(x, y); g.rotate(tilt);
-      [2.25, 2.0, 1.72, 1.48].forEach(function (k, i) {
+      RING.forEach(function (k, i) {
         g.lineWidth = i === 1 ? Math.max(0.9, r * 0.07) : Math.max(0.55, r * 0.04);
         g.beginPath(); g.ellipse(0, 0, r * k, r * k * 0.28, 0, front ? 0 : Math.PI, front ? Math.PI : TAU); g.stroke();
       });
@@ -191,7 +196,7 @@
     if (ring) {
       // Paper fill between the rings hides the orbit lines behind them
       g.save(); g.translate(x, y); g.rotate(tilt);
-      g.beginPath(); g.ellipse(0, 0, r * 2.25, r * 2.25 * 0.28, 0, 0, TAU); g.ellipse(0, 0, r * 1.48, r * 1.48 * 0.28, 0, 0, TAU);
+      g.beginPath(); g.ellipse(0, 0, r * RING[0], r * RING[0] * 0.28, 0, 0, TAU); g.ellipse(0, 0, r * RING[3], r * RING[3] * 0.28, 0, 0, TAU);
       g.fillStyle = paper; g.fill('evenodd'); g.restore();
       g.strokeStyle = ink; ringPath(false);
     }
@@ -221,9 +226,9 @@
     var s = sprite(CS, CS), g = s.g, c = CS / 2;
     g.strokeStyle = ink;
     g.globalAlpha = 0.9; g.lineWidth = 1.2;
-    g.beginPath(); g.arc(c, c, R * PORTRAIT + 3, 0, TAU); g.stroke();
+    g.beginPath(); g.arc(c, c, PR + 3, 0, TAU); g.stroke();
     g.globalAlpha = 0.55; g.lineWidth = 0.7;
-    g.beginPath(); g.arc(c, c, R * PORTRAIT + 7.5, 0, TAU); g.stroke();
+    g.beginPath(); g.arc(c, c, PR + 7.5, 0, TAU); g.stroke();
     g.globalAlpha = 1;
     rimSprite = s;
   }
@@ -236,12 +241,33 @@
     PLANETS.forEach(paintPlanet);
   }
 
+  // How far a planet reaches from its orbit, its moon or rings included (in units of its radius)
+  function reach(p) { return p.moon ? MOON_ORBIT + MOON_SIZE : p.kind === 'saturn' ? RING[0] : 1; }
+
+  // Fit the six orbits between the photo's rim and the edge of the canvas. Each orbit sits
+  // a clear gap beyond everything the planet inside it can reach, so no two ever touch.
+  function layout() {
+    var inner = PR + 13, outer = CS / 2 - 3;
+    var gap = Math.max(3, R * 0.016), span = 0;
+    PLANETS.forEach(function (p) { span += 2 * p.size * reach(p); });
+    var unit = Math.max(1, (outer - inner - gap * (PLANETS.length - 1)) / span);
+    var at = inner;
+    PLANETS.forEach(function (p) {
+      var out = p.size * reach(p) * unit;
+      p.rp = p.size * unit;
+      p.orbit = at + out;
+      at = p.orbit + out + gap;
+    });
+  }
+
   function resize() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     CS = canvas.clientWidth;
     R = stage.clientWidth / 2;
+    PR = portrait.offsetWidth / 2;
     canvas.width = Math.round(CS * dpr); canvas.height = Math.round(CS * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    layout();
     paintAll();
   }
 
@@ -278,7 +304,7 @@
       if (q <= 0) return;
       var a0 = p.start - Math.PI / 2;
       ctx.globalAlpha = 0.55;
-      ctx.beginPath(); ctx.arc(c, c, R * p.f, a0, a0 + TAU * q); ctx.stroke();
+      ctx.beginPath(); ctx.arc(c, c, p.orbit, a0, a0 + TAU * q); ctx.stroke();
     });
     ctx.setLineDash([]); ctx.globalAlpha = 1;
 
@@ -288,7 +314,7 @@
       if (q <= 0) return;
       var sc = easeOutBack(q);
       var ang = p.start + spin * TAU / p.period;
-      var x = c + Math.cos(ang) * R * p.f, y = c + Math.sin(ang) * R * p.f;
+      var x = c + Math.cos(ang) * p.orbit, y = c + Math.sin(ang) * p.orbit;
       ctx.save();
       ctx.translate(x, y); ctx.scale(sc, sc);
       ctx.drawImage(p.sprite.c, -p.sprite.w / 2, -p.sprite.h / 2, p.sprite.w, p.sprite.h);
@@ -296,8 +322,8 @@
       ctx.drawImage(p.shade.c, -p.shade.w / 2, -p.shade.h / 2, p.shade.w, p.shade.h);
       ctx.restore();
       if (p.moon) {
-        var ma = spin * TAU / 6, mr = R * p.r * 1.9;
-        var mx = x + Math.cos(ma) * mr, my = y + Math.sin(ma) * mr, rr = Math.max(1.8, R * p.r * 0.3) * sc;
+        var ma = spin * TAU / MOON_PERIOD, mr = p.rp * MOON_ORBIT;
+        var mx = x + Math.cos(ma) * mr, my = y + Math.sin(ma) * mr, rr = Math.max(1.2, p.rp * MOON_SIZE) * sc;
         ctx.fillStyle = paper; ctx.strokeStyle = ink; ctx.lineWidth = 0.8;
         ctx.beginPath(); ctx.arc(mx, my, rr, 0, TAU); ctx.fill(); ctx.stroke();
       }
