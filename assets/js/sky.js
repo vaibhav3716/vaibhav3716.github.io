@@ -23,6 +23,9 @@
   var ctx = canvas.getContext('2d');
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   var liveText = document.getElementById('sky-live');
+  var sunLine = document.getElementById('sky-sun');
+  var sunBox = document.getElementById('sun-box');
+  var sunInfo = null;              // today's sunrise and sunset for the place in view, while the Sun is up
 
   var D2R = Math.PI / 180, R2D = 180 / Math.PI;
   var MUMBAI = { lat: 19.076, lon: 72.878, mumbai: true };
@@ -522,8 +525,8 @@
     // The Sun and its path across the sky today
     var dayA = clamp01((sunAlt + 6) / 8) * (1 - night);
     if (dayA > 0.02) drawSunPath(F, dayA);
+    var sr = Math.max(9, P.k * 0.017);
     if (sunP && sunAlt > -1.5) {
-      var sr = Math.max(9, P.k * 0.017);
       var sgr = ctx.createRadialGradient(sunP[0], sunP[1], 0, sunP[0], sunP[1], sr * 4);
       sgr.addColorStop(0, 'rgba(255,245,225,1)'); sgr.addColorStop(0.25, 'rgba(255,220,160,.95)'); sgr.addColorStop(1, 'rgba(255,190,120,0)');
       ctx.fillStyle = sgr; ctx.beginPath(); ctx.arc(sunP[0], sunP[1], sr * 4, 0, 6.2832); ctx.fill();
@@ -531,6 +534,7 @@
     }
 
     drawGround(F, hz, gy, sunAlt, twilight, sunP, moonP, moonAlt);
+    placeSunBox(sunP && sunAlt > 0 && onScreen(sunP) ? sunP : null, sr);
 
 
     // Labels: desktop only; the phone layout keeps the sky as a backdrop
@@ -711,10 +715,94 @@
     var ap = h >= 12 ? 'pm' : 'am'; h = h % 12 || 12;
     return h + ':' + (m < 10 ? '0' : '') + m + ' ' + ap;
   }
+  // Sunrise before now and sunset after it at a place (the Sun's upper edge on the horizon),
+  // found by stepping the Sun's altitude ten minutes at a time and then narrowing down
+  function sunTimes(lat, lon, t) {
+    var alt = window.DayNight && window.DayNight.sunAltitude;
+    if (!alt) return null;
+    function up(ms) { return alt(lat, lon, ms) > -0.833; }
+    function edge(a, b) {
+      for (var k = 0; k < 12; k++) { var mid = (a + b) / 2; if (up(mid) === up(a)) a = mid; else b = mid; }
+      return (a + b) / 2;
+    }
+    var step = 600000, rise = null, set = null, s;
+    for (s = t; s > t - 86400000; s -= step) if (!up(s - step)) { rise = edge(s - step, s); break; }
+    for (s = t; s < t + 86400000; s += step) if (!up(s + step)) { set = edge(s, s + step); break; }
+    return { rise: rise, set: set };
+  }
+  function fmtLeft(ms) {
+    var min = Math.max(0, Math.round(ms / 60000)), h = Math.floor(min / 60), m = min % 60;
+    return (h ? h + ' h ' : '') + m + ' min';
+  }
+  // Sunrise, sunset and daylight left for the place in view. Shown in a box beside the Sun,
+  // or as a caption line on phones, where the Sun sits behind the caption.
+  function updateSunInfo(isDay, ll, t) {
+    var st = isDay && !(tween && tween.from !== tween.to) ? sunTimes(ll.lat, ll.lon, t) : null;
+    sunInfo = st && st.set ? st : null;
+    if (!sunInfo) { if (sunLine) sunLine.hidden = true; placeSunBox(null); return; }
+    var fmt = theta < 90
+      ? (origin.mumbai ? function (ms) { return fmtTime(ms, 5.5); } : function (ms) { return new Date(ms).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }); })
+      : function (ms) { return fmtTime(ms, ll.lon / 15); };
+    var zone = theta < 90 ? (origin.mumbai ? 'Mumbai, IST' : 'Your local time') : 'Local solar time, ' + (origin.mumbai ? 'South Pacific' : 'opposite side of Earth');
+    var left = fmtLeft(sunInfo.set - t);
+    if (sunBox) {
+      sunBoxSize = null;
+      sunBox.querySelector('.sun-box-left').textContent = left;
+      sunBox.querySelector('.sun-rise').textContent = sunInfo.rise ? fmt(sunInfo.rise) : '—';
+      sunBox.querySelector('.sun-set').textContent = fmt(sunInfo.set);
+      sunBox.querySelector('.sun-box-zone').textContent = zone;
+      var day = sunInfo.rise ? clamp01((t - sunInfo.rise) / (sunInfo.set - sunInfo.rise)) : 0.5;
+      sunBox.querySelector('.sun-box-bar span').style.setProperty('--day', (day * 100).toFixed(1) + '%');
+      sunBox.setAttribute('aria-label', 'Daylight: ' + left + ' left. Sunrise ' + (sunInfo.rise ? fmt(sunInfo.rise) : 'unknown') + ', sunset ' + fmt(sunInfo.set) + ' (' + zone + ').');
+    }
+    if (!running) draw(performance.now());   // place the box now rather than on the next frame
+    if (sunLine) {
+      sunLine.hidden = useSunBox();
+      sunLine.lastChild.textContent = (sunInfo.rise ? 'Sunrise ' + fmt(sunInfo.rise) + ', sunset ' : 'Sunset ') + fmt(sunInfo.set) +
+        (theta < 90 ? (origin.mumbai ? ' IST' : '') : ' local solar time') + '. ' + left + ' of daylight left.';
+    }
+  }
+  function useSunBox() { return !!sunBox && (!narrow() || exploring); }
+
+  // Put the box beside the Sun: to the right, left, below or above it, wherever it stays on screen
+  // and clear of the intro text and the buttons. Hidden if there is no such place.
+  var sunBoxAt = null, sunBoxSize = null;
+  function placeSunBox(sunP, sr) {
+    if (!sunBox) return;
+    var spot = null;
+    if (sunP && sunInfo && useSunBox()) {
+      if (sunBox.hidden) { sunBox.hidden = false; sunBoxSize = null; }
+      if (!sunBoxSize) sunBoxSize = [sunBox.offsetWidth, sunBox.offsetHeight];   // measured once, not every frame
+      var w = sunBoxSize[0], h = sunBoxSize[1], d = sr * 1.6 + 16, m = 12;
+      var tries = [[sunP[0] + d, sunP[1] - h / 2], [sunP[0] - d - w, sunP[1] - h / 2], [sunP[0] - w / 2, sunP[1] + d], [sunP[0] - w / 2, sunP[1] - d - h]];
+      for (var i = 0; i < tries.length && !spot; i++) {
+        var x = tries[i][0], y = tries[i][1];
+        if (x < m || y < m || x + w > W - m || y + h > H - m) continue;
+        var clear = true;
+        for (var j = 0; j < labelBoxes.length && clear; j++) {
+          var b = labelBoxes[j];
+          if (x < b[0] + b[2] && x + w > b[0] && y < b[1] + b[3] && y + h > b[1]) clear = false;
+        }
+        if (clear) spot = [x, y, w, h];
+      }
+    }
+    if (!spot) {
+      sunBox.classList.remove('show');
+      if (!sunInfo || !useSunBox()) sunBox.hidden = true;
+      sunBoxAt = null;
+      return;
+    }
+    labelBoxes.push(spot);           // canvas labels keep clear of it
+    if (!sunBoxAt || Math.abs(sunBoxAt[0] - spot[0]) > 0.5 || Math.abs(sunBoxAt[1] - spot[1]) > 0.5) {
+      sunBox.style.transform = 'translate(' + Math.round(spot[0]) + 'px, ' + Math.round(spot[1]) + 'px)';
+      sunBoxAt = spot;
+    }
+    sunBox.classList.add('show');
+  }
   function listJoin(a) { return a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1]; }
   function updateCaption() {
     if (!liveText) return;
-    if (tween && tween.from !== tween.to) { liveText.textContent = 'Travelling to the other side of Earth…'; return; }
+    if (tween && tween.from !== tween.to) { liveText.textContent = 'Travelling to the other side of Earth…'; sunInfo = null; if (sunLine) sunLine.hidden = true; placeSunBox(null); return; }
     var t = Date.now(), gmst = currentGmst(), F = frameAt(theta, gmst);
     var isDay = altOf(eph.sun, F) > -0.5;
     var up = [];
@@ -723,6 +811,7 @@
     var also = up.length ? ' Also up: ' + listJoin(up) + '.' : '';
     var ll = observerLatLon(F, gmst);
     var where = Math.abs(ll.lat).toFixed(0) + '° ' + (ll.lat >= 0 ? 'N' : 'S') + ', ' + Math.abs(ll.lon).toFixed(0) + '° ' + (ll.lon >= 0 ? 'E' : 'W');
+    updateSunInfo(isDay, ll, t);
     if (theta < 90) {
       liveText.textContent = origin.mumbai
         ? 'Live: the sky over Mumbai right now, ' + fmtTime(t, 5.5) + ' IST.' + also
@@ -759,7 +848,7 @@
   }
   function update() {
     var should = visible && !document.hidden;
-    if (should && !running) { running = true; lastCheck = performance.now(); raf = requestAnimationFrame(frame); }
+    if (should && !running) { running = true; lastCheck = performance.now(); recheck(); raf = requestAnimationFrame(frame); }
     else if (!should && running) { running = false; cancelAnimationFrame(raf); }
   }
 
@@ -912,7 +1001,7 @@
   }
   function setExploring(on) {
     exploring = on;
-    if (on) tweenView(exploreFrame(), 900);
+    if (on) { tweenView(exploreFrame(), 900); updateCaption(); }
     if (hero) hero.classList.toggle('exploring', on);
     canvas.style.cursor = on ? 'grab' : '';
     if (exploreBtn) {

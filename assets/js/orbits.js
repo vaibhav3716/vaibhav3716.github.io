@@ -10,8 +10,9 @@
    Saturn's rings included), so neighbours pass each other with a
    clear gap and can never overlap.
 
-   When the section scrolls into view the photo rounds into a circle,
-   the orbits sweep in one after another, and the planets appear.
+   When the section scrolls into view the photo grows from a point,
+   then the planets pop out from behind it one by one, each pushing
+   its orbit out with it, and once in place they begin to revolve.
 ------------------------------------------------------------------- */
 (function () {
   'use strict';
@@ -46,8 +47,9 @@
   function clamp01(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
   function lerp(a, b, t) { return a + (b - a) * t; }
   function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
-  function easeInOut(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
-  function easeOutBack(t) { var c1 = 1.6, c3 = c1 + 1; return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2); }
+    function easeOutBack(t, c1) { var c3 = c1 + 1; return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2); }
+  // Time spent revolving, easing in so a planet starts moving gently rather than all at once
+  function spinUp(tau) { var k = 2; return tau <= 0 ? 0 : tau - k * (1 - Math.exp(-tau / k)); }
   function isDark() {
     var d = document.documentElement.dataset.theme;
     return d ? d === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -274,47 +276,52 @@
   // ---------------------------------------------------------------
   // Frame
   // ---------------------------------------------------------------
+  var PHOTO = 0.9;                  // seconds for the photo to grow
+  var POP = 0.55, STAGGER = 0.16;   // when the first planet pops out, and the gap between planets
+  var FLY = 1.1;                    // seconds for a planet to reach its orbit
+
   function draw(now) {
     if (!CS) return;
     ctx.clearRect(0, 0, CS, CS);
     var t = started ? (now - t0) / 1000 : 0;
     if (reduceMotion.matches && started) t = 10;
     var c = CS / 2;
-    var spin = reduceMotion.matches ? 0 : t;
 
-    // 1. The photo rounds into a circle
-    var m = started ? easeOutCubic(clamp01(t / 0.8)) : 0;
-    portrait.style.setProperty('--pr', lerp(18, 50, m).toFixed(2) + '%');
-    portrait.style.setProperty('--ps', lerp(0.88, 1, m).toFixed(4));
+    // 1. The photo grows from a point, overshooting a touch
+    var m = started ? easeOutBack(clamp01(t / PHOTO), 1.3) : 0;
+    portrait.style.setProperty('--ps', m.toFixed(4));
     if (!started) return;
 
-    // 2. The rim fades in around the photo
-    var rq = easeOutCubic(clamp01((t - 0.2) / 0.6));
-    if (rq > 0) {
-      ctx.globalAlpha = rq;
-      ctx.drawImage(rimSprite.c, 0, 0, CS, CS);
-      ctx.globalAlpha = 1;
+    // 2. The rim grows with it
+    if (m > 0) {
+      ctx.save();
+      ctx.globalAlpha = clamp01(m);
+      ctx.translate(c, c); ctx.scale(m, m);
+      ctx.drawImage(rimSprite.c, -c, -c, CS, CS);
+      ctx.restore();
     }
 
-    // 3. Dash-dot orbits sweep in, one after another
+    // 3. Planets pop out from behind the photo, each pushing its orbit out with it, then revolve
+    var live = [];
+    PLANETS.forEach(function (p, i) {
+      var q = clamp01((t - POP - i * STAGGER) / FLY);
+      if (q > 0) live.push({ p: p, q: q, d: lerp(PR * 0.3, p.orbit, easeOutBack(q, 1.1)),
+        tau: reduceMotion.matches ? 0 : spinUp(t - POP - i * STAGGER - FLY) });
+    });
+    // Orbits first, so a ring on its way out never crosses over a planet
     ctx.strokeStyle = ink; ctx.lineWidth = 0.9;
     ctx.setLineDash([12, 5, 2.5, 5]);
-    PLANETS.forEach(function (p, i) {
-      var q = easeInOut(clamp01((t - 0.5 - i * 0.1) / 0.9));
-      if (q <= 0) return;
-      var a0 = p.start - Math.PI / 2;
-      ctx.globalAlpha = 0.55;
-      ctx.beginPath(); ctx.arc(c, c, p.orbit, a0, a0 + TAU * q); ctx.stroke();
+    live.forEach(function (o) {
+      ctx.globalAlpha = 0.55 * clamp01(o.q * 2);
+      ctx.beginPath(); ctx.arc(c, c, o.d, 0, TAU); ctx.stroke();
     });
     ctx.setLineDash([]); ctx.globalAlpha = 1;
 
-    // 4. Planets appear and revolve
-    PLANETS.forEach(function (p, i) {
-      var q = clamp01((t - 1.25 - i * 0.1) / 0.6);
-      if (q <= 0) return;
-      var sc = easeOutBack(q);
-      var ang = p.start + spin * TAU / p.period;
-      var x = c + Math.cos(ang) * p.orbit, y = c + Math.sin(ang) * p.orbit;
+    live.forEach(function (o) {
+      var p = o.p, d = o.d, tau = o.tau;
+      var sc = lerp(0.35, 1, easeOutCubic(o.q));
+      var ang = p.start + tau * TAU / p.period;
+      var x = c + Math.cos(ang) * d, y = c + Math.sin(ang) * d;
       ctx.save();
       ctx.translate(x, y); ctx.scale(sc, sc);
       ctx.drawImage(p.sprite.c, -p.sprite.w / 2, -p.sprite.h / 2, p.sprite.w, p.sprite.h);
@@ -322,7 +329,7 @@
       ctx.drawImage(p.shade.c, -p.shade.w / 2, -p.shade.h / 2, p.shade.w, p.shade.h);
       ctx.restore();
       if (p.moon) {
-        var ma = spin * TAU / MOON_PERIOD, mr = p.rp * MOON_ORBIT;
+        var ma = -0.6 + tau * TAU / MOON_PERIOD, mr = p.rp * MOON_ORBIT * sc;
         var mx = x + Math.cos(ma) * mr, my = y + Math.sin(ma) * mr, rr = Math.max(1.2, p.rp * MOON_SIZE) * sc;
         ctx.fillStyle = paper; ctx.strokeStyle = ink; ctx.lineWidth = 0.8;
         ctx.beginPath(); ctx.arc(mx, my, rr, 0, TAU); ctx.fill(); ctx.stroke();

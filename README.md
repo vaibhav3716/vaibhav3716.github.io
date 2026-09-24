@@ -17,7 +17,7 @@ Plain HTML, CSS and JavaScript. There is no build step: edit a file, push, and t
 | SED explorer, theme switch, scroll effects, page star field, blog feed | `assets/js/site.js` |
 | Smooth scrolling | `assets/js/vendor/lenis.min.js` (Lenis, MIT licence, see `lenis-LICENSE.txt`) |
 | Tool logos | `assets/img/logos/` (Simple Icons, CC0; Astropy logo CC BY-SA 3.0) |
-| Portrait | `assets/img/portrait.jpg` and `assets/img/portrait.webp` |
+| Portrait (square crop of the original photo, with room above the head) | `assets/img/portrait.jpg` and `assets/img/portrait.webp` |
 | About: portrait with engraved orbiting planets | `assets/js/orbits.js` |
 | Paper figures | `assets/img/research/` |
 | Stargazing photos | `assets/img/stargazing/` |
@@ -31,7 +31,9 @@ Plain HTML, CSS and JavaScript. There is no build step: edit a file, push, and t
   and the `paper-card` block in the research section. Add the arXiv or DOI link there.
 - **Quotes:** each quote is a `<section class="quote-panel">` block in `index.html`. Copy one, point `--img` at a new image, and keep the credit line: ESA/Hubble and ESA/Webb images are CC BY 4.0 and must be credited.
 - **New stargazing photo:** convert it to WebP, put it in `assets/img/stargazing/`, and copy a `<figure class="g-item">` block.
-- **New blog post:** nothing to do. The "From the blog" list loads the three newest posts from Blogger.
+- **New blog post:** nothing to do. The Blog section loads the six newest posts from Blogger as cards
+  (cover image, date, reading time, opening lines). The two cards written into `index.html` are only a
+  fallback for when Blogger can't be reached.
 - **New figure:** export it to WebP (for example `magick figure.pdf -density 200 -resize 1600x figure.webp`),
   put it in `assets/img/research/`, and copy one of the `<figure class="fig">` blocks.
 
@@ -42,6 +44,8 @@ planets from orbital elements (checked against NASA JPL Horizons), and Earth's r
 wherever it is night right now; light theme wherever it is day (Mumbai or the point opposite it on Earth).
 The view stays still until a visitor presses "Explore the sky"; then they can drag to look around and click
 objects to identify them. They can also choose to see the sky above their own location. The location never leaves their browser.
+In daytime a small box beside the Sun gives that place's sunrise and sunset and how much daylight is left
+(on phones, where the Sun sits behind the caption, the same line appears in the caption).
 
 ## Day and night theme
 

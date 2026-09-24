@@ -27,7 +27,8 @@
     window.DayNight.onChange(function (next) {
       if (window.Sky) window.Sky.set(next, true);
       if (!document.startViewTransition || reduceMotion.matches || document.hidden) { applyTheme(next); return; }
-      document.startViewTransition(function () { applyTheme(next); });
+      // A transition the browser has to skip still applies the theme; only its animation is lost
+      document.startViewTransition(function () { applyTheme(next); }).ready.catch(function () {});
     });
   }
   if (themeBtn) {
@@ -46,7 +47,7 @@
           { clipPath: ['circle(0px at ' + x + 'px ' + y + 'px)', 'circle(' + radius + 'px at ' + x + 'px ' + y + 'px)'] },
           { duration: 750, easing: 'cubic-bezier(.2,.7,.2,1)', pseudoElement: '::view-transition-new(root)' }
         );
-      });
+      }).catch(function () {});
     });
     syncThemeLabel();
   }
@@ -289,38 +290,81 @@
   }
 
   /* ---------------------------------------------------------------
-     Latest blog posts from Blogger (JSONP). The static list in the
-     HTML stays if this fails.
+     Blog cards: the newest posts from Blogger (JSONP). The cards
+     written into the HTML stay if the feed can't be reached.
   ---------------------------------------------------------------- */
-  var blogList = document.getElementById('blog-list');
-  if (blogList) {
+  var postGrid = document.getElementById('post-grid');
+  if (postGrid) {
+    var moreCard = postGrid.querySelector('.post-card-more');
+    // Blogger resizes images from the URL: 640x360, cropped, as WebP
+    function cardImage(url) { return url.replace(/\/[swh]\d+[^/]*\/([^/]+)$/, '/w640-h360-c-k-no-nu-rw/$1'); }
+    function postText(htmlText) {
+      var doc = new DOMParser().parseFromString(htmlText, 'text/html');   // inert: nothing in it runs
+      // Leave out notes, image captions and credits so the excerpt starts with the article itself
+      Array.prototype.forEach.call(doc.querySelectorAll('blockquote, table, figure, img, [style*="text-align: center"]'), function (el) { el.remove(); });
+      return (doc.body.textContent || '').replace(/\s+/g, ' ').replace(/\(\s+/g, '(').replace(/\s+([),.?!])/g, '$1').trim();
+    }
+    function el(tag, cls, text) {
+      var e = document.createElement(tag);
+      if (cls) e.className = cls;
+      if (text) e.textContent = text;
+      return e;
+    }
+    function card(entry) {
+      var link = (entry.link || []).filter(function (l) { return l.rel === 'alternate'; })[0];
+      if (!link) return null;
+      var title = (entry.title && entry.title.$t || '').trim().replace(/\s+\?$/, '?');
+      var body = entry.content ? entry.content.$t : entry.summary ? entry.summary.$t : '';
+      var text = postText(body);
+      var words = text ? text.split(' ').length : 0;
+      var thumb = entry.media$thumbnail && entry.media$thumbnail.url;
+      if (!thumb) { var m = /<img[^>]+src="([^"]+)"/.exec(body); thumb = m && m[1]; }
+
+      var art = el('article', 'post-card');
+      var media = el('div', 'post-media');
+      if (thumb) {
+        var img = el('img');
+        img.src = cardImage(thumb); img.width = 640; img.height = 360; img.loading = 'lazy'; img.alt = '';
+        media.appendChild(img);
+      }
+      art.appendChild(media);
+      var inner = el('div', 'post-body');
+      var meta = el('p', 'post-meta');
+      var iso = entry.published && entry.published.$t;
+      if (iso) {
+        var time = el('time', '', new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }));
+        time.dateTime = iso.slice(0, 10);
+        meta.appendChild(time);
+      }
+      if (words) meta.appendChild(el('span', '', Math.max(1, Math.round(words / 220)) + ' min read'));
+      inner.appendChild(meta);
+      var h = el('h3', 'post-title'), a = el('a', '', title);
+      a.href = link.href; a.target = '_blank'; a.rel = 'noopener';
+      h.appendChild(a); inner.appendChild(h);
+      if (text) inner.appendChild(el('p', 'post-excerpt', text.length > 320 ? text.slice(0, 320).replace(/\s+\S*$/, '') + '…' : text));
+      var more = el('span', 'post-more', 'Read the post ');
+      more.setAttribute('aria-hidden', 'true');
+      more.insertAdjacentHTML('beforeend', '<svg class="icon"><use href="#i-arrow"/></svg>');
+      inner.appendChild(more);
+      art.appendChild(inner);
+      return art;
+    }
     window.__renderBlog = function (data) {
       try {
         var entries = (data && data.feed && data.feed.entry) || [];
-        if (!entries.length) return;
-        var frag = document.createDocumentFragment();
-        entries.slice(0, 3).forEach(function (entry) {
-          var link = (entry.link || []).filter(function (l) { return l.rel === 'alternate'; })[0];
-          if (!link) return;
-          var li = document.createElement('li');
-          var a = document.createElement('a');
-          a.href = link.href; a.target = '_blank'; a.rel = 'noopener';
-          a.textContent = (entry.title && entry.title.$t || '').trim();
-          var time = document.createElement('time');
-          var iso = entry.published && entry.published.$t;
-          if (iso) {
-            time.dateTime = iso.slice(0, 10);
-            time.textContent = new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-          }
-          li.appendChild(a);
-          li.appendChild(time);
-          frag.appendChild(li);
+        var cards = entries.slice(0, 6).map(card).filter(Boolean);
+        if (!cards.length) return;
+        // If the section hasn't been scrolled to yet, the new cards reveal the same way the old ones would have
+        var hidden = postGrid.querySelector('article.post-card.reveal:not(.in)') && revealObserver;
+        Array.prototype.forEach.call(postGrid.querySelectorAll('article.post-card'), function (c) { c.remove(); });
+        cards.forEach(function (c, i) {
+          if (hidden) { c.classList.add('reveal'); c.style.setProperty('--rd', Math.min(i, 6) * 80 + 'ms'); revealObserver.observe(c); }
+          postGrid.insertBefore(c, moreCard);
         });
-        if (frag.childNodes.length) { blogList.innerHTML = ''; blogList.appendChild(frag); }
-      } catch (e) { /* keep the static list */ }
+      } catch (e) { /* keep the cards in the HTML */ }
     };
     var s = document.createElement('script');
-    s.src = 'https://astrologs3142.blogspot.com/feeds/posts/default?alt=json-in-script&max-results=3&callback=__renderBlog';
+    s.src = 'https://astrologs3142.blogspot.com/feeds/posts/default?alt=json-in-script&max-results=6&callback=__renderBlog';
     s.async = true;
     document.body.appendChild(s);
   }
@@ -332,8 +376,8 @@
   ---------------------------------------------------------------- */
   var revealGroups = [
     ['.section h2, .feature-title, .section-intro, .meta-line', ''],
-    ['.prose, .interests, .paper-card, .side-project, .results h4, .pipeline h4, .sed-card, .blog, .coursework, .gallery-title', ''],
-    ['.interest-list li, .steps li, .result-list li, .project, .pub-list li, .plain-list li, .semesters > li, .course-feature, .edu-list li, .skills div, .contact-links li, .blog-list li', 'stagger'],
+    ['.prose, .interests, .paper-card, .side-project, .results h4, .pipeline h4, .sed-card, .blog-head, .coursework, .gallery-title', ''],
+    ['.interest-list li, .steps li, .result-list li, .project, .pub-list li, .plain-list li, .semesters > li, .course-feature, .edu-list li, .skills div, .contact-links li, .post-card', 'stagger'],
     ['.fig, .g-item', 'scale-stagger'],
     ['.quote-panel blockquote, .quote-panel figcaption', 'fade'],
     ['.andromeda-quote blockquote, .andromeda-quote figcaption', 'fade']
