@@ -76,11 +76,11 @@
     for (var i = 0; i < metas.length; i++) metas[i].setAttribute('content', theme === 'dark' ? '#000000' : '#F3ECDA');
   }
 
-  function check() {
+  function check(source) {
     if (chosen) return;
     var next = themeNow();
     if (next === root.dataset.theme) return;
-    if (listeners.length) listeners.forEach(function (fn) { fn(next); });
+    if (listeners.length) listeners.forEach(function (fn) { fn(next, source); });
     else { paint(next); if (window.Sky) window.Sky.set(next, false); }
   }
 
@@ -113,10 +113,11 @@
     setPlace: function (lat, lon) { place = { lat: lat, lon: lon }; check(); },
     // "See the sky above you": follow day or night at the visitor's real location,
     // even over a theme they picked with the switch
-    follow: function (lat, lon) {
+    // (source: the button pressed, so the theme can spread out from it)
+    follow: function (lat, lon, source) {
       place = { lat: lat, lon: lon }; chosen = null;
       try { sessionStorage.removeItem('theme'); } catch (e) {}
-      check();
+      check(source);
     },
     onChange: function (fn) { listeners.push(fn); },
     sunAltitude: sunAltitude

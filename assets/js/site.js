@@ -22,32 +22,30 @@
     drawSED();
     drawPageStars();
   }
-  // The theme follows sunrise and sunset where the visitor is (daynight.js) until they pick one
-  if (window.DayNight) {
-    window.DayNight.onChange(function (next) {
-      if (window.Sky) window.Sky.set(next, true);
-      if (!document.startViewTransition || reduceMotion.matches || document.hidden) { applyTheme(next); return; }
-      // A transition the browser has to skip still applies the theme; only its animation is lost
-      document.startViewTransition(function () { applyTheme(next); }).ready.catch(function () {});
-    });
+  // Switch theme and turn the hero sky to match (it jumps straight to the end if the hero is off-screen).
+  // With a button to start from, the new theme spreads out from it in a circle; otherwise it fades in.
+  function switchTheme(next, fromEl) {
+    if (window.Sky) window.Sky.set(next, true);
+    if (!document.startViewTransition || reduceMotion.matches || document.hidden) { applyTheme(next); return; }
+    var vt = document.startViewTransition(function () { applyTheme(next); });
+    var r = fromEl && fromEl.getBoundingClientRect();
+    if (!r || !r.width) { vt.ready.catch(function () {}); return; }   // a skipped transition still applies the theme
+    var x = r.left + r.width / 2, y = r.top + r.height / 2;
+    var radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+    vt.ready.then(function () {
+      document.documentElement.animate(
+        { clipPath: ['circle(0px at ' + x + 'px ' + y + 'px)', 'circle(' + radius + 'px at ' + x + 'px ' + y + 'px)'] },
+        { duration: 750, easing: 'cubic-bezier(.2,.7,.2,1)', pseudoElement: '::view-transition-new(root)' }
+      );
+    }).catch(function () {});
   }
+  // The theme follows sunrise and sunset where the visitor is (daynight.js) until they pick one
+  if (window.DayNight) window.DayNight.onChange(switchTheme);
   if (themeBtn) {
     themeBtn.addEventListener('click', function () {
       var next = currentTheme() === 'dark' ? 'light' : 'dark';
       if (window.DayNight) window.DayNight.choose(next);
-      // Turn the hero sky to match (it jumps straight to the end if the hero is off-screen)
-      if (window.Sky) window.Sky.set(next, true);
-      if (!document.startViewTransition || reduceMotion.matches) { applyTheme(next); return; }
-      var r = themeBtn.getBoundingClientRect();
-      var x = r.left + r.width / 2, y = r.top + r.height / 2;
-      var radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
-      var vt = document.startViewTransition(function () { applyTheme(next); });
-      vt.ready.then(function () {
-        document.documentElement.animate(
-          { clipPath: ['circle(0px at ' + x + 'px ' + y + 'px)', 'circle(' + radius + 'px at ' + x + 'px ' + y + 'px)'] },
-          { duration: 750, easing: 'cubic-bezier(.2,.7,.2,1)', pseudoElement: '::view-transition-new(root)' }
-        );
-      }).catch(function () {});
+      switchTheme(next, themeBtn);
     });
     syncThemeLabel();
   }
@@ -462,7 +460,7 @@
         // Rounded to about 10 km: plenty for the sky, and it never leaves the page
         var lat = Math.round(pos.coords.latitude * 10) / 10, lon = Math.round(pos.coords.longitude * 10) / 10;
         // First the theme turns to day or night where the visitor is, then the sky turns to their own
-        if (window.DayNight) window.DayNight.follow(lat, lon);
+        if (window.DayNight) window.DayNight.follow(lat, lon, hereBtn);
         window.Sky.useLocation(lat, lon); usingHere = true;
         hereLabel.textContent = 'Back to Mumbai'; hereBtn.setAttribute('aria-pressed', 'true');
       }, function () {

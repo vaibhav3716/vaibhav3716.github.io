@@ -136,6 +136,28 @@
     var t = add(mul(p0, -st), mul(s0, ct));
     return { U: U, N: mul(t, -1), E: cross(p0, s0) };
   }
+  // A flight between any two places (the visitor's own sky, or back to Mumbai): the observer moves
+  // along the great circle between them with the horizon frame carried along, so the sky turns as
+  // it goes, and the frame twists gradually to the destination's orientation on the way.
+  function rotateAbout(v, k, a) {
+    var c = Math.cos(a), s = Math.sin(a);
+    return add(add(mul(v, c), mul(cross(k, v), s)), mul(k, dot(k, v) * (1 - c)));
+  }
+  function frameBetween(A, B, e) {
+    var ang = Math.acos(Math.max(-1, Math.min(1, dot(A.U, B.U))));
+    var k = cross(A.U, B.U);
+    k = dot(k, k) > 1e-12 ? norm(k) : A.E;          // same place or exactly opposite: head south
+    var NT = rotateAbout(A.N, k, ang);
+    var twist = Math.atan2(dot(cross(NT, B.N), B.U), dot(NT, B.N));
+    var a = ang * e, U = rotateAbout(A.U, k, a);
+    return { U: U, N: rotateAbout(rotateAbout(A.N, k, a), U, twist * e), E: rotateAbout(rotateAbout(A.E, k, a), U, twist * e) };
+  }
+  function currentFrame(gmst) {
+    var F = frameAt(theta, gmst);
+    return tween && tween.hop ? frameBetween(tween.hop, F, tween.e) : F;
+  }
+  function travelling() { return !!tween && (tween.from !== tween.to || !!tween.hop); }
+
   function altOf(v, F) { return Math.asin(Math.max(-1, Math.min(1, dot(v, F.U)))) * R2D; }
   function azOf(v, F) { return rev(atan2d(dot(v, F.E), dot(v, F.N))); }
   function observerLatLon(F, gmst) {
@@ -419,7 +441,7 @@
   function draw(t) {
     if (!W) return;
     refreshEphemeris();
-    var F = frameAt(theta, currentGmst());
+    var F = currentFrame(currentGmst());
     setupProjection(F);
     labelBoxes = exploring ? barBoxes.slice() : textBoxes.concat(barBoxes);
 
@@ -737,7 +759,7 @@
   // Sunrise, sunset and daylight left for the place in view. Shown in a box beside the Sun,
   // or as a caption line on phones, where the Sun sits behind the caption.
   function updateSunInfo(isDay, ll, t) {
-    var st = isDay && !(tween && tween.from !== tween.to) ? sunTimes(ll.lat, ll.lon, t) : null;
+    var st = isDay && !travelling() ? sunTimes(ll.lat, ll.lon, t) : null;
     sunInfo = st && st.set ? st : null;
     if (!sunInfo) { if (sunLine) sunLine.hidden = true; placeSunBox(null); return; }
     var fmt = theta < 90
@@ -802,7 +824,7 @@
   function listJoin(a) { return a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1]; }
   function updateCaption() {
     if (!liveText) return;
-    if (tween && tween.from !== tween.to) { liveText.textContent = 'Travelling to the other side of Earth…'; sunInfo = null; if (sunLine) sunLine.hidden = true; placeSunBox(null); return; }
+    if (travelling()) { liveText.textContent = tween.label || 'Travelling to the other side of Earth…'; sunInfo = null; if (sunLine) sunLine.hidden = true; placeSunBox(null); return; }
     var t = Date.now(), gmst = currentGmst(), F = frameAt(theta, gmst);
     var isDay = altOf(eph.sun, F) > -0.5;
     var up = [];
@@ -833,6 +855,7 @@
     if (tween) {
       var k = clamp01((t - tween.t0) / tween.dur), e = ease(k);
       theta = lerp(tween.from, tween.to, e);
+      tween.e = e;
       view = {
         az: angLerp(tween.v0.az, tween.v1.az, e), alt: lerp(tween.v0.alt, tween.v1.alt, e),
         cx: lerp(tween.v0.cx, tween.v1.cx, e), cy: lerp(tween.v0.cy, tween.v1.cy, e),
@@ -857,6 +880,7 @@
     if (!animate || reduceMotion.matches || !running) {
       tween = null; theta = targetTheta; view = v1; draw(performance.now()); updateCaption(); return;
     }
+    if (tween && tween.hop) { flyFrom(currentFrame(currentGmst()), targetTheta, v1, tween.label); return; }
     tween = { from: theta, to: targetTheta, v0: view, v1: v1, t0: performance.now(), dur: targetTheta === theta ? 2000 : 4200 };
     updateCaption();
   }
@@ -915,7 +939,7 @@
     return list;
   }
   function pick(x, y) {
-    var F = frameAt(theta, currentGmst());
+    var F = currentFrame(currentGmst());
     setupProjection(F);
     var best = null, bestD = 22 * 22;
     candidates(F).forEach(function (c) {
@@ -1017,23 +1041,34 @@
   if (exploreBtn) exploreBtn.addEventListener('click', function () { setExploring(!exploring); });
 
 
+  // Change the home location and fly there from wherever the view is now
+  function flyTo(o, label) {
+    refreshEphemeris();
+    var from = currentFrame(currentGmst());
+    origin = o;
+    manualUntil = 0; if (resetBtn) resetBtn.hidden = true; hideCard();
+    var target = thetaFor(chosenTheme), v1 = viewFor(target);
+    if (exploring) { var ef = exploreFrame(); v1 = { az: v1.az, alt: Math.min(v1.alt, 40), cx: ef.cx, cy: ef.cy, kW: ef.kW, kH: ef.kH }; }
+    flyFrom(from, target, v1, label);
+  }
+  function flyFrom(A, target, v1, label) {
+    if (reduceMotion.matches || !running) {
+      tween = null; theta = target; view = v1; draw(performance.now()); updateCaption(); return;
+    }
+    // Longer trips take longer: the full way round the globe takes as long as a theme switch
+    var ang = Math.acos(Math.max(-1, Math.min(1, dot(A.U, frameAt(target, currentGmst()).U))));
+    theta = target;
+    tween = { from: target, to: target, v0: view, v1: v1, t0: performance.now(), dur: 1600 + 2600 * ang / Math.PI, hop: A, e: 0, label: label };
+    updateCaption();
+  }
+
   window.Sky = {
     set: function (theme, animate) {
       chosenTheme = theme;
       goTo(thetaFor(theme), animate);
     },
-    useLocation: function (lat, lon) {
-      origin = { lat: lat, lon: lon, mumbai: false };
-      tween = null; manualUntil = 0; if (resetBtn) resetBtn.hidden = true; hideCard();
-      theta = thetaFor(chosenTheme); view = viewFor(theta);
-      draw(performance.now()); updateCaption();
-    },
-    useMumbai: function () {
-      origin = MUMBAI;
-      tween = null; manualUntil = 0; if (resetBtn) resetBtn.hidden = true; hideCard();
-      theta = thetaFor(chosenTheme); view = viewFor(theta);
-      draw(performance.now()); updateCaption();
-    }
+    useLocation: function (lat, lon) { flyTo({ lat: lat, lon: lon, mumbai: false }, 'Travelling to the sky above you…'); },
+    useMumbai: function () { flyTo(MUMBAI, 'Travelling back to Mumbai…'); }
   };
 
   var textBoxes = [], barBoxes = [];

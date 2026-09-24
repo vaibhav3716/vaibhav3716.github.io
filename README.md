@@ -54,7 +54,8 @@ from their location, if they have already let the site use it), computes the Sun
 picks the paper theme while the Sun is up and the dark theme after sunset. It switches by itself at sunrise
 and sunset. If a visitor uses the theme switch, their choice holds until they close the tab.
 Pressing "See the sky above you" uses the visitor's exact location: the theme turns to day or night
-there (even over a theme they picked), and the hero shows their own sky.
+there (even over a theme they picked, spreading out from the button like the theme switch), and the
+sky flies to their location along the great circle between the two places, turning as it goes.
 
 ## Preview locally
 
