@@ -19,6 +19,7 @@ Plain HTML, CSS and JavaScript. There is no build step: edit a file, push, and t
 | Tool logos | `assets/img/logos/` (Simple Icons, CC0; Astropy logo CC BY-SA 3.0) |
 | Portrait (square crop of the original photo, with room above the head) | `assets/img/portrait.jpg` and `assets/img/portrait.webp` |
 | About: portrait with engraved orbiting planets | `assets/js/orbits.js` |
+| Facts from the cosmos (flip cards, six at a time) | the `id="facts"` section in `index.html`, dealt by `assets/js/facts.js` |
 | Paper figures | `assets/img/research/` |
 | Stargazing photos | `assets/img/stargazing/` |
 | Quote backgrounds (ESA/Hubble, ESA/Webb) | `assets/img/andromeda-hst.webp`, `assets/img/esa/` |
@@ -31,6 +32,9 @@ Plain HTML, CSS and JavaScript. There is no build step: edit a file, push, and t
   and the `paper-card` block in the research section. Add the arXiv or DOI link there.
 - **Quotes:** each quote is a `<section class="quote-panel">` block in `index.html`. Copy one, point `--img` at a new image, and keep the credit line: ESA/Hubble and ESA/Webb images are CC BY 4.0 and must be credited.
 - **New stargazing photo:** convert it to WebP, put it in `assets/img/stargazing/`, and copy a `<figure class="g-item">` block.
+- **New fact:** copy one `<article class="fact ...">` block in the `id="facts"` section. The class sets the colour:
+  `fact-wd` white dwarfs, `fact-bin` binaries, `fact-sun` the Sun and stars, `fact-bh` neutron stars and black holes,
+  `fact-cos` the Universe. Give the source, with a DOI link for papers. The cards are shuffled on every visit.
 - **New blog post:** nothing to do. The Blog section loads the six newest posts from Blogger as cards
   (cover image, date, reading time, opening lines). The two cards written into `index.html` are only a
   fallback for when Blogger can't be reached.

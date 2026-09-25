@@ -369,13 +369,39 @@
 
 
   /* ---------------------------------------------------------------
+     Relevant coursework: the panel slides open to its full height
+     while the courses arrive one after another (CSS), and folds
+     away again when closed. With reduced motion it opens at once.
+  ---------------------------------------------------------------- */
+  Array.prototype.forEach.call(document.querySelectorAll('details.coursework'), function (det) {
+    var summary = det.querySelector('summary'), body = det.querySelector('.coursework-body');
+    if (!summary || !body) return;
+    var anim = null;
+    det.classList.toggle('is-open', det.open);
+    det.addEventListener('toggle', function () { if (!anim) det.classList.toggle('is-open', det.open); });
+    summary.addEventListener('click', function (e) {
+      if (reduceMotion.matches || !body.animate) return;          // the browser opens it at once
+      e.preventDefault();
+      var opening = !det.classList.contains('is-open');
+      var from = body.getBoundingClientRect().height;             // mid-way if it was still moving
+      if (anim) anim.cancel();
+      if (opening) det.open = true;
+      det.classList.toggle('is-open', opening);
+      var to = opening ? body.scrollHeight : 0;
+      anim = body.animate({ height: [from + 'px', to + 'px'] },
+        { duration: opening ? 560 : 380, easing: opening ? 'cubic-bezier(.2,.7,.2,1)' : 'cubic-bezier(.4,0,.6,1)' });
+      anim.onfinish = function () { anim = null; if (!opening) det.open = false; };
+    });
+  });
+
+  /* ---------------------------------------------------------------
      Scroll reveal. Only elements that start below the fold are
      hidden, so nothing flashes and nothing stays hidden without JS.
   ---------------------------------------------------------------- */
   var revealGroups = [
     ['.section h2, .feature-title, .section-intro, .meta-line', ''],
     ['.prose, .interests, .paper-card, .side-project, .results h4, .pipeline h4, .sed-card, .blog-head, .coursework, .gallery-title', ''],
-    ['.interest-list li, .steps li, .result-list li, .project, .pub-list li, .plain-list li, .semesters > li, .course-feature, .edu-list li, .skills div, .contact-links li, .post-card', 'stagger'],
+    ['.interest-list li, .steps li, .result-list li, .project, .pub-list li, .plain-list li, .semesters > li, .course-feature, .edu-list li, .skills div, .contact-links li, .post-card, .fact', 'stagger'],
     ['.fig, .g-item', 'scale-stagger'],
     ['.quote-panel blockquote, .quote-panel figcaption', 'fade'],
     ['.andromeda-quote blockquote, .andromeda-quote figcaption', 'fade']

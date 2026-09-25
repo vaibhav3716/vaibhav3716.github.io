@@ -132,7 +132,7 @@ sub { line-height: 0; }
 .btn {
   display: inline-flex; align-items: center; gap: .5rem;
   min-height: 44px; padding: .6rem 1.15rem;
-  border-radius: 999px; border: 1px solid transparent;
+  border-radius: 999px; border: 1px solid transparent; background: none;
   font: 500 .975rem/1 var(--sans); text-decoration: none; cursor: pointer;
   transition: background-color .18s ease, border-color .18s ease, color .18s ease;
 }
@@ -521,6 +521,99 @@ sub { line-height: 0; }
   .outreach-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
   .outreach-list li { border-top: 0; padding: 0; }
 }
+/* ------------------------------------------------------------------
+   Facts from the cosmos: flip cards on a band of night sky (dark in
+   both themes, like the quote panels). facts.js deals and flips them.
+------------------------------------------------------------------- */
+.facts { position: relative; isolation: isolate; overflow: hidden; color: var(--night-ink); background: #04060D; }
+.facts-sky {
+  position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, .85) 0 1px, transparent 1.6px),
+    radial-gradient(circle at 70% 62%, rgba(255, 255, 255, .55) 0 .9px, transparent 1.5px),
+    radial-gradient(circle at 44% 86%, rgba(196, 218, 255, .7) 0 1px, transparent 1.6px),
+    radial-gradient(circle at 86% 14%, rgba(255, 236, 214, .6) 0 .8px, transparent 1.4px),
+    radial-gradient(60% 55% at 90% 0%, rgba(96, 66, 178, .30), transparent 70%),
+    radial-gradient(55% 60% at 0% 100%, rgba(30, 94, 170, .26), transparent 70%);
+  background-size: 190px 170px, 230px 210px, 150px 260px, 310px 190px, 100% 100%, 100% 100%;
+}
+.facts h2 { color: #F4F6FB; }
+.facts .section-intro { color: rgba(233, 237, 246, .72); margin-bottom: 0; }
+.facts-eyebrow { margin: 0 0 .5rem; font-size: .76rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--night-ms); }
+.facts-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem 2rem; }
+.fact-grid { display: grid; gap: 1.1rem; margin-top: 2.25rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr)); }
+
+.fact { --tc: var(--night-ms); min-width: 0; cursor: pointer; }
+.fact[hidden] { display: none; }
+.fact-wd { --tc: #8CC0FF; }
+.fact-bin { --tc: #FFB45C; }
+.fact-sun { --tc: #FFD27A; }
+.fact-bh { --tc: #BBA6FF; }
+.fact-cos { --tc: #6FD6C8; }
+.fact-inner { position: relative; display: grid; height: 100%; }
+.fact-face {
+  display: flex; flex-direction: column; gap: .5rem; padding: 1.3rem 1.35rem 1rem;
+  border-radius: var(--radius-m); border: 1px solid rgba(233, 237, 246, .12);
+  background: linear-gradient(160deg, rgba(255, 255, 255, .075), rgba(255, 255, 255, .02) 60%), #080B16;
+  transition: border-color .35s ease, box-shadow .35s ease;
+}
+.fact:hover .fact-face { border-color: color-mix(in srgb, var(--tc) 50%, transparent); box-shadow: 0 22px 50px -28px color-mix(in srgb, var(--tc) 70%, transparent); }
+.fact-topic { display: flex; align-items: center; gap: .5rem; margin: 0; font-size: .7rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--tc); }
+.fact-topic::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--tc); box-shadow: 0 0 10px var(--tc); }
+.fact-stat {
+  margin: .55rem 0 0; font-family: var(--serif); font-weight: 500; line-height: 1.05;
+  font-size: clamp(2.2rem, 1.8rem + 1.3vw, 2.9rem); font-variant-numeric: lining-nums;
+  color: #FFFFFF; background: linear-gradient(180deg, #FFFFFF 35%, var(--tc)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+.fact-stat sub, .fact-answer sub { font-size: .5em; line-height: 0; vertical-align: -.12em; margin-left: .04em; }
+/* ☉ in a font that has it, drawn in the card colour (the gradient text can't reach a fallback glyph) */
+.fact-stat sub { font-family: 'Apple Symbols', 'Segoe UI Symbol', 'Noto Sans Symbols', 'DejaVu Sans', sans-serif; font-size: .42em; -webkit-text-fill-color: var(--tc); color: var(--tc); }
+/* A faint star with a dashed orbit in the corner of each card front */
+.fact-front { position: relative; overflow: hidden; }
+.fact-front::before, .fact-front::after { content: ''; position: absolute; border-radius: 50%; pointer-events: none; }
+.fact-front::before { right: -58px; bottom: -58px; width: 150px; height: 150px; border: 1px dashed color-mix(in srgb, var(--tc) 40%, transparent); }
+.fact-front::after {
+  right: -26px; bottom: -26px; width: 86px; height: 86px;
+  background: radial-gradient(circle, color-mix(in srgb, var(--tc) 70%, #fff) 0 6%, color-mix(in srgb, var(--tc) 30%, transparent) 16%, transparent 62%);
+  transition: transform .6s cubic-bezier(.2, .7, .2, 1);
+}
+.fact:hover .fact-front::after { transform: scale(1.18); }
+.fact-front > * { position: relative; z-index: 1; }
+.fact-teaser { margin: 0; font-family: var(--sans); font-size: 1rem; font-weight: 500; line-height: 1.4; color: rgba(233, 237, 246, .88); }
+.fact-answer { margin: 0; font-size: .95rem; line-height: 1.55; color: rgba(233, 237, 246, .92); }
+.fact-source { margin: .15rem 0 0; font-size: .76rem; color: rgba(233, 237, 246, .56); }
+.fact-source a { color: var(--tc); }
+.fact-btn {
+  display: inline-flex; align-items: center; gap: .4rem; align-self: flex-start; margin-top: auto; min-height: 40px; padding: .35rem 0 0;
+  border: 0; background: none; cursor: pointer; font: 500 .85rem/1 var(--sans); color: var(--tc);
+}
+.fact-btn .icon { width: 1.05em; height: 1.05em; transition: transform .5s cubic-bezier(.2, .7, .2, 1); }
+.fact:hover .fact-btn .icon { transform: rotate(180deg); }
+
+/* With facts.js: the two faces sit on top of each other and the card turns over */
+.facts-js .fact { perspective: 1400px; }
+.facts-js .fact-inner { transform-style: preserve-3d; transition: transform .8s cubic-bezier(.2, .7, .2, 1); }
+.facts-js .fact.flipped .fact-inner { transform: rotateY(180deg); }
+.facts-js .fact-face { grid-area: 1 / 1; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+.facts-js .fact-back { transform: rotateY(180deg); }
+/* Without it every card simply shows its answer */
+.facts:not(.facts-js) .fact-btn { display: none; }
+.facts:not(.facts-js) .fact-back { border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0; margin-top: -1px; }
+
+/* Dealing a new hand of facts */
+@keyframes fact-out { to { opacity: 0; transform: translateY(14px) scale(.96); } }
+@keyframes fact-in { from { opacity: 0; transform: perspective(900px) rotateY(-75deg) translateY(10px); } to { opacity: 1; transform: none; } }
+.fact.dealing-out { animation: fact-out .32s cubic-bezier(.4, 0, 1, 1) both; animation-delay: var(--d, 0ms); pointer-events: none; }
+.fact.dealing-in { animation: fact-in .75s cubic-bezier(.2, .7, .2, 1) both; animation-delay: var(--d, 0ms); }
+@media (prefers-reduced-motion: reduce) {
+  .facts-js .fact-inner { transition: none; }
+  .facts-js .fact.flipped .fact-inner { transform: none; }
+  .facts-js .fact-back { transform: none; visibility: hidden; }
+  .facts-js .fact.flipped .fact-back { visibility: visible; }
+  .facts-js .fact.flipped .fact-front { visibility: hidden; }
+  .fact.dealing-in, .fact.dealing-out { animation: none; }
+}
+
 /* Blog: post cards */
 .blog-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 0 2rem; }
 .blog-head .section-intro { margin-bottom: 0; }
@@ -565,10 +658,37 @@ sub { line-height: 0; }
 .edu-list h3 { margin-bottom: .25rem; }
 .edu-list p { margin: 0; color: var(--ink-2); }
 .edu-list .when { font-size: .9rem; margin-top: .2rem; }
-.coursework { border: 1px solid var(--rule); border-radius: var(--radius-m); padding: .25rem 1.25rem; }
-.coursework summary { cursor: pointer; font-weight: 600; padding: .75rem 0; min-height: 44px; display: flex; align-items: center; }
-.coursework ul { padding-left: 1.1rem; margin: 0 0 1rem; display: grid; gap: .45rem; color: var(--ink-2); font-size: .95rem; }
-.coursework strong { color: var(--ink); font-weight: 600; }
+/* Relevant coursework: slides open (site.js animates the height) and the courses arrive in turn */
+.coursework { border: 1px solid var(--rule); border-radius: var(--radius-m); padding: 0 1.25rem; transition: border-color .4s ease; }
+.coursework.is-open { border-color: color-mix(in srgb, var(--ms) 40%, transparent); }
+.coursework summary {
+  display: flex; align-items: center; gap: .75rem; min-height: 52px; padding: .75rem 0;
+  cursor: pointer; font-weight: 600; list-style: none; user-select: none;
+}
+.coursework summary::-webkit-details-marker { display: none; }
+.coursework-count { margin-left: auto; font-size: .82rem; font-weight: 500; color: var(--ink-2); }
+/* A chevron that turns over as the list opens */
+.coursework summary::after {
+  content: ''; flex: none; width: .5rem; height: .5rem; margin: -.2rem .2rem 0 0;
+  border-right: 1.8px solid currentColor; border-bottom: 1.8px solid currentColor;
+  transform: rotate(45deg); transition: transform .45s cubic-bezier(.2, .7, .2, 1), margin .45s cubic-bezier(.2, .7, .2, 1);
+}
+.coursework.is-open summary::after { transform: rotate(225deg); margin-top: .25rem; }
+.coursework summary:hover::after, .coursework summary:hover .coursework-count { color: var(--ms); }
+.coursework-body { overflow: hidden; }
+.coursework ul { list-style: none; padding: 0 0 1.1rem; margin: 0; display: grid; gap: .75rem; border-top: 1px solid var(--rule); padding-top: 1rem; }
+.coursework li { position: relative; display: grid; gap: .1rem; padding-left: 1.1rem; }
+.coursework li::before { content: ''; position: absolute; left: 0; top: .5em; width: 6px; height: 6px; border-radius: 50%; background: var(--ms); }
+.coursework strong { color: var(--ink); font-weight: 600; font-size: .98rem; }
+.coursework li span { color: var(--ink-2); font-size: .9rem; }
+@keyframes course-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@keyframes course-dot { from { transform: scale(0); } 60% { transform: scale(1.6); } to { transform: scale(1); } }
+.coursework.is-open li { animation: course-in .55s cubic-bezier(.2, .7, .2, 1) both; animation-delay: calc(90ms + var(--i, 0) * 45ms); }
+.coursework.is-open li::before { animation: course-dot .5s cubic-bezier(.2, .7, .2, 1) both; animation-delay: calc(220ms + var(--i, 0) * 45ms); }
+@media (prefers-reduced-motion: reduce) {
+  .coursework.is-open li, .coursework.is-open li::before { animation: none; }
+  .coursework summary::after { transition: none; }
+}
 
 /* ------------------------------------------------------------------
    Contact and footer
@@ -762,19 +882,21 @@ sub { line-height: 0; }
 .chip-logo, .chip-img, .chip-mono { width: 22px; height: 22px; flex: none; border-radius: 6px; }
 .chip-logo { background-color: var(--c); -webkit-mask: var(--m) center / 16px 16px no-repeat; mask: var(--m) center / 16px 16px no-repeat; }
 .chip-img { object-fit: contain; padding: 1px; }
+/* The LaTeX logo, typeset the way TeX prints it: a small raised A and a lowered E, tucked in */
+.chip-latex { padding: .3rem .95rem .38rem; }
+.latex { font-family: var(--serif); font-size: 1.12rem; font-weight: 500; line-height: 1; letter-spacing: 0; white-space: nowrap; }
+.latex-a { position: relative; top: -.24em; margin: 0 -.15em 0 -.36em; font-size: .74em; text-transform: uppercase; }
+.latex-e { position: relative; top: .22em; margin: 0 -.12em 0 -.17em; text-transform: uppercase; }
 .chip-mono { display: inline-grid; place-items: center; font: 600 .66rem/1 var(--sans); color: var(--ms); background: var(--ms-soft); letter-spacing: -.02em; }
 .skill-group:nth-child(3) .chip-mono { color: var(--wd); background: var(--wd-soft); }
 .logo-python { --m: url("../img/logos/python.svg"); --c: #3776AB; }
 .logo-gnubash { --m: url("../img/logos/gnubash.svg"); --c: #4EAA25; }
-.logo-latex { --m: url("../img/logos/latex.svg"); --c: #008080; }
 .logo-scikitlearn { --m: url("../img/logos/scikitlearn.svg"); --c: #F7931E; }
 .logo-opencv { --m: url("../img/logos/opencv.svg"); --c: #5C3EE8; }
 :root[data-theme="dark"] .logo-python { --c: #6FA8DC; }
-:root[data-theme="dark"] .logo-latex { --c: #3FB6B6; }
 :root[data-theme="dark"] .logo-opencv { --c: #8C78F0; }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .logo-python { --c: #6FA8DC; }
-  :root:not([data-theme="light"]) .logo-latex { --c: #3FB6B6; }
   :root:not([data-theme="light"]) .logo-opencv { --c: #8C78F0; }
 }
 
