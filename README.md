@@ -78,8 +78,8 @@ The Action never commits to `main`, so pushing the site from your computer works
    API key from https://console.anthropic.com. Without it the papers still update daily, but show the opening
    lines of each abstract instead of plain-language summaries.
 2. Actions tab → "What's new in research" → Run workflow, to fill it straight away instead of waiting a day.
-3. Optional: a repository *variable* `CLAUDE_MODEL` to use a different Claude model (for example a cheaper
-   one); the default is set at the top of `scripts/update_arxiv.py`.
+3. Optional: a repository *variable* `CLAUDE_MODEL` to use a different Claude model. The default is Claude
+   Sonnet 5 (`claude-sonnet-5`), set at the top of `scripts/update_arxiv.py`.
 
 To try the script locally: `ANTHROPIC_API_KEY=... python3 scripts/update_arxiv.py --out /tmp/arxiv.json`.
 

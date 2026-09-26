@@ -28,7 +28,7 @@ from datetime import datetime, timezone
 ARXIV_API = ('https://export.arxiv.org/api/query?search_query=cat:astro-ph.*'
              '&sortBy=submittedDate&sortOrder=descending&max_results=40')
 ANTHROPIC_API = 'https://api.anthropic.com/v1/messages'
-DEFAULT_MODEL = 'claude-opus-5-5'
+DEFAULT_MODEL = 'claude-sonnet-5'   # plenty for three short summaries a day; set CLAUDE_MODEL to override
 TOPICS = ['Stars', 'The Sun', 'Planets', 'Galaxies', 'Black holes', 'Cosmology', 'Instruments']
 NS = {'a': 'http://www.w3.org/2005/Atom', 'arxiv': 'http://arxiv.org/schemas/atom'}
 # arXiv subject classes, for the fallback when there is no summary
