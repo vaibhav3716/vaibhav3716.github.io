@@ -625,6 +625,7 @@ sub { line-height: 0; }
   color: #FFFFFF; background: linear-gradient(180deg, #FFFFFF 35%, var(--tc)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
 }
 .fact-stat sub, .fact-answer sub { font-size: .5em; line-height: 0; vertical-align: -.12em; margin-left: .04em; }
+.fact-stat sup, .fact-answer sup { font-size: .55em; line-height: 0; vertical-align: .75em; }
 /* ☉ in a font that has it, drawn in the card colour (the gradient text can't reach a fallback glyph) */
 .fact-stat sub { font-family: 'Apple Symbols', 'Segoe UI Symbol', 'Noto Sans Symbols', 'DejaVu Sans', sans-serif; font-size: .42em; -webkit-text-fill-color: var(--tc); color: var(--tc); }
 /* A faint star with a dashed orbit in the corner of each card front */
