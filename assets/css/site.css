@@ -17,6 +17,15 @@
   --focus: #1B55AE;
   --plate: #FFFDF6;
   --shadow: 0 1px 2px rgba(18, 26, 43, .06), 0 8px 24px rgba(18, 26, 43, .06);
+  /* Liquid glass (the header): tinted with the theme's own colour, opaque enough to read over anything */
+  --glass-tint: rgba(243, 236, 218, .66);
+  --glass-solid: rgba(243, 236, 218, .97);
+  --glass-hi: rgba(255, 255, 255, .9);
+  --glass-lo: rgba(120, 92, 40, .14);
+  --glass-rim: rgba(255, 255, 255, .95);
+  --glass-sheen: rgba(255, 255, 255, .34);
+  --glass-pill: rgba(255, 255, 255, .6);
+  --glass-hover: rgba(255, 255, 255, .34);
 
   /* The hero is a night sky in both themes */
   --night: #03050B;
@@ -39,7 +48,7 @@
   --max: 1120px;
   --radius-s: 6px;
   --radius-m: 12px;
-  --header-h: 60px;
+  --header-h: 58px;
 
   color-scheme: light;
 }
@@ -59,6 +68,14 @@
     --focus: #8CC0FF;
     --plate: #F7F8FB;
     --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 10px 30px rgba(0, 0, 0, .25);
+    --glass-tint: rgba(14, 14, 17, .6);
+    --glass-solid: rgba(14, 14, 17, .97);
+    --glass-hi: rgba(255, 255, 255, .2);
+    --glass-lo: rgba(255, 255, 255, .05);
+    --glass-rim: rgba(255, 255, 255, .32);
+    --glass-sheen: rgba(255, 255, 255, .07);
+    --glass-pill: rgba(255, 255, 255, .12);
+    --glass-hover: rgba(255, 255, 255, .07);
     color-scheme: dark;
   }
 }
@@ -76,6 +93,14 @@
   --focus: #8CC0FF;
   --plate: #F7F8FB;
   --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 10px 30px rgba(0, 0, 0, .25);
+  --glass-tint: rgba(14, 14, 17, .6);
+  --glass-solid: rgba(14, 14, 17, .97);
+  --glass-hi: rgba(255, 255, 255, .2);
+  --glass-lo: rgba(255, 255, 255, .05);
+  --glass-rim: rgba(255, 255, 255, .32);
+  --glass-sheen: rgba(255, 255, 255, .07);
+  --glass-pill: rgba(255, 255, 255, .12);
+  --glass-hover: rgba(255, 255, 255, .07);
   color-scheme: dark;
 }
 
@@ -84,7 +109,7 @@
 ------------------------------------------------------------------- */
 *, *::before, *::after { box-sizing: border-box; }
 [hidden] { display: none !important; }
-html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 12px); -webkit-text-size-adjust: 100%; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 24px); -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
   background: var(--bg);
@@ -155,19 +180,37 @@ sub { line-height: 0; }
 /* ------------------------------------------------------------------
    Header
 ------------------------------------------------------------------- */
-.site-header {
-  position: sticky; top: 0; z-index: 50;
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
-  backdrop-filter: saturate(1.4) blur(10px);
-  -webkit-backdrop-filter: saturate(1.4) blur(10px);
-  border-bottom: 1px solid var(--rule);
+/* A floating capsule of liquid glass: it blurs and brightens whatever passes behind it, tinted with
+   the theme's colour, with a bright rim and a sheen along the top like a curved pane of glass */
+.site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 50; padding: 10px var(--gutter) 0; pointer-events: none; }
+.nav {
+  position: relative; isolation: isolate; pointer-events: auto;
+  display: flex; align-items: center; gap: 1rem;
+  max-width: calc(var(--max) - 2 * var(--gutter) + 28px); height: var(--header-h); margin: 0 auto; padding: 0 .45rem 0 1.3rem;
+  border-radius: 999px; background: var(--glass-tint);
+  -webkit-backdrop-filter: blur(22px) saturate(1.8) brightness(1.04);
+  backdrop-filter: blur(22px) saturate(1.8) brightness(1.04);
+  box-shadow: inset 0 1px 1px var(--glass-hi), inset 0 -1px 1px var(--glass-lo),
+    0 14px 34px -16px rgba(0, 0, 0, .38), 0 2px 8px -2px rgba(0, 0, 0, .12);
 }
-.nav { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); height: var(--header-h); display: flex; align-items: center; gap: 1rem; }
+/* The rim: a thin edge of light, brightest at the top left and bottom right */
+.nav::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; padding: 1px; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(135deg, var(--glass-rim), transparent 30%, transparent 70%, var(--glass-rim));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); mask-composite: exclude;
+}
+/* The sheen across the upper half */
+.nav::after { content: ''; position: absolute; inset: 1px; z-index: -1; border-radius: inherit; pointer-events: none; background: linear-gradient(180deg, var(--glass-sheen), transparent 58%); }
 .brand { font-family: var(--serif); font-weight: 600; font-size: 1.15rem; color: var(--ink); text-decoration: none; margin-right: auto; white-space: nowrap; }
-.nav-links { list-style: none; margin: 0; padding: 0; display: none; gap: .25rem; }
-.nav-links a { display: block; padding: .5rem .6rem; color: var(--ink-2); text-decoration: none; font-size: .94rem; border-radius: var(--radius-s); }
-.nav-links a:hover { color: var(--ink); }
-.nav-links a[aria-current="true"] { color: var(--ink); box-shadow: inset 0 -2px 0 var(--ms); border-radius: 0; }
+.nav-links { list-style: none; margin: 0; padding: 0; display: none; gap: .1rem; }
+.nav-links a {
+  display: block; padding: .45rem .62rem; border-radius: 999px; text-decoration: none; font-size: .94rem;
+  color: color-mix(in srgb, var(--ink) 80%, transparent); transition: background-color .25s ease, color .25s ease, box-shadow .25s ease;
+}
+.nav-links a:hover { color: var(--ink); background: var(--glass-hover); }
+/* The section you're in: a small drop of brighter glass */
+.nav-links a[aria-current="true"] { color: var(--ink); background: var(--glass-pill); box-shadow: inset 0 1px 0 var(--glass-hi), 0 1px 4px rgba(0, 0, 0, .1); }
 .nav-actions { display: flex; align-items: center; gap: .35rem; }
 .theme-toggle .icon-moon { display: none; }
 :root[data-theme="light"] .theme-toggle .icon-sun { display: none; }
@@ -183,15 +226,18 @@ sub { line-height: 0; }
 }
 @media (max-width: 1099.98px) {
   .nav-toggle { order: 3; }
+  /* The menu drops down as a second pane of the same glass, nearly solid so every item reads clearly.
+     (No blur of its own: it sits inside the header's glass, and nested blurs render badly in some browsers.) */
   .nav-links.open {
     display: flex; flex-direction: column; gap: 0;
-    position: absolute; top: var(--header-h); left: 0; right: 0;
-    background: var(--bg); border-bottom: 1px solid var(--rule);
-    padding: .5rem var(--gutter) 1rem; box-shadow: var(--shadow);
+    position: absolute; top: calc(100% + 8px); left: 0; right: 0;
+    padding: .4rem 1.25rem .6rem; border-radius: 24px; background: var(--glass-solid);
+    box-shadow: inset 0 1px 1px var(--glass-hi), 0 18px 40px -18px rgba(0, 0, 0, .45);
   }
   .nav-links.open a { padding: .8rem 0; font-size: 1.05rem; border-bottom: 1px solid var(--rule); border-radius: 0; }
+  .nav-links.open a:hover { background: none; }
   .nav-links.open li:last-child a { border-bottom: 0; }
-  .nav-links a[aria-current="true"] { box-shadow: none; color: var(--ms); }
+  .nav-links a[aria-current="true"], .nav-links.open a[aria-current="true"] { background: none; box-shadow: none; color: var(--ms); }
 }
 
 /* ------------------------------------------------------------------
@@ -201,10 +247,11 @@ sub { line-height: 0; }
   position: relative; overflow: hidden; isolation: isolate;
   background: var(--night);
   color: var(--night-ink);
-  min-height: calc(100vh - var(--header-h));
-  min-height: calc(100svh - var(--header-h));
+  min-height: 100vh;
+  min-height: 100svh;
   display: flex; flex-direction: column; justify-content: center;
-  padding: clamp(2.5rem, 5vw, 4rem) 0 clamp(3rem, 5vw, 4rem);
+  /* the sky runs up behind the glass header, so the text starts below it */
+  padding: calc(var(--header-h) + 10px + clamp(2rem, 4vw, 3rem)) 0 clamp(3rem, 5vw, 4rem);
 }
 .sky { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -2; }
 .hero-scrim {
@@ -538,10 +585,22 @@ sub { line-height: 0; }
   background-size: 190px 170px, 230px 210px, 150px 260px, 310px 190px, 100% 100%, 100% 100%;
 }
 .facts h2 { color: #F4F6FB; }
-.facts .section-intro { color: rgba(233, 237, 246, .72); margin-bottom: 0; }
+.facts .section-intro { color: rgba(233, 237, 246, .72); margin: .75rem 0 1.75rem; }
 .facts-eyebrow { margin: 0 0 .5rem; font-size: .76rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--night-ms); }
 .facts-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem 2rem; }
-.fact-grid { display: grid; gap: 1.1rem; margin-top: 2.25rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr)); }
+/* Two halves: facts on the left, new research on the right. On wide screens a subgrid lines them
+   up row by row, so each fact card is as tall as the paper card beside it */
+.facts-split { display: grid; gap: 4rem; }
+.facts-split h2 { font-size: clamp(1.75rem, 1.35rem + 1.1vw, 2.3rem); }
+@media (min-width: 960px) {
+  .facts-split { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(6, auto); gap: 0 3.5rem; }
+  .facts-col, .news-col { display: grid; grid-row: span 6; grid-template-rows: subgrid; }
+  .facts-split .fact-grid, .facts-split .news-list { display: contents; }
+  .facts-split .fact, .facts-split .news-card { margin-bottom: 1.1rem; }
+  /* A taller card: the number sits in the middle */
+  .facts-split .fact-front .fact-stat { margin-top: auto; font-size: clamp(2.5rem, 1.9rem + 1.6vw, 3.3rem); }
+}
+.fact-grid { display: grid; gap: 1.1rem; align-content: start; }
 
 .fact { --tc: var(--night-ms); min-width: 0; cursor: pointer; }
 .fact[hidden] { display: none; }
@@ -599,6 +658,60 @@ sub { line-height: 0; }
 /* Without it every card simply shows its answer */
 .facts:not(.facts-js) .fact-btn { display: none; }
 .facts:not(.facts-js) .fact-back { border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0; margin-top: -1px; }
+
+/* What's new in research: paper cards, drawn like the fact cards */
+.news-eyebrow { color: #8CC0FF; }
+.news-list { display: grid; gap: 1.1rem; align-content: start; }
+.news-card {
+  --tc: #C9CED8; position: relative; display: flex; flex-direction: column; gap: .5rem; min-width: 0;
+  padding: 1.2rem 1.35rem 1.1rem; border-radius: var(--radius-m); border: 1px solid rgba(233, 237, 246, .12);
+  background: linear-gradient(160deg, rgba(255, 255, 255, .075), rgba(255, 255, 255, .02) 60%), #080B16;
+}
+/* The hover lift uses translate, so it never fights the scroll reveal's transform */
+.news-list .news-card {
+  transition: opacity .8s cubic-bezier(.2, .7, .2, 1) var(--rd, 0ms), transform .8s cubic-bezier(.2, .7, .2, 1) var(--rd, 0ms),
+    translate .35s cubic-bezier(.2, .7, .2, 1), border-color .35s ease, box-shadow .35s ease;
+}
+.news-list .news-card:not(.news-skeleton):hover { translate: 0 -3px; border-color: color-mix(in srgb, var(--tc) 50%, transparent); box-shadow: 0 22px 50px -28px color-mix(in srgb, var(--tc) 70%, transparent); }
+.news-card:focus-within { outline: 2px solid var(--tc); outline-offset: 3px; }
+.news-stars { --tc: #FFB45C; }
+.news-sun { --tc: #FFD27A; }
+.news-planets { --tc: #7FD6A0; }
+.news-galaxies { --tc: #8CC0FF; }
+.news-bh { --tc: #BBA6FF; }
+.news-cos { --tc: #6FD6C8; }
+.news-meta { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem; margin: 0; font-size: .76rem; color: rgba(233, 237, 246, .6); font-variant-numeric: tabular-nums; }
+.news-topic {
+  padding: .22rem .6rem; border-radius: 999px; font-size: .66rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--tc); background: color-mix(in srgb, var(--tc) 14%, transparent);
+}
+.news-title { margin: .1rem 0 0; font-family: var(--serif); font-size: 1.38rem; font-weight: 500; line-height: 1.2; color: #F4F6FB; }
+.news-title a { color: inherit; text-decoration: none; }
+.news-title a:focus-visible { outline: 0; }
+.news-title a::after { content: ''; position: absolute; inset: 0; border-radius: inherit; }   /* the whole card is the link */
+.news-summary { margin: 0; font-size: .95rem; line-height: 1.55; color: rgba(233, 237, 246, .9); }
+.news-paper { display: grid; gap: .1rem; margin: .1rem 0 0; font-size: .78rem; line-height: 1.45; color: rgba(233, 237, 246, .55); }
+.news-paper-title { font-style: italic; }
+.news-more { display: inline-flex; align-items: center; gap: .35rem; margin-top: .3rem; font-size: .85rem; font-weight: 500; color: var(--tc); }
+.news-more .icon { width: 1.05em; height: 1.05em; transition: transform .3s ease; }
+.news-card:hover .news-more .icon { transform: translateX(4px); }
+.news-credit { margin: 1.1rem 0 0; font-size: .74rem; line-height: 1.5; color: rgba(233, 237, 246, .5); }
+.news-credit a { color: #8CC0FF; }
+.news-fallback { gap: .3rem; text-decoration: none; color: var(--night-ink); }
+.news-fallback span { font-size: .85rem; color: rgba(233, 237, 246, .6); }
+/* Placeholders while the papers load */
+.news-skeleton { gap: .75rem; min-height: 200px; }
+.news-skeleton span {
+  display: block; height: .8rem; border-radius: 6px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, .05), rgba(255, 255, 255, .12), rgba(255, 255, 255, .05)) 0 0 / 200% 100%;
+  animation: news-shimmer 1.4s linear infinite;
+}
+.news-skeleton span:nth-child(1) { width: 28%; }
+.news-skeleton span:nth-child(2) { width: 82%; height: 1.35rem; }
+.news-skeleton span:nth-child(3) { width: 100%; }
+.news-skeleton span:nth-child(4) { width: 66%; }
+@keyframes news-shimmer { to { background-position: -200% 0; } }
+@media (prefers-reduced-motion: reduce) { .news-skeleton span { animation: none; } }
 
 /* Dealing a new hand of facts */
 @keyframes fact-out { to { opacity: 0; transform: translateY(14px) scale(.96); } }

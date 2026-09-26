@@ -19,7 +19,8 @@ Plain HTML, CSS and JavaScript. There is no build step: edit a file, push, and t
 | Tool logos | `assets/img/logos/` (Simple Icons, CC0; Astropy logo CC BY-SA 3.0) |
 | Portrait (square crop of the original photo, with room above the head) | `assets/img/portrait.jpg` and `assets/img/portrait.webp` |
 | About: portrait with engraved orbiting planets | `assets/js/orbits.js` |
-| Facts from the cosmos (flip cards, six at a time) | the `id="facts"` section in `index.html`, dealt by `assets/js/facts.js` |
+| Did you know? (fact flip cards, three at a time) | the `id="facts"` section in `index.html`, dealt by `assets/js/facts.js` |
+| What's new in research (three new arXiv papers in plain words) | `assets/js/news.js`, fed daily by `scripts/update_arxiv.py` and `.github/workflows/research-feed.yml` |
 | Paper figures | `assets/img/research/` |
 | Stargazing photos | `assets/img/stargazing/` |
 | Quote backgrounds (ESA/Hubble, ESA/Webb) | `assets/img/andromeda-hst.webp`, `assets/img/esa/` |
@@ -60,6 +61,27 @@ and sunset. If a visitor uses the theme switch, their choice holds until they cl
 Pressing "See the sky above you" uses the visitor's exact location: the theme turns to day or night
 there (even over a theme they picked, spreading out from the button like the theme switch), and the
 sky flies to their location along the great circle between the two places, turning as it goes.
+
+## What's new in research
+
+Every morning (01:30 UTC, 7 am in India) the GitHub Action in `.github/workflows/research-feed.yml` runs
+`scripts/update_arxiv.py`. It fetches the newest astrophysics papers from the arXiv API, asks Claude to pick
+three a curious non-scientist would enjoy and explain each in a few plain sentences, and saves them to
+`arxiv.json` on a separate branch, `research-feed`. The page reads that file; `assets/data/arxiv.json` is
+the fallback copy on the site itself.
+
+The Action never commits to `main`, so pushing the site from your computer works exactly as before.
+
+**One-time setup** (on github.com, in this repository):
+
+1. Settings → Secrets and variables → Actions → New repository secret. Name `ANTHROPIC_API_KEY`, value: an
+   API key from https://console.anthropic.com. Without it the papers still update daily, but show the opening
+   lines of each abstract instead of plain-language summaries.
+2. Actions tab → "What's new in research" → Run workflow, to fill it straight away instead of waiting a day.
+3. Optional: a repository *variable* `CLAUDE_MODEL` to use a different Claude model (for example a cheaper
+   one); the default is set at the top of `scripts/update_arxiv.py`.
+
+To try the script locally: `ANTHROPIC_API_KEY=... python3 scripts/update_arxiv.py --out /tmp/arxiv.json`.
 
 ## Preview locally
 

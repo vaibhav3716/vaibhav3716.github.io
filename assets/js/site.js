@@ -563,7 +563,7 @@
   ---------------------------------------------------------------- */
   if (window.Lenis && !reduceMotion.matches && window.matchMedia('(pointer: fine)').matches) {
     try {
-      new window.Lenis({ autoRaf: true, lerp: 0.11, anchors: { offset: -72 } });
+      new window.Lenis({ autoRaf: true, lerp: 0.11, anchors: { offset: -82 } });
     } catch (e) { /* native scrolling still works */ }
   }
 

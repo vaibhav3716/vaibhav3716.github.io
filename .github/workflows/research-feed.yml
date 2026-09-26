@@ -1,0 +1,56 @@
+# What's new in research: every morning, pick three new astrophysics papers from arXiv,
+# have Claude explain them in plain words, and publish them for the website.
+#
+# The result goes to its own branch, research-feed, so this never commits to main and
+# never gets in the way of pushing the site from your computer. The page reads it from
+# https://raw.githubusercontent.com/<owner>/<repo>/research-feed/arxiv.json
+#
+# Needs a repository secret ANTHROPIC_API_KEY (Settings → Secrets and variables → Actions).
+# Without it the papers still update, showing the start of each abstract instead.
+# Optional repository variable CLAUDE_MODEL to use a different model.
+
+name: What's new in research
+
+on:
+  schedule:
+    - cron: '30 1 * * *'     # 01:30 UTC (7 am in India), after arXiv's nightly announcement
+  workflow_dispatch:         # run it by hand from the Actions tab
+
+permissions:
+  contents: write
+
+concurrency:
+  group: research-feed
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out the site (for the script)
+        uses: actions/checkout@v4
+
+      - name: Check out the research-feed branch, or start it
+        env:
+          REPO_URL: https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+        run: |
+          if ! git clone --quiet --depth 1 --branch research-feed "$REPO_URL" "$RUNNER_TEMP/feed"; then
+            git init --quiet -b research-feed "$RUNNER_TEMP/feed"
+            git -C "$RUNNER_TEMP/feed" remote add origin "$REPO_URL"
+          fi
+
+      - name: Fetch new papers and write plain summaries
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLAUDE_MODEL: ${{ vars.CLAUDE_MODEL }}
+        run: python3 scripts/update_arxiv.py --out "$RUNNER_TEMP/feed/arxiv.json"
+
+      - name: Publish
+        working-directory: ${{ runner.temp }}/feed
+        run: |
+          git add arxiv.json
+          if git diff --cached --quiet; then echo "Nothing new today"; exit 0; fi
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit --quiet -m "What's new in research, $(date -u +%Y-%m-%d)"
+          git push --quiet origin research-feed

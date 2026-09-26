@@ -3,8 +3,8 @@
 
    All the facts are written in index.html. This shuffles them once
    per visit (so a returning visitor sees different ones first), shows
-   six at a time (three on phones), and turns a card over to its answer
-   when it is clicked or tapped. "More facts" deals the next hand.
+   three at a time, and turns a card over to its answer when it is
+   clicked or tapped. "More facts" deals the next three.
    Without JavaScript every card simply shows its answer.
 ------------------------------------------------------------------- */
 (function () {
@@ -17,7 +17,7 @@
   var cards = Array.prototype.slice.call(grid.querySelectorAll('.fact'));
   if (!cards.length) return;
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  var phone = window.matchMedia('(max-width: 599.98px)');
+  var HAND = 3;
   section.classList.add('facts-js');
 
   // A fresh order each visit; the page shows the cards in this order
@@ -45,12 +45,12 @@
     });
   });
 
-  // Deal a hand: the next six (or three) facts in the shuffled order
+  // Deal a hand: the next three facts in the shuffled order
   var at = 0, hand = [];
   function nextHand() {
-    var n = phone.matches ? 3 : 6, list = [];
-    for (var k = 0; k < n; k++) list.push(order[(at + k) % order.length]);
-    at = (at + n) % order.length;
+    var list = [];
+    for (var k = 0; k < HAND; k++) list.push(order[(at + k) % order.length]);
+    at = (at + HAND) % order.length;
     return list;
   }
   function show(list, animate) {
@@ -79,10 +79,4 @@
       setTimeout(function () { show(incoming, true); busy = false; }, 320 + hand.length * 40);
     });
   }
-
-  // Crossing the phone breakpoint changes the hand size, so deal again from the same place
-  if (phone.addEventListener) phone.addEventListener('change', function () {
-    at = (at - hand.length + order.length) % order.length;
-    show(nextHand(), false);
-  });
 })();

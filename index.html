@@ -18,11 +18,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
-  <link rel="stylesheet" href="assets/js/vendor/lenis.css?v=20260925c">
-  <link rel="stylesheet" href="assets/css/site.css?v=20260925c">
+  <link rel="stylesheet" href="assets/js/vendor/lenis.css?v=20260926f">
+  <link rel="stylesheet" href="assets/css/site.css?v=20260926f">
 
   <!-- Picks the theme from day or night where the visitor is, before the first paint -->
-  <script src="assets/js/daynight.js?v=20260925c"></script>
+  <script src="assets/js/daynight.js?v=20260926f"></script>
 
   <script type="application/ld+json">
   {
@@ -174,8 +174,8 @@
           <canvas class="orbit-canvas" aria-hidden="true"></canvas>
           <figure class="portrait">
             <picture>
-              <source srcset="assets/img/portrait.webp?v=20260925c" type="image/webp">
-              <img src="assets/img/portrait.jpg?v=20260925c" width="900" height="900" loading="lazy" alt="Portrait of Vaibhav Yenare, smiling">
+              <source srcset="assets/img/portrait.webp?v=20260926f" type="image/webp">
+              <img src="assets/img/portrait.jpg?v=20260926f" width="900" height="900" loading="lazy" alt="Portrait of Vaibhav Yenare, smiling">
             </picture>
           </figure>
         </div>
@@ -527,289 +527,311 @@
       </div>
     </section>
 
-    <!-- Facts from the cosmos: flip cards on a band of night sky; facts.js deals six at a time -->
-    <section class="section facts" id="facts" aria-labelledby="facts-h">
+    <!-- Did you know / What's new in research: a band of night sky in two halves.
+         Left, flip cards (facts.js deals three at a time). Right, three new arXiv papers in
+         plain words (news.js; written daily by .github/workflows/research-feed.yml). -->
+    <section class="section facts" id="facts" aria-label="Did you know, and what's new in research">
       <div class="facts-sky" aria-hidden="true"></div>
-      <div class="wrap">
-        <div class="facts-head">
-          <div>
-            <p class="facts-eyebrow">Did you know?</p>
-            <h2 id="facts-h">Facts from the cosmos</h2>
-            <p class="section-intro">Some of my favourite facts about stars, what they leave behind, and the Universe around them. Tap a card to find out more.</p>
+      <div class="wrap facts-split">
+        <div class="facts-col" role="region" aria-labelledby="facts-h">
+          <div class="facts-head">
+            <div>
+              <p class="facts-eyebrow">Did you know?</p>
+              <h2 id="facts-h">Facts from the cosmos</h2>
+            </div>
+            <button class="btn btn-ghost facts-more" type="button" hidden><svg class="icon" aria-hidden="true"><use href="#i-shuffle"/></svg>More facts</button>
           </div>
-          <button class="btn btn-ghost facts-more" type="button" hidden><svg class="icon" aria-hidden="true"><use href="#i-shuffle"/></svg>More facts</button>
+          <p class="section-intro">Some of my favourite facts about stars, what they leave behind, and the Universe around them. Tap a card to find out more.</p>
+          <div class="fact-grid" id="fact-grid">
+            <article class="fact fact-wd">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">White dwarfs</p>
+                  <p class="fact-stat">5 tonnes</p>
+                  <h3 class="fact-teaser">The weight of one teaspoon of white dwarf</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">A white dwarf packs about the Sun's mass into a ball the size of Earth, so its matter weighs roughly a tonne per cubic centimetre. Only the pressure of tightly packed electrons stops it collapsing further.</p>
+                  <p class="fact-source">Source: Worked out from a typical white dwarf density</p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-wd">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">White dwarfs</p>
+                  <p class="fact-stat">97%</p>
+                  <h3 class="fact-teaser">Of all stars will end their lives as white dwarfs</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">Every star born with less than about 8 to 10 times the Sun's mass ends as a white dwarf. That includes the Sun, in roughly 5 billion years.</p>
+                  <p class="fact-source">Source: <a href="https://doi.org/10.1086/319535" target="_blank" rel="noopener">Fontaine, Brassard &amp; Bergeron 2001, PASP 113, 409</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-wd">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">White dwarfs</p>
+                  <p class="fact-stat">1.4 M<sub>☉</sub></p>
+                  <h3 class="fact-teaser">The heaviest a white dwarf can ever be</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">Subrahmanyan Chandrasekhar worked out this limit in 1930, aged 19, on the voyage from India to England. Heavier remnants collapse into neutron stars or black holes. It earned him a share of the 1983 Nobel Prize in Physics.</p>
+                  <p class="fact-source">Source: <a href="https://www.nobelprize.org/prizes/physics/1983/chandrasekhar/facts/" target="_blank" rel="noopener">The Nobel Prize in Physics 1983</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-wd">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">White dwarfs</p>
+                  <p class="fact-stat">Frozen</p>
+                  <h3 class="fact-teaser">Old white dwarfs turn solid as they cool</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">Gaia's measurements of thousands of nearby white dwarfs show a pile-up where their carbon–oxygen cores crystallise. The heat released as they freeze slows their cooling by up to 2 billion years.</p>
+                  <p class="fact-source">Source: <a href="https://doi.org/10.1038/s41586-018-0791-x" target="_blank" rel="noopener">Tremblay et al. 2019, Nature 565, 202</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-wd">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">White dwarfs</p>
+                  <p class="fact-stat">Earth-sized</p>
+                  <h3 class="fact-teaser">Sirius B, the hidden partner of the brightest star in the sky</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">Sirius, the brightest star in the night sky, has a white dwarf companion with about the mass of the Sun (1.02 M<sub>☉</sub>) squeezed into a sphere slightly smaller than Earth.</p>
+                  <p class="fact-source">Source: <a href="https://doi.org/10.3847/1538-4357/aa6af8" target="_blank" rel="noopener">Bond et al. 2017, ApJ 840, 70</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-bin">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">Binary stars</p>
+                  <p class="fact-stat">70%+</p>
+                  <h3 class="fact-teaser">Of massive stars will swap mass with a partner</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">Most massive O-type stars have a close companion, and more than 70% will exchange mass with it during their lives. That reshapes how they evolve, and how they explode.</p>
+                  <p class="fact-source">Source: <a href="https://doi.org/10.1126/science.1223344" target="_blank" rel="noopener">Sana et al. 2012, Science 337, 444</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-bin">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">Binary stars</p>
+                  <p class="fact-stat">2.87 days</p>
+                  <h3 class="fact-teaser">How often Algol, the ‘Demon Star’, fades</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">Algol is an eclipsing binary: every 2.87 days the fainter star passes in front of the brighter one. Oddly, its less massive star is the more evolved one, because it has already handed much of its mass to its partner.</p>
+                  <p class="fact-source">Source: The Algol paradox, a classic case of mass transfer</p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-sun">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">The Sun and stars</p>
+                  <p class="fact-stat">8 min 20 s</p>
+                  <h3 class="fact-teaser">Sunlight's journey to Earth</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">Light leaving the Sun's surface reaches us in about 8 minutes 20 seconds. But the energy it carries spent somewhere between 10,000 and 170,000 years scattering its way out from the core.</p>
+                  <p class="fact-source">Source: NASA</p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-sun">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">The Sun and stars</p>
+                  <p class="fact-stat">4 million tonnes</p>
+                  <h3 class="fact-teaser">The mass the Sun turns into light every second</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">The Sun fuses about 600 million tonnes of hydrogen into helium each second. The 4 million tonnes that go missing leave as energy, exactly as E = mc<sup>2</sup> says.</p>
+                  <p class="fact-source">Source: Worked out from the Sun's luminosity, 3.83 × 10<sup>26</sup> W</p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-sun">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">The Sun and stars</p>
+                  <p class="fact-stat">Past Mars</p>
+                  <h3 class="fact-teaser">Where Betelgeuse would reach if it replaced the Sun</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">The red supergiant on Orion's shoulder is roughly 700 times wider than the Sun. Put in the Sun's place, its surface would stretch beyond the orbit of Mars.</p>
+                  <p class="fact-source">Source: ESO and NASA</p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-bh">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">Neutron stars and black holes</p>
+                  <p class="fact-stat">716 turns/s</p>
+                  <h3 class="fact-teaser">The fastest-spinning neutron star known</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">The pulsar PSR J1748−2446ad, in the globular cluster Terzan 5, spins 716 times every second. A point on its equator moves at tens of thousands of kilometres per second.</p>
+                  <p class="fact-source">Source: <a href="https://doi.org/10.1126/science.1123430" target="_blank" rel="noopener">Hessels et al. 2006, Science 311, 1901</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-bh">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">Neutron stars and black holes</p>
+                  <p class="fact-stat">Billions of tonnes</p>
+                  <h3 class="fact-teaser">The weight of one teaspoon of neutron star</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">A neutron star crushes more than the Sun's mass into a ball about 20 km across. A teaspoon of it would weigh a few billion tonnes, several times the combined mass of every person alive.</p>
+                  <p class="fact-source">Source: Worked out from a typical neutron star density</p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-bh">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">Neutron stars and black holes</p>
+                  <p class="fact-stat">3 M<sub>☉</sub></p>
+                  <h3 class="fact-teaser">Turned into gravitational waves in a split second</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">On 14 September 2015 LIGO caught two black holes, of 36 and 29 solar masses, merging 1.3 billion light-years away. About three Suns' worth of mass left as ripples in spacetime in a fraction of a second.</p>
+                  <p class="fact-source">Source: <a href="https://doi.org/10.1103/PhysRevLett.116.061102" target="_blank" rel="noopener">LIGO and Virgo, Abbott et al. 2016, PRL 116, 061102</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-bh">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">Neutron stars and black holes</p>
+                  <p class="fact-stat">6.5 billion M<sub>☉</sub></p>
+                  <h3 class="fact-teaser">The first black hole ever photographed</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">In 2019 the Event Horizon Telescope, an Earth-sized network of radio dishes, imaged the shadow of the black hole at the heart of the galaxy M87, 55 million light-years away.</p>
+                  <p class="fact-source">Source: <a href="https://doi.org/10.3847/2041-8213/ab0ec7" target="_blank" rel="noopener">Event Horizon Telescope Collaboration 2019, ApJL 875, L1</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-cos">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">The Universe</p>
+                  <p class="fact-stat">1912</p>
+                  <h3 class="fact-teaser">The year a pulsing star became a cosmic ruler</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">Henrietta Swan Leavitt found that brighter Cepheid variables pulse more slowly. That let Edwin Hubble measure the distance to Andromeda in the 1920s and show it is a galaxy far beyond our own.</p>
+                  <p class="fact-source">Source: <a href="https://ui.adsabs.harvard.edu/abs/1912HarCi.173....1L/abstract" target="_blank" rel="noopener">Leavitt &amp; Pickering 1912, Harvard College Observatory Circular 173</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-cos">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">The Universe</p>
+                  <p class="fact-stat">2.725 K</p>
+                  <h3 class="fact-teaser">The temperature of the Big Bang’s afterglow</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">The cosmic microwave background is light released about 380,000 years after the Big Bang, when the Universe first became transparent. Today it fills all of space at just 2.725 degrees above absolute zero.</p>
+                  <p class="fact-source">Source: <a href="https://doi.org/10.1088/0004-637X/707/2/916" target="_blank" rel="noopener">Fixsen 2009, ApJ 707, 916</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-cos">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">The Universe</p>
+                  <p class="fact-stat">75,000 years</p>
+                  <h3 class="fact-teaser">Voyager 1's travel time to the nearest star</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">Proxima Centauri is 4.24 light-years away. At its 17 km/s, Voyager 1, one of the fastest spacecraft ever launched, would need about 75,000 years to cover that distance.</p>
+                  <p class="fact-source">Source: NASA/JPL</p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-cos">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">The Universe</p>
+                  <p class="fact-stat">243 days</p>
+                  <h3 class="fact-teaser">A day on Venus lasts longer than its year</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">Venus turns once every 243 Earth days, and backwards, but goes round the Sun in 225. So a Venusian day is longer than a Venusian year.</p>
+                  <p class="fact-source">Source: NASA</p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+          </div>
         </div>
-        <div class="fact-grid" id="fact-grid" aria-live="polite">
-          <article class="fact fact-wd">
-            <div class="fact-inner">
-              <div class="fact-face fact-front">
-                <p class="fact-topic">White dwarfs</p>
-                <p class="fact-stat">5 tonnes</p>
-                <h3 class="fact-teaser">The weight of one teaspoon of white dwarf</h3>
-                <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
-              <div class="fact-face fact-back">
-                <p class="fact-answer">A white dwarf packs about the Sun's mass into a ball the size of Earth, so its matter weighs roughly a tonne per cubic centimetre. Only the pressure of tightly packed electrons stops it collapsing further.</p>
-                <p class="fact-source">Source: Worked out from a typical white dwarf density</p>
-                <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
+
+        <div class="news-col" role="region" aria-labelledby="news-h">
+          <div class="facts-head">
+            <div>
+              <p class="facts-eyebrow news-eyebrow">What's new in research</p>
+              <h2 id="news-h">Fresh from arXiv</h2>
             </div>
-          </article>
-          <article class="fact fact-wd">
-            <div class="fact-inner">
-              <div class="fact-face fact-front">
-                <p class="fact-topic">White dwarfs</p>
-                <p class="fact-stat">97%</p>
-                <h3 class="fact-teaser">Of all stars will end their lives as white dwarfs</h3>
-                <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
-              <div class="fact-face fact-back">
-                <p class="fact-answer">Every star born with less than about 8 to 10 times the Sun's mass ends as a white dwarf. That includes the Sun, in roughly 5 billion years.</p>
-                <p class="fact-source">Source: <a href="https://doi.org/10.1086/319535" target="_blank" rel="noopener">Fontaine, Brassard &amp; Bergeron 2001, PASP 113, 409</a></p>
-                <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
-            </div>
-          </article>
-          <article class="fact fact-wd">
-            <div class="fact-inner">
-              <div class="fact-face fact-front">
-                <p class="fact-topic">White dwarfs</p>
-                <p class="fact-stat">1.4 M<sub>☉</sub></p>
-                <h3 class="fact-teaser">The heaviest a white dwarf can ever be</h3>
-                <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
-              <div class="fact-face fact-back">
-                <p class="fact-answer">Subrahmanyan Chandrasekhar worked out this limit in 1930, aged 19, on the voyage from India to England. Heavier remnants collapse into neutron stars or black holes. It earned him a share of the 1983 Nobel Prize in Physics.</p>
-                <p class="fact-source">Source: <a href="https://www.nobelprize.org/prizes/physics/1983/chandrasekhar/facts/" target="_blank" rel="noopener">The Nobel Prize in Physics 1983</a></p>
-                <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
-            </div>
-          </article>
-          <article class="fact fact-wd">
-            <div class="fact-inner">
-              <div class="fact-face fact-front">
-                <p class="fact-topic">White dwarfs</p>
-                <p class="fact-stat">Frozen</p>
-                <h3 class="fact-teaser">Old white dwarfs turn solid as they cool</h3>
-                <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
-              <div class="fact-face fact-back">
-                <p class="fact-answer">Gaia's measurements of thousands of nearby white dwarfs show a pile-up where their carbon–oxygen cores crystallise. The heat released as they freeze slows their cooling by up to 2 billion years.</p>
-                <p class="fact-source">Source: <a href="https://doi.org/10.1038/s41586-018-0791-x" target="_blank" rel="noopener">Tremblay et al. 2019, Nature 565, 202</a></p>
-                <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
-            </div>
-          </article>
-          <article class="fact fact-wd">
-            <div class="fact-inner">
-              <div class="fact-face fact-front">
-                <p class="fact-topic">White dwarfs</p>
-                <p class="fact-stat">Earth-sized</p>
-                <h3 class="fact-teaser">Sirius B, the hidden partner of the brightest star in the sky</h3>
-                <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
-              <div class="fact-face fact-back">
-                <p class="fact-answer">Sirius, the brightest star in the night sky, has a white dwarf companion with about the mass of the Sun (1.02 M<sub>☉</sub>) squeezed into a sphere slightly smaller than Earth.</p>
-                <p class="fact-source">Source: <a href="https://doi.org/10.3847/1538-4357/aa6af8" target="_blank" rel="noopener">Bond et al. 2017, ApJ 840, 70</a></p>
-                <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
-            </div>
-          </article>
-          <article class="fact fact-bin">
-            <div class="fact-inner">
-              <div class="fact-face fact-front">
-                <p class="fact-topic">Binary stars</p>
-                <p class="fact-stat">70%+</p>
-                <h3 class="fact-teaser">Of massive stars will swap mass with a partner</h3>
-                <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
-              <div class="fact-face fact-back">
-                <p class="fact-answer">Most massive O-type stars have a close companion, and more than 70% will exchange mass with it during their lives. That reshapes how they evolve, and how they explode.</p>
-                <p class="fact-source">Source: <a href="https://doi.org/10.1126/science.1223344" target="_blank" rel="noopener">Sana et al. 2012, Science 337, 444</a></p>
-                <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
-            </div>
-          </article>
-          <article class="fact fact-bin">
-            <div class="fact-inner">
-              <div class="fact-face fact-front">
-                <p class="fact-topic">Binary stars</p>
-                <p class="fact-stat">2.87 days</p>
-                <h3 class="fact-teaser">How often Algol, the ‘Demon Star’, fades</h3>
-                <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
-              <div class="fact-face fact-back">
-                <p class="fact-answer">Algol is an eclipsing binary: every 2.87 days the fainter star passes in front of the brighter one. Oddly, its less massive star is the more evolved one, because it has already handed much of its mass to its partner.</p>
-                <p class="fact-source">Source: The Algol paradox, a classic case of mass transfer</p>
-                <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
-            </div>
-          </article>
-          <article class="fact fact-sun">
-            <div class="fact-inner">
-              <div class="fact-face fact-front">
-                <p class="fact-topic">The Sun and stars</p>
-                <p class="fact-stat">8 min 20 s</p>
-                <h3 class="fact-teaser">Sunlight's journey to Earth</h3>
-                <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
-              <div class="fact-face fact-back">
-                <p class="fact-answer">Light leaving the Sun's surface reaches us in about 8 minutes 20 seconds. But the energy it carries spent somewhere between 10,000 and 170,000 years scattering its way out from the core.</p>
-                <p class="fact-source">Source: NASA</p>
-                <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
-            </div>
-          </article>
-          <article class="fact fact-sun">
-            <div class="fact-inner">
-              <div class="fact-face fact-front">
-                <p class="fact-topic">The Sun and stars</p>
-                <p class="fact-stat">4 million tonnes</p>
-                <h3 class="fact-teaser">The mass the Sun turns into light every second</h3>
-                <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
-              <div class="fact-face fact-back">
-                <p class="fact-answer">The Sun fuses about 600 million tonnes of hydrogen into helium each second. The 4 million tonnes that go missing leave as energy, exactly as E = mc<sup>2</sup> says.</p>
-                <p class="fact-source">Source: Worked out from the Sun's luminosity, 3.83 × 10<sup>26</sup> W</p>
-                <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
-            </div>
-          </article>
-          <article class="fact fact-sun">
-            <div class="fact-inner">
-              <div class="fact-face fact-front">
-                <p class="fact-topic">The Sun and stars</p>
-                <p class="fact-stat">Past Mars</p>
-                <h3 class="fact-teaser">Where Betelgeuse would reach if it replaced the Sun</h3>
-                <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
-              <div class="fact-face fact-back">
-                <p class="fact-answer">The red supergiant on Orion's shoulder is roughly 700 times wider than the Sun. Put in the Sun's place, its surface would stretch beyond the orbit of Mars.</p>
-                <p class="fact-source">Source: ESO and NASA</p>
-                <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
-            </div>
-          </article>
-          <article class="fact fact-bh">
-            <div class="fact-inner">
-              <div class="fact-face fact-front">
-                <p class="fact-topic">Neutron stars and black holes</p>
-                <p class="fact-stat">716 turns/s</p>
-                <h3 class="fact-teaser">The fastest-spinning neutron star known</h3>
-                <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
-              <div class="fact-face fact-back">
-                <p class="fact-answer">The pulsar PSR J1748−2446ad, in the globular cluster Terzan 5, spins 716 times every second. A point on its equator moves at tens of thousands of kilometres per second.</p>
-                <p class="fact-source">Source: <a href="https://doi.org/10.1126/science.1123430" target="_blank" rel="noopener">Hessels et al. 2006, Science 311, 1901</a></p>
-                <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
-            </div>
-          </article>
-          <article class="fact fact-bh">
-            <div class="fact-inner">
-              <div class="fact-face fact-front">
-                <p class="fact-topic">Neutron stars and black holes</p>
-                <p class="fact-stat">Billions of tonnes</p>
-                <h3 class="fact-teaser">The weight of one teaspoon of neutron star</h3>
-                <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
-              <div class="fact-face fact-back">
-                <p class="fact-answer">A neutron star crushes more than the Sun's mass into a ball about 20 km across. A teaspoon of it would weigh a few billion tonnes, several times the combined mass of every person alive.</p>
-                <p class="fact-source">Source: Worked out from a typical neutron star density</p>
-                <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
-            </div>
-          </article>
-          <article class="fact fact-bh">
-            <div class="fact-inner">
-              <div class="fact-face fact-front">
-                <p class="fact-topic">Neutron stars and black holes</p>
-                <p class="fact-stat">3 M<sub>☉</sub></p>
-                <h3 class="fact-teaser">Turned into gravitational waves in a split second</h3>
-                <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
-              <div class="fact-face fact-back">
-                <p class="fact-answer">On 14 September 2015 LIGO caught two black holes, of 36 and 29 solar masses, merging 1.3 billion light-years away. About three Suns' worth of mass left as ripples in spacetime in a fraction of a second.</p>
-                <p class="fact-source">Source: <a href="https://doi.org/10.1103/PhysRevLett.116.061102" target="_blank" rel="noopener">LIGO and Virgo, Abbott et al. 2016, PRL 116, 061102</a></p>
-                <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
-            </div>
-          </article>
-          <article class="fact fact-bh">
-            <div class="fact-inner">
-              <div class="fact-face fact-front">
-                <p class="fact-topic">Neutron stars and black holes</p>
-                <p class="fact-stat">6.5 billion M<sub>☉</sub></p>
-                <h3 class="fact-teaser">The first black hole ever photographed</h3>
-                <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
-              <div class="fact-face fact-back">
-                <p class="fact-answer">In 2019 the Event Horizon Telescope, an Earth-sized network of radio dishes, imaged the shadow of the black hole at the heart of the galaxy M87, 55 million light-years away.</p>
-                <p class="fact-source">Source: <a href="https://doi.org/10.3847/2041-8213/ab0ec7" target="_blank" rel="noopener">Event Horizon Telescope Collaboration 2019, ApJL 875, L1</a></p>
-                <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
-            </div>
-          </article>
-          <article class="fact fact-cos">
-            <div class="fact-inner">
-              <div class="fact-face fact-front">
-                <p class="fact-topic">The Universe</p>
-                <p class="fact-stat">1912</p>
-                <h3 class="fact-teaser">The year a pulsing star became a cosmic ruler</h3>
-                <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
-              <div class="fact-face fact-back">
-                <p class="fact-answer">Henrietta Swan Leavitt found that brighter Cepheid variables pulse more slowly. That let Edwin Hubble measure the distance to Andromeda in the 1920s and show it is a galaxy far beyond our own.</p>
-                <p class="fact-source">Source: <a href="https://ui.adsabs.harvard.edu/abs/1912HarCi.173....1L/abstract" target="_blank" rel="noopener">Leavitt &amp; Pickering 1912, Harvard College Observatory Circular 173</a></p>
-                <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
-            </div>
-          </article>
-          <article class="fact fact-cos">
-            <div class="fact-inner">
-              <div class="fact-face fact-front">
-                <p class="fact-topic">The Universe</p>
-                <p class="fact-stat">2.725 K</p>
-                <h3 class="fact-teaser">The temperature of the Big Bang’s afterglow</h3>
-                <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
-              <div class="fact-face fact-back">
-                <p class="fact-answer">The cosmic microwave background is light released about 380,000 years after the Big Bang, when the Universe first became transparent. Today it fills all of space at just 2.725 degrees above absolute zero.</p>
-                <p class="fact-source">Source: <a href="https://doi.org/10.1088/0004-637X/707/2/916" target="_blank" rel="noopener">Fixsen 2009, ApJ 707, 916</a></p>
-                <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
-            </div>
-          </article>
-          <article class="fact fact-cos">
-            <div class="fact-inner">
-              <div class="fact-face fact-front">
-                <p class="fact-topic">The Universe</p>
-                <p class="fact-stat">75,000 years</p>
-                <h3 class="fact-teaser">Voyager 1's travel time to the nearest star</h3>
-                <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
-              <div class="fact-face fact-back">
-                <p class="fact-answer">Proxima Centauri is 4.24 light-years away. At its 17 km/s, Voyager 1, one of the fastest spacecraft ever launched, would need about 75,000 years to cover that distance.</p>
-                <p class="fact-source">Source: NASA/JPL</p>
-                <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
-            </div>
-          </article>
-          <article class="fact fact-cos">
-            <div class="fact-inner">
-              <div class="fact-face fact-front">
-                <p class="fact-topic">The Universe</p>
-                <p class="fact-stat">243 days</p>
-                <h3 class="fact-teaser">A day on Venus lasts longer than its year</h3>
-                <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
-              <div class="fact-face fact-back">
-                <p class="fact-answer">Venus turns once every 243 Earth days, and backwards, but goes round the Sun in 225. So a Venusian day is longer than a Venusian year.</p>
-                <p class="fact-source">Source: NASA</p>
-                <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
-              </div>
-            </div>
-          </article>
+            <a class="btn btn-ghost" href="https://arxiv.org/list/astro-ph/new" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-doc"/></svg>All new papers</a>
+          </div>
+          <p class="section-intro">Three new astrophysics papers, explained in plain words. <span class="news-updated" id="news-updated">Updated every morning.</span></p>
+          <div class="news-list" id="news-list">
+            <div class="news-card news-skeleton" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+            <div class="news-card news-skeleton" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+            <div class="news-card news-skeleton" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+          </div>
+          <noscript><p class="news-credit"><a href="https://arxiv.org/list/astro-ph/new">See today's new astrophysics papers on arXiv</a></p></noscript>
+          <p class="news-credit" id="news-credit">Summaries are written by Claude, an AI model, from each paper's abstract, so they leave out detail: the paper has the full story. Thank you to arXiv for use of its open access interoperability.</p>
         </div>
       </div>
     </section>
@@ -933,10 +955,11 @@
     <p id="lightbox-cap"></p>
   </dialog>
 
-  <script src="assets/js/vendor/lenis.min.js?v=20260925c" defer></script>
-  <script src="assets/js/sky.js?v=20260925c" defer></script>
-  <script src="assets/js/orbits.js?v=20260925c" defer></script>
-  <script src="assets/js/facts.js?v=20260925c" defer></script>
-  <script src="assets/js/site.js?v=20260925c" defer></script>
+  <script src="assets/js/vendor/lenis.min.js?v=20260926f" defer></script>
+  <script src="assets/js/sky.js?v=20260926f" defer></script>
+  <script src="assets/js/orbits.js?v=20260926f" defer></script>
+  <script src="assets/js/facts.js?v=20260926f" defer></script>
+  <script src="assets/js/news.js?v=20260926f" defer></script>
+  <script src="assets/js/site.js?v=20260926f" defer></script>
 </body>
 </html>

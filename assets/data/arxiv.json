@@ -1,0 +1,41 @@
+{
+  "updated": "2026-09-26T06:00:00Z",
+  "newest": "2609.30267",
+  "plain": true,
+  "summarised_by": "Claude",
+  "papers": [
+    {
+      "id": "2609.30230",
+      "headline": "How a star can keep feeding on its partner",
+      "summary": "Many stars live in close pairs and pass gas from one to the other. Models said the receiving star spins so fast after gaining a little that it cannot take any more, yet real stars show they gained a lot. This study suggests a disc of gas around the star carries the extra spin away, letting it keep growing.",
+      "topic": "Stars",
+      "title": "Disc-mediated angular momentum transport resolves the mass-gain problem in rotating binaries",
+      "authors": "S. Ljung, A. Gilkis, S. Tacchella",
+      "category": "astro-ph.SR",
+      "published": "2026-09-24",
+      "url": "https://arxiv.org/abs/2609.30230"
+    },
+    {
+      "id": "2609.30051",
+      "headline": "The Sun's tiniest whirlpools, seen for the first time",
+      "summary": "Computer models predicted small spinning whirlpools of gas on the Sun's surface, under 50 km across, but no telescope was sharp enough to see them. The 4-metre DKIST solar telescope has now spotted 201 of them, about 40 km wide, each turning in roughly half a minute. Whirlpools like these are thought to help carry energy up into the Sun's hot outer atmosphere.",
+      "topic": "The Sun",
+      "title": "DKIST unveils MHD-predicted sub-50 km photospheric vortices",
+      "authors": "S. Vargas Dominguez et al.",
+      "category": "astro-ph.SR",
+      "published": "2026-09-24",
+      "url": "https://arxiv.org/abs/2609.30051"
+    },
+    {
+      "id": "2609.29852",
+      "headline": "A possible 'failed galaxy' made almost entirely of dark matter",
+      "summary": "China's giant FAST radio telescope found a small cloud of hydrogen gas with no stars seen in it. The way the gas moves shows the cloud holds about 200 times more dark matter than ordinary matter. It may be a failed galaxy: a clump of dark matter that gathered gas but never made stars.",
+      "topic": "Galaxies",
+      "title": "Discovery of an isolated RELHIC Candidate: J1351+0039",
+      "authors": "J. Xu et al.",
+      "category": "astro-ph.GA",
+      "published": "2026-09-24",
+      "url": "https://arxiv.org/abs/2609.29852"
+    }
+  ]
+}
