@@ -1,0 +1,41 @@
+{
+  "updated": "2026-09-28T16:07:46Z",
+  "newest": "2609.31611",
+  "plain": false,
+  "summarised_by": null,
+  "papers": [
+    {
+      "id": "2609.31611",
+      "headline": "A Multidimensional General-Relativistic Boltzmann Solver for Neutrino Transport: Implementation, Discretization and Optimization",
+      "summary": "We present the implementation of a multidimensional general-relativistic Boltzmann solver for neutrino transport using the finite volume method. We extend the general-relativistic magnetohydrodynamics solver ttGmunu to discretize the full 6D phase space.",
+      "topic": "Black holes",
+      "title": "A Multidimensional General-Relativistic Boltzmann Solver for Neutrino Transport: Implementation, Discretization and Optimization",
+      "authors": "A. Offermans et al.",
+      "category": "astro-ph.HE",
+      "published": "2026-09-25",
+      "url": "https://arxiv.org/abs/2609.31611"
+    },
+    {
+      "id": "2609.31580",
+      "headline": "Inclination of Miranda as a Constraint on the Tidal Dissipation of Uranus",
+      "summary": "The five major moons of Uranus record a complicated geological history characterized by both tectonic resurfacing and heavy impact cratering, connecting their evolution to dynamical processes in the Solar System.",
+      "topic": "Planets",
+      "title": "Inclination of Miranda as a Constraint on the Tidal Dissipation of Uranus",
+      "authors": "M. E. Moutamid, M. Ćuk",
+      "category": "astro-ph.EP",
+      "published": "2026-09-25",
+      "url": "https://arxiv.org/abs/2609.31580"
+    },
+    {
+      "id": "2609.31565",
+      "headline": "A Comprehensive Study of the Magnetic White Dwarfs in DESI DR1",
+      "summary": "As the end point of stellar evolution for most stars, white dwarfs offer powerful insight into stellar magnetism.",
+      "topic": "Stars",
+      "title": "A Comprehensive Study of the Magnetic White Dwarfs in DESI DR1",
+      "authors": "A. Moss et al.",
+      "category": "astro-ph.SR",
+      "published": "2026-09-25",
+      "url": "https://arxiv.org/abs/2609.31565"
+    }
+  ]
+}
