@@ -72,6 +72,11 @@ the fallback copy on the site itself.
 
 The Action never commits to `main`, so pushing the site from your computer works exactly as before.
 
+If arXiv's search API refuses the request (it sometimes throttles GitHub's shared servers), the script
+uses arXiv's RSS feed instead. If neither answers, it keeps the current papers and ends with a warning
+rather than failing. Any problem, such as arXiv being down, a rejected API key or credit running out, is
+written as an annotation on the run, so it shows on the run page and in GitHub's email without signing in.
+
 **One-time setup** (on github.com, in this repository):
 
 1. Settings → Secrets and variables → Actions → New repository secret. Name `ANTHROPIC_API_KEY`, value: an
@@ -81,7 +86,8 @@ The Action never commits to `main`, so pushing the site from your computer works
 3. Optional: a repository *variable* `CLAUDE_MODEL` to use a different Claude model. The default is Claude
    Sonnet 5 (`claude-sonnet-5`), set at the top of `scripts/update_arxiv.py`.
 
-To try the script locally: `ANTHROPIC_API_KEY=... python3 scripts/update_arxiv.py --out /tmp/arxiv.json`.
+To try the script locally: `pip install anthropic`, then
+`ANTHROPIC_API_KEY=... python3 scripts/update_arxiv.py --out /tmp/arxiv.json` (without a key it needs no install).
 
 ## Preview locally
 

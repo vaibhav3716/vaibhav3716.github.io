@@ -7,6 +7,8 @@
 #
 # Needs a repository secret ANTHROPIC_API_KEY (Settings → Secrets and variables → Actions).
 # Without it the papers still update, showing the start of each abstract instead.
+# If arXiv can't be reached the current papers are kept and the run ends with a warning;
+# problems show as annotations on the run page and in the notification email.
 # Optional repository variable CLAUDE_MODEL to use a different model.
 
 name: What's new in research
@@ -29,7 +31,15 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Check out the site (for the script)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Install the Anthropic library
+        run: python -m pip install --quiet --disable-pip-version-check anthropic
 
       - name: Check out the research-feed branch, or start it
         env:
@@ -44,11 +54,12 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           CLAUDE_MODEL: ${{ vars.CLAUDE_MODEL }}
-        run: python3 scripts/update_arxiv.py --out "$RUNNER_TEMP/feed/arxiv.json"
+        run: python scripts/update_arxiv.py --out "$RUNNER_TEMP/feed/arxiv.json"
 
       - name: Publish
         working-directory: ${{ runner.temp }}/feed
         run: |
+          if [ ! -f arxiv.json ]; then echo "Nothing to publish yet"; exit 0; fi
           git add arxiv.json
           if git diff --cached --quiet; then echo "Nothing new today"; exit 0; fi
           git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
