@@ -1,41 +1,41 @@
 {
-  "updated": "2026-09-28T16:07:46Z",
-  "newest": "2609.31611",
+  "updated": "2026-09-29T07:23:39Z",
+  "newest": "2609.35757",
   "plain": false,
   "summarised_by": null,
   "papers": [
     {
-      "id": "2609.31611",
-      "headline": "A Multidimensional General-Relativistic Boltzmann Solver for Neutrino Transport: Implementation, Discretization and Optimization",
-      "summary": "We present the implementation of a multidimensional general-relativistic Boltzmann solver for neutrino transport using the finite volume method. We extend the general-relativistic magnetohydrodynamics solver ttGmunu to discretize the full 6D phase space.",
-      "topic": "Black holes",
-      "title": "A Multidimensional General-Relativistic Boltzmann Solver for Neutrino Transport: Implementation, Discretization and Optimization",
-      "authors": "A. Offermans et al.",
-      "category": "astro-ph.HE",
-      "published": "2026-09-25",
-      "url": "https://arxiv.org/abs/2609.31611"
+      "id": "2609.35757",
+      "headline": "Can Fingers of God be Resummed?",
+      "summary": "Fingers of God (FoGs), Doppler shifts due to the small-scale virial motions of galaxies, are one of the most significant challenges for analytic models of galaxy clustering in redshift surveys.",
+      "topic": "Cosmology",
+      "title": "Can Fingers of God be Resummed?",
+      "authors": "S. Chen, A. Aviles",
+      "category": "astro-ph.CO",
+      "published": "2026-09-28",
+      "url": "https://arxiv.org/abs/2609.35757"
     },
     {
-      "id": "2609.31580",
-      "headline": "Inclination of Miranda as a Constraint on the Tidal Dissipation of Uranus",
-      "summary": "The five major moons of Uranus record a complicated geological history characterized by both tectonic resurfacing and heavy impact cratering, connecting their evolution to dynamical processes in the Solar System.",
+      "id": "2609.35747",
+      "headline": "A temperate sub-Neptune transiting the M4 Dwarf TOI-210 identified by NIRPS and TESS – Uncovering hidden M-dwarf planetary systems in the near-infrared",
+      "summary": "Super-Earths and sub-Neptunes dominate the exoplanet population, yet their compositions, formation mechanisms, and capability of retaining atmospheres remain poorly understood.",
       "topic": "Planets",
-      "title": "Inclination of Miranda as a Constraint on the Tidal Dissipation of Uranus",
-      "authors": "M. E. Moutamid, M. Ćuk",
+      "title": "A temperate sub-Neptune transiting the M4 Dwarf TOI-210 identified by NIRPS and TESS – Uncovering hidden M-dwarf planetary systems in the near-infrared",
+      "authors": "C. Cadieux et al.",
       "category": "astro-ph.EP",
-      "published": "2026-09-25",
-      "url": "https://arxiv.org/abs/2609.31580"
+      "published": "2026-09-28",
+      "url": "https://arxiv.org/abs/2609.35747"
     },
     {
-      "id": "2609.31565",
-      "headline": "A Comprehensive Study of the Magnetic White Dwarfs in DESI DR1",
-      "summary": "As the end point of stellar evolution for most stars, white dwarfs offer powerful insight into stellar magnetism.",
-      "topic": "Stars",
-      "title": "A Comprehensive Study of the Magnetic White Dwarfs in DESI DR1",
-      "authors": "A. Moss et al.",
-      "category": "astro-ph.SR",
-      "published": "2026-09-25",
-      "url": "https://arxiv.org/abs/2609.31565"
+      "id": "2609.35733",
+      "headline": "Fast radio burst - persistent radio source systems III. The relation bewteen PRS luminosity and FRB rotation measure",
+      "summary": "Fast radio bursts (FRBs) are millisecond-duration radio transients of extragalactic origin whose physical origin remains uncertain.",
+      "topic": "Black holes",
+      "title": "Fast radio burst - persistent radio source systems III. The relation bewteen PRS luminosity and FRB rotation measure",
+      "authors": "D. Pelliciari et al.",
+      "category": "astro-ph.HE",
+      "published": "2026-09-28",
+      "url": "https://arxiv.org/abs/2609.35733"
     }
   ]
 }
