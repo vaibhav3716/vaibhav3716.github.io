@@ -980,6 +980,18 @@ body { counter-reset: section; }
 }
 .img-right .quote-panel-img { right: 0; }
 .img-left .quote-panel-img { left: 0; }
+/* The image dissolves into the black on every side, so its edges never show as a hard rectangle
+   (the Pillars in particular fill their frame with bright gas right to the edge) */
+.quote-panel-img {
+  --fade-x: linear-gradient(90deg, transparent 0%, #000 42%);
+  --fade-y: linear-gradient(180deg, transparent 6%, #000 24%, #000 76%, transparent 94%);
+  -webkit-mask-image: var(--fade-x), var(--fade-y); -webkit-mask-composite: source-in;
+  mask-image: var(--fade-x), var(--fade-y); mask-composite: intersect;
+}
+.img-left .quote-panel-img { --fade-x: linear-gradient(270deg, transparent 0%, #000 42%); }
+/* Show the Pillars whole, tips included, and calm the bright teal so the quote stays the focus */
+.quote-pillars .quote-panel-img { background-position: 42% 18%; filter: saturate(.85) brightness(.82); }
+.quote-pillars { min-height: clamp(460px, 70vh, 680px); }
 .quote-panel::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; }
 .img-right::after { background: linear-gradient(90deg, #03050B 0%, #03050B 36%, rgba(3, 5, 11, .75) 48%, rgba(3, 5, 11, .1) 72%, rgba(3, 5, 11, .25) 100%); }
 .img-left::after  { background: linear-gradient(270deg, #03050B 0%, #03050B 36%, rgba(3, 5, 11, .75) 48%, rgba(3, 5, 11, .1) 72%, rgba(3, 5, 11, .25) 100%); }
@@ -1004,6 +1016,9 @@ body { counter-reset: section; }
 @media (max-width: 759.98px) {
   .quote-panel { min-height: 0; align-items: end; }
   .quote-panel-img { width: 100%; left: 0; right: 0; background-image: var(--img-small); }
+  .quote-panel-img, .img-left .quote-panel-img { --fade-x: linear-gradient(#000, #000); --fade-y: linear-gradient(180deg, transparent 4%, #000 20%, #000 50%, transparent 86%); }
+  .quote-pillars { min-height: 0; }
+  .quote-pillars .quote-panel-img { background-position: 45% 12%; }
   .img-right::after, .img-left::after { background: linear-gradient(180deg, rgba(3, 5, 11, .25) 0%, rgba(3, 5, 11, .55) 45%, #03050B 88%); }
   .quote-panel-inner { padding-top: 16rem; padding-bottom: 4.5rem; }
   .img-left .quote-panel-inner { justify-items: start; text-align: left; }
