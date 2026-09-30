@@ -1,41 +1,41 @@
 {
-  "updated": "2026-09-29T07:23:39Z",
-  "newest": "2609.35757",
+  "updated": "2026-09-30T07:13:37Z",
+  "newest": "2609.38179",
   "plain": false,
   "summarised_by": null,
   "papers": [
     {
-      "id": "2609.35757",
-      "headline": "Can Fingers of God be Resummed?",
-      "summary": "Fingers of God (FoGs), Doppler shifts due to the small-scale virial motions of galaxies, are one of the most significant challenges for analytic models of galaxy clustering in redshift surveys.",
-      "topic": "Cosmology",
-      "title": "Can Fingers of God be Resummed?",
-      "authors": "S. Chen, A. Aviles",
-      "category": "astro-ph.CO",
-      "published": "2026-09-28",
-      "url": "https://arxiv.org/abs/2609.35757"
+      "id": "2609.38179",
+      "headline": "LYRA: The formation and growth of nuclear star clusters in dwarf galaxies",
+      "summary": "Nuclear star clusters (NSCs) are dense massive star clusters ubiquitous in galactic centres across various mass regimes, present in up to ∼30 per cent of dwarf galaxies with M_star<10⁷ M☉.",
+      "topic": "Galaxies",
+      "title": "LYRA: The formation and growth of nuclear star clusters in dwarf galaxies",
+      "authors": "J. Sureda et al.",
+      "category": "astro-ph.GA",
+      "published": "2026-09-29",
+      "url": "https://arxiv.org/abs/2609.38179"
     },
     {
-      "id": "2609.35747",
-      "headline": "A temperate sub-Neptune transiting the M4 Dwarf TOI-210 identified by NIRPS and TESS – Uncovering hidden M-dwarf planetary systems in the near-infrared",
-      "summary": "Super-Earths and sub-Neptunes dominate the exoplanet population, yet their compositions, formation mechanisms, and capability of retaining atmospheres remain poorly understood.",
+      "id": "2609.38128",
+      "headline": "Atmospheric dynamics and variability of periodically irradiated tidally locked planets",
+      "summary": "Time-variable stellar heating may create new climate states, such as permanently hot or cold hemispheres, on asynchronous planets.",
       "topic": "Planets",
-      "title": "A temperate sub-Neptune transiting the M4 Dwarf TOI-210 identified by NIRPS and TESS – Uncovering hidden M-dwarf planetary systems in the near-infrared",
-      "authors": "C. Cadieux et al.",
+      "title": "Atmospheric dynamics and variability of periodically irradiated tidally locked planets",
+      "authors": "D. Banik et al.",
       "category": "astro-ph.EP",
-      "published": "2026-09-28",
-      "url": "https://arxiv.org/abs/2609.35747"
+      "published": "2026-09-29",
+      "url": "https://arxiv.org/abs/2609.38128"
     },
     {
-      "id": "2609.35733",
-      "headline": "Fast radio burst - persistent radio source systems III. The relation bewteen PRS luminosity and FRB rotation measure",
-      "summary": "Fast radio bursts (FRBs) are millisecond-duration radio transients of extragalactic origin whose physical origin remains uncertain.",
-      "topic": "Black holes",
-      "title": "Fast radio burst - persistent radio source systems III. The relation bewteen PRS luminosity and FRB rotation measure",
-      "authors": "D. Pelliciari et al.",
-      "category": "astro-ph.HE",
-      "published": "2026-09-28",
-      "url": "https://arxiv.org/abs/2609.35733"
+      "id": "2609.38110",
+      "headline": "Gravitational-wave dark sirens as astrophysical probes: inferring galaxy-merger relations and identifying individual hosts",
+      "summary": "Gravitational-wave (GW) ``dark siren'' techniques, namely the statistical association of GW events with a galaxy catalog, have so far been used as a cosmological tool.",
+      "topic": "Cosmology",
+      "title": "Gravitational-wave dark sirens as astrophysical probes: inferring galaxy-merger relations and identifying individual hosts",
+      "authors": "A. Agapito, M. Mancarella",
+      "category": "astro-ph.CO",
+      "published": "2026-09-29",
+      "url": "https://arxiv.org/abs/2609.38110"
     }
   ]
 }
