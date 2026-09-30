@@ -438,7 +438,20 @@ body { counter-reset: section; }
 
 /* Portrait at the centre of an engraved solar system, beside the About text */
 .orbit-stage { position: relative; width: min(100%, 440px); aspect-ratio: 1; margin: 1rem auto 1.5rem; }
-@media (min-width: 860px) { .orbit-stage { width: clamp(340px, 45vw, 580px); margin: 2.5rem 0; } }
+@media (min-width: 860px) { .orbit-stage { width: clamp(320px, 36vw, 480px); margin: 1.5rem 0; } }
+/* About: short enough to read beside the photo in one view; the details live in the sections it links to */
+.about-prose p { margin-bottom: 1rem; }
+.about-prose .about-lead { font-size: 1.08em; color: var(--ink); }
+.about-jump { list-style: none; padding: 0; margin: 1.5rem 0 0; display: flex; flex-wrap: wrap; gap: .6rem; }
+.about-jump a {
+  display: inline-flex; align-items: center; gap: .4rem; min-height: 40px; padding: .45rem .95rem;
+  border: 1px solid var(--rule); border-radius: 999px; color: var(--ink); text-decoration: none; font-size: .92rem;
+  transition: border-color .2s, background-color .2s, translate .2s;
+}
+.about-jump a:hover, .about-jump a:focus-visible { border-color: var(--ms); translate: 0 -2px; }
+.about-jump .icon { width: .95em; height: .95em; transition: translate .2s; }
+.about-jump a:hover .icon { translate: 3px 0; }
+@media (prefers-reduced-motion: reduce) { .about-jump a, .about-jump .icon { transition: none; } }
 /* The canvas overhangs the stage so the outer planets have room (less on phones, to stay inside the page) */
 .orbit-canvas { position: absolute; left: -4%; top: -4%; width: 108%; height: 108%; pointer-events: none; }
 @media (min-width: 860px) { .orbit-canvas { left: -7%; top: -7%; width: 114%; height: 114%; } }
