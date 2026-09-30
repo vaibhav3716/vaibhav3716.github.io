@@ -554,6 +554,8 @@ body { counter-reset: section; }
 @media (min-width: 760px) { .result-list { grid-template-columns: 1fr 1fr; } }
 .result-list li { padding-left: 1.1rem; border-left: 2px solid var(--ms); color: var(--ink-2); }
 .result-list strong { color: var(--ink); font-weight: 600; }
+.contrib { margin-top: -1rem; margin-bottom: 3.5rem; }
+.contrib-note { margin: 1.25rem 0 0; max-width: 72ch; color: var(--ink-2); font-style: italic; }
 
 .paper-card { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 1.5rem 0; margin-bottom: 4rem; max-width: 80ch; }
 .paper-status { font-size: .9rem; color: var(--ms); font-weight: 500; margin-bottom: .4rem; }

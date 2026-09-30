@@ -18,11 +18,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
-  <link rel="stylesheet" href="assets/js/vendor/lenis.css?v=20261001c">
-  <link rel="stylesheet" href="assets/css/site.css?v=20261001c">
+  <link rel="stylesheet" href="assets/js/vendor/lenis.css?v=20261001d">
+  <link rel="stylesheet" href="assets/css/site.css?v=20261001d">
 
   <!-- Picks the theme from day or night where the visitor is, before the first paint -->
-  <script src="assets/js/daynight.js?v=20261001c"></script>
+  <script src="assets/js/daynight.js?v=20261001d"></script>
 
   <script type="application/ld+json">
   {
@@ -178,17 +178,17 @@
           <canvas class="orbit-canvas" aria-hidden="true"></canvas>
           <figure class="portrait">
             <picture>
-              <source srcset="assets/img/portrait.webp?v=20261001c" type="image/webp">
-              <img src="assets/img/portrait.jpg?v=20261001c" width="900" height="900" loading="lazy" alt="Portrait of Vaibhav Yenare, smiling">
+              <source srcset="assets/img/portrait.webp?v=20261001d" type="image/webp">
+              <img src="assets/img/portrait.jpg?v=20261001d" width="900" height="900" loading="lazy" alt="Portrait of Vaibhav Yenare, smiling">
             </picture>
           </figure>
         </div>
         <div class="about-text">
           <h2 id="about-h">About</h2>
           <div class="prose">
-            <p>I have loved physics for as long as I can remember. It still delights me that the same handful of laws describes a boiling kettle, a spinning top and a star collapsing under its own weight. Astrophysics is where I get to use nearly all of them at once, which is why I ended up here.</p>
-            <p>At the Tata Institute of Fundamental Research, I'm building a catalogue of white dwarf–main sequence binaries: pairs in which a white dwarf, the Earth-sized core of a dead star, orbits an ordinary star that outshines it in visible light. By combining ultraviolet data from GALEX with optical data from Gaia, I have found more than five thousand of these systems. The project began as my MSc thesis and refused to stay small.</p>
-            <p>Along the way I have worked across the spectrum: the outbursts of the black hole binary 4U&nbsp;1630–47 in archival RXTE data, a black hole's spin from NuSTAR X-ray spectra, radio lines from a dying star's envelope with the VLA, e-MERLIN and EVN images of an active galaxy, and gravitational waves from merging black holes. I enjoy picking up a new technique as much as applying a familiar one, and I'm open to good problems in any corner of astrophysics.</p>
+            <p>My path to astrophysics began with equations rather than a telescope. I was drawn to physics for its rigour, and as an undergraduate I realised that the laws we test in a laboratory also decide how stars live and die. The moment it clicked was learning that Fermi–Dirac statistics, a rule for how electrons behave at the smallest scales, is exactly what stops a white dwarf from collapsing under its own weight. Since then I have seen the Universe as a natural laboratory for fundamental physics, and I haven't stopped enjoying the view.</p>
+            <p>At the Tata Institute of Fundamental Research, with Prof. Sourav Chatterjee, I'm building a catalogue of white dwarf–main sequence binaries: pairs in which a white dwarf, the Earth-sized core of a dead star, orbits an ordinary star that outshines it in visible light. By combining ultraviolet data from GALEX with optical data from Gaia, I have found more than five thousand of these systems. The project began as my MSc thesis and refused to stay small: a first-author paper is now in preparation, and its abstract was selected for a poster at the 2026 meeting of the Astronomical Society of India.</p>
+            <p>Along the way I have worked across the spectrum: the outbursts of the black hole binary 4U&nbsp;1630–47 in archival RXTE data, a black hole's spin from NuSTAR X-ray spectra, molecular lines from a carbon star's envelope with the VLA, e-MERLIN and EVN images of an active galaxy, the kinematics of active galactic nuclei, and gravitational waves from merging black holes. The methods travel well: fitting a spectral energy distribution uses the same statistics whether the source is a pair of stars or a whole galaxy. I enjoy picking up a new technique as much as applying a familiar one, and I'm open to good problems in any corner of astrophysics.</p>
             <p>Teaching is the other half of my working life, and the half I would least like to give up. At B.K. Birla College, Kalyan, I teach undergraduate physics, and my favourite moment in any lecture is when a student stops copying an equation and starts questioning it. Explaining time dilation at nine in the morning remains an experiment in its own right.</p>
             <p>If you'd like to talk about research, teaching or the sky, <a href="#contact">I'd be glad to hear from you</a>.</p>
           </div>
@@ -275,6 +275,16 @@
           </ol>
         </div>
 
+        <!-- What I changed in the method -->
+        <div class="results contrib">
+          <h4>Two problems I had to solve</h4>
+          <ul class="result-list">
+            <li><strong>Selection cuts built from the data.</strong> Standard selection criteria were excluding viable candidates in this dataset. Rather than relying on clustering filters, I set the cuts by studying where the stars actually fall in the colour–magnitude diagrams, which gave a more complete and more robust sample.</li>
+            <li><strong>Fitting without a known metallicity.</strong> VOSA, the standard fitting tool, could not handle the missing metallicities. I split the fit in two: first constrain the metallicity from models of the main sequence companion, then use it as a prior when fitting both stars together.</li>
+          </ul>
+          <p class="contrib-note">Both taught me that a solution often needs a closer look at the physics rather than more code, and that a result is only as good as one's understanding of the data's systematics.</p>
+        </div>
+
         <!-- Figures from the paper -->
         <div class="figures">
           <figure class="fig fig-tall">
@@ -313,7 +323,7 @@
         </div>
 
         <div class="paper-card">
-          <p class="paper-status">Manuscript in preparation for <em>The Astrophysical Journal</em></p>
+          <p class="paper-status">Manuscript in preparation for <em>The Astrophysical Journal</em>. Abstract selected for a poster at <a href="https://astron-soc.in/asi2026/sites/default/files/Bpage_file/ASI2026_StarsInterstellarMediumAstrochemistryMilkyWay.pdf" target="_blank" rel="noopener">ASI&nbsp;2026</a>.</p>
           <p class="paper-cite"><strong>Yenare, V.</strong>, Chatterjee, S., Ganguly, A., Nayak, P. K. <span class="paper-title">White Dwarf–Main Sequence Binaries Using Multi-band Photometry: Discovery and Characterisation.</span></p>
         </div>
 
@@ -358,10 +368,10 @@
             </div>
           </li>
           <li class="project" data-band="radio">
-            <div class="project-band"><span class="band band-radio">Radio</span><span class="instr">VLA, CASA</span></div>
+            <div class="project-band"><span class="band band-radio">Radio</span><span class="instr">VLA, CASA, CARTA</span></div>
             <div class="project-body">
               <h3>SiS molecular lines in IRC+10216</h3>
-              <p>I reduced VLA observations of the carbon star IRC+10216 in CASA, including flagging and calibration, and extracted spectral lines of SiS from its circumstellar envelope.</p>
+              <p>I replicated a published study of molecular tracers in the carbon star IRC+10216: I calibrated the VLA visibility data in CASA, including flagging, extracted spectral lines of SiS from its circumstellar envelope, and examined the data cubes in CARTA.</p>
               <a class="text-link" href="https://drive.google.com/file/d/1ZWDKzQvkwh5Q60iIDB2LlTjkf6-MScpU/view?usp=drive_link" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-doc"/></svg>Project report</a>
             </div>
           </li>
@@ -412,6 +422,7 @@
           <div>
             <h3>Posters and awards</h3>
             <ul class="plain-list award-list">
+              <li><strong>Tracing White Dwarf–Main Sequence Binaries Using Multi-band UV–Optical Photometry</strong><span>44th Annual Meeting of the Astronomical Society of India (ASI&nbsp;2026), IIT Guwahati. Abstract selected for a poster presentation (ASI2026_466). <a href="https://astron-soc.in/asi2026/sites/default/files/Bpage_file/ASI2026_StarsInterstellarMediumAstrochemistryMilkyWay.pdf" target="_blank" rel="noopener">List of selected abstracts</a></span></li>
               <li><strong>Spin Estimation of M33 X-8 Black Hole by Spectrum Analysis</strong><span>PROBE 2025. Excellent grade for the presentation.</span></li>
               <li><strong>Simulation of the Double-Slit Experiment using the Crank–Nicolson Method</strong><span>PROBE 2024. First prize for poster presentation.</span></li>
               <li><strong>Demonstration of Linear Accelerators using Simple Magnets</strong><span>JIGYASA 2023.</span></li>
@@ -1290,11 +1301,11 @@
     <p id="lightbox-cap"></p>
   </dialog>
 
-  <script src="assets/js/vendor/lenis.min.js?v=20261001c" defer></script>
-  <script src="assets/js/sky.js?v=20261001c" defer></script>
-  <script src="assets/js/orbits.js?v=20261001c" defer></script>
-  <script src="assets/js/facts.js?v=20261001c" defer></script>
-  <script src="assets/js/news.js?v=20261001c" defer></script>
-  <script src="assets/js/site.js?v=20261001c" defer></script>
+  <script src="assets/js/vendor/lenis.min.js?v=20261001d" defer></script>
+  <script src="assets/js/sky.js?v=20261001d" defer></script>
+  <script src="assets/js/orbits.js?v=20261001d" defer></script>
+  <script src="assets/js/facts.js?v=20261001d" defer></script>
+  <script src="assets/js/news.js?v=20261001d" defer></script>
+  <script src="assets/js/site.js?v=20261001d" defer></script>
 </body>
 </html>
