@@ -227,7 +227,7 @@
   }
 
   function loadCatalogue() {
-    fetch('assets/data/sky-data.json?v=20260924c').then(function (r) { return r.json(); }).then(function (data) {
+    fetch('assets/data/sky-data.json?v=20260930a').then(function (r) { return r.json(); }).then(function (data) {
       var stars = [];
       for (var i = 0; i < data.stars.length; i += 4) {
         var c = bvColour(data.stars[i + 3]);
@@ -235,7 +235,8 @@
         stars.push({ v: vec(data.stars[i], data.stars[i + 1]), mag: data.stars[i + 2], bv: data.stars[i + 3],
           col: 'rgba(' + (c[0] | 0) + ',' + (c[1] | 0) + ',' + (c[2] | 0) + ',', tw: Math.random() * 6.28,
           name: (data.names && data.names[idx]) || '', desig: (data.desig && data.desig[idx]) || '',
-          con: (data.conNames && data.con && data.conNames[data.con[idx]]) || '' });
+          con: (data.conNames && data.con && data.conNames[data.con[idx]]) || '',
+          wiki: (data.wiki && data.wiki[idx]) || '' });
       }
       var lines = [];
       Object.keys(data.lines).forEach(function (k) {
@@ -249,10 +250,83 @@
         // jitter the 2-degree sampling grid so it doesn't show
         for (var q = 0; q < 2; q++) mw.push({ v: vec(data.mw[m] + (Math.random() - 0.5) * 2.4, data.mw[m + 1] + (Math.random() - 0.5) * 2.4), l: data.mw[m + 2] });
       }
-      CAT = { stars: stars, lines: lines, cons: cons, mw: mw };
+      // Every constellation, for identifying it when its name is clicked
+      var allCons = data.cons.map(function (c) {
+        return { v: vec(c[2], c[3]), abbr: c[0], name: c[1], rank: c[4],
+          english: (data.conEnglish && data.conEnglish[c[0]]) || '', wiki: (data.conWiki && data.conWiki[c[0]]) || '' };
+      });
+      CAT = { stars: stars, lines: lines, cons: cons, allCons: allCons, mw: mw };
       if (!tween) view = viewFor(theta);
       draw(performance.now());
     }).catch(function () { /* the Sun, Moon and planets still render without the catalogue */ });
+  }
+
+  // ---------------------------------------------------------------
+  // Constellation art: Stellarium's illustrations (Free Art License), each pinned to the sky by
+  // three stars. The drawing is stretched so its three anchor points land on those stars.
+  // Loaded only when someone switches it on.
+  // ---------------------------------------------------------------
+  var ART = null, artOn = false, artLoading = false;
+  var artBtn = document.getElementById('sky-art');
+  function loadArt() {
+    if (ART || artLoading) return;
+    artLoading = true;
+    fetch('assets/data/constellation-art.json?v=20260930a').then(function (r) { return r.json(); }).then(function (list) {
+      ART = list.map(function (a) {
+        var img = new Image();
+        img.decoding = 'async';
+        img.onload = function () { if (!running) draw(performance.now()); };
+        img.src = 'assets/img/constellations/' + a.f;
+        return { img: img, w: a.w, h: a.h, uv: a.a.map(function (q) { return [q[0], q[1]]; }), v: a.a.map(function (q) { return vec(q[2], q[3]); }) };
+      });
+      if (!running) draw(performance.now());
+    }).catch(function () { artLoading = false; });
+  }
+  function drawArt(F, alpha) {
+    if (!ART || alpha < 0.02) return;
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';         // the drawings are light on black: black adds nothing
+    ctx.globalAlpha = alpha;
+    for (var i = 0; i < ART.length; i++) {
+      var a = ART[i];
+      if (!a.img.complete || !a.img.naturalWidth) continue;
+      if (dot(a.v[0], F.U) < -0.25 && dot(a.v[1], F.U) < -0.25 && dot(a.v[2], F.U) < -0.25) continue;   // well below the horizon
+      var p0 = project(a.v[0]), p1 = project(a.v[1]), p2 = project(a.v[2]);
+      if (!p0 || !p1 || !p2) continue;
+      if (!onScreen(p0, W * 0.6) && !onScreen(p1, W * 0.6) && !onScreen(p2, W * 0.6)) continue;
+      // The affine map that takes the three anchor points in the image to the three stars on screen
+      var u0 = a.uv[0][0], v0 = a.uv[0][1], u1 = a.uv[1][0], v1 = a.uv[1][1], u2 = a.uv[2][0], v2 = a.uv[2][1];
+      var det = u0 * (v1 - v2) - v0 * (u1 - u2) + (u1 * v2 - u2 * v1);
+      if (Math.abs(det) < 1e-6) continue;
+      function solve(t0, t1, t2) {
+        return [(t0 * (v1 - v2) - v0 * (t1 - t2) + (t1 * v2 - t2 * v1)) / det,
+                (u0 * (t1 - t2) - t0 * (u1 - u2) + (u1 * t2 - u2 * t1)) / det,
+                (u0 * (v1 * t2 - v2 * t1) - v0 * (u1 * t2 - u2 * t1) + t0 * (u1 * v2 - u2 * v1)) / det];
+      }
+      var X = solve(p0[0], p1[0], p2[0]), Y = solve(p0[1], p1[1], p2[1]);
+      // Skip figures squashed to nothing or blown up (anchors nearly in a line on screen)
+      var scale = Math.abs(X[0] * Y[1] - X[1] * Y[0]);
+      if (scale < 1e-4 || scale > 400) continue;
+      ctx.save();
+      ctx.transform(X[0], Y[0], X[1], Y[1], X[2], Y[2]);
+      ctx.drawImage(a.img, 0, 0, a.w, a.h);
+      ctx.restore();
+    }
+    ctx.restore();
+  }
+  function setArt(on) {
+    artOn = on;
+    if (on) loadArt();
+    if (artBtn) {
+      artBtn.setAttribute('aria-pressed', String(on));
+      artBtn.querySelector('span').textContent = on ? 'Hide constellation art' : 'Constellation art';
+    }
+    try { localStorage.setItem('skyArt', on ? '1' : ''); } catch (e) {}
+    draw(performance.now());
+  }
+  if (artBtn) {
+    artBtn.addEventListener('click', function () { setArt(!artOn); });
+    try { if (localStorage.getItem('skyArt')) artOn = true; } catch (e) {}
   }
 
   // ---------------------------------------------------------------
@@ -478,6 +552,8 @@
         ctx.fillStyle = 'rgba(200,208,240,' + (0.0065 * m.l * night) + ')';
         ctx.beginPath(); ctx.arc(mp[0], mp[1], mwr * (0.8 + 0.1 * m.l), 0, 6.2832); ctx.fill();
       }
+      // Constellation art, when switched on, under the lines
+      if (artOn) drawArt(F, 0.36 * night);
       // Constellation lines
       ctx.strokeStyle = 'rgba(160,190,240,' + 0.24 * night + ')';
       ctx.lineWidth = 1;
@@ -834,6 +910,7 @@
     var ll = observerLatLon(F, gmst);
     var where = Math.abs(ll.lat).toFixed(0) + '° ' + (ll.lat >= 0 ? 'N' : 'S') + ', ' + Math.abs(ll.lon).toFixed(0) + '° ' + (ll.lon >= 0 ? 'E' : 'W');
     updateSunInfo(isDay, ll, t);
+    if (artBtn) artBtn.hidden = isDay;
     if (theta < 90) {
       liveText.textContent = origin.mumbai
         ? 'Live: the sky over Mumbai right now, ' + fmtTime(t, 5.5) + ' IST.' + also
@@ -908,6 +985,22 @@
   var card = document.getElementById('sky-card');
   var resetBtn = document.getElementById('sky-reset');
 
+  // Wikipedia articles, checked against the Wikipedia API when the site was built
+  var WIKI = {
+    'The Sun': 'Sun', 'The Moon': 'Moon', 'Mercury': 'Mercury (planet)', 'Venus': 'Venus', 'Mars': 'Mars',
+    'Jupiter': 'Jupiter', 'Saturn': 'Saturn', 'Centre of the Milky Way': 'Galactic Center'
+  };
+  function wikiUrl(title) { return title ? 'https://en.wikipedia.org/wiki/' + encodeURIComponent(title.replace(/ /g, '_')) : ''; }
+
+  function describeConstellation(c) {
+    var brightest = null;
+    CAT.stars.forEach(function (st) { if (st.con === c.name && (!brightest || st.mag < brightest.mag)) brightest = st; });
+    var rows = [];
+    if (brightest) rows.push(['Brightest star', (brightest.name || brightest.desig) + ' (magnitude ' + brightest.mag.toFixed(1) + ')']);
+    return { title: c.name, kind: c.english && c.english !== c.name ? 'Constellation: the ' + c.english : 'Constellation',
+      rows: rows, wiki: c.wiki };
+  }
+
   function describeStar(st) {
     var facts = STAR_FACTS[st.name];
     var colour = st.bv < 0 ? 'A hot blue-white star' : st.bv < 0.3 ? 'A white star' : st.bv < 0.6 ? 'A yellow-white star'
@@ -917,25 +1010,27 @@
     if (st.con) rows.push(['Constellation', st.con]);
     rows.push(['Brightness', 'magnitude ' + st.mag.toFixed(1)]);
     if (facts) rows.push(['Distance', facts[1]]);
-    return { title: st.name || st.desig || 'Star', kind: facts ? facts[0] : colour, rows: rows };
+    return { title: st.name || st.desig || 'Star', kind: facts ? facts[0] : colour, rows: rows, wiki: st.wiki };
   }
   function candidates(F) {
     var list = [];
     function push(v, info, pr) { if (dot(v, F.U) < 0) return; var p = project(v); if (onScreen(p)) list.push({ p: p, info: info, pr: pr }); }
     var sunAlt = altOf(eph.sun, F);
-    push(eph.sun, function () { return { title: 'The Sun', kind: 'Our star', rows: [['Distance', (eph.sunDist * 8.317).toFixed(1) + ' light-minutes']] }; }, 3);
+    push(eph.sun, function () { return { title: 'The Sun', kind: 'Our star', rows: [['Distance', (eph.sunDist * 8.317).toFixed(1) + ' light-minutes']], wiki: WIKI['The Sun'] }; }, 3);
     var mv = moonFor(F);
     push(mv, function () {
       return { title: 'The Moon', kind: Math.round(eph.moonLit * 100) + '% lit right now',
-        rows: [['Distance', Math.round(eph.moonDist * 6371).toLocaleString('en-US') + ' km'], ['Light takes', (eph.moonDist * 6371 / 299792).toFixed(2) + ' seconds']] };
+        rows: [['Distance', Math.round(eph.moonDist * 6371).toLocaleString('en-US') + ' km'], ['Light takes', (eph.moonDist * 6371 / 299792).toFixed(2) + ' seconds']], wiki: WIKI['The Moon'] };
     }, 3);
     eph.planets.forEach(function (pl) {
       push(pl.v, function () {
-        return { title: pl.name, kind: 'A planet', rows: [['Distance now', (pl.dist * 149.6).toFixed(0) + ' million km'], ['Light takes', (pl.dist * 8.317).toFixed(1) + ' minutes'], ['Brightness', 'magnitude ' + pl.mag.toFixed(1)]] };
+        return { title: pl.name, kind: 'A planet', rows: [['Distance now', (pl.dist * 149.6).toFixed(0) + ' million km'], ['Light takes', (pl.dist * 8.317).toFixed(1) + ' minutes'], ['Brightness', 'magnitude ' + pl.mag.toFixed(1)]], wiki: WIKI[pl.name] };
       }, 2);
     });
-    NOTES.forEach(function (n) { push(n.v, function () { return { title: n.text, kind: n.kind, rows: [['Distance', n.dist]] }; }, 1.5); });
+    NOTES.forEach(function (n) { push(n.v, function () { return { title: n.text, kind: n.kind, rows: [['Distance', n.dist]], wiki: WIKI[n.text] || n.text }; }, 1.5); });
     if (CAT && sunAlt < 0) CAT.stars.forEach(function (st) { if (st.mag < 4.2) push(st.v, function () { return describeStar(st); }, 1 - st.mag * 0.1); });
+    // Constellations, by their names in the sky (stars and planets near a name still win)
+    if (CAT && sunAlt < 0) CAT.allCons.forEach(function (c) { push(c.v, function () { return describeConstellation(c); }, 0.2); });
     return list;
   }
   function pick(x, y) {
@@ -961,6 +1056,16 @@
       var dd = document.createElement('dd'); dd.textContent = r[1];
       row.appendChild(dt); row.appendChild(dd); dl.appendChild(row);
     });
+    // "Read more on Wikipedia"
+    var wiki = card.querySelector('.sky-card-wiki');
+    if (!wiki) {
+      wiki = document.createElement('a');
+      wiki.className = 'sky-card-wiki'; wiki.target = '_blank'; wiki.rel = 'noopener';
+      wiki.innerHTML = 'Read more on Wikipedia <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>';
+      card.appendChild(wiki);
+    }
+    wiki.hidden = !info.wiki;
+    if (info.wiki) { wiki.href = wikiUrl(info.wiki); wiki.setAttribute('aria-label', 'Read about ' + info.title + ' on Wikipedia (opens in a new tab)'); }
     card.hidden = false;
     var cw = card.offsetWidth, ch = card.offsetHeight;
     var x = hit.p[0] + 18, y = hit.p[1] - ch / 2;
@@ -1098,6 +1203,7 @@
   updateCaption();
   update();
   loadCatalogue();
+  if (artOn) setArt(true);                 // remembered from an earlier visit
 
   var rt;
   window.addEventListener('resize', function () {

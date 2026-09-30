@@ -357,6 +357,14 @@ sub { line-height: 0; }
 .sky-card-kind { font-size: .85rem; color: var(--night-ink-2); margin: 0 0 .6rem; }
 .sky-card dl { margin: 0; font-size: .82rem; }
 .sky-card dl div { display: flex; justify-content: space-between; gap: 1rem; padding: .35rem 0; border-top: 1px solid rgba(233, 237, 246, .12); }
+.sky-card-wiki {
+  display: inline-flex; align-items: center; gap: .35rem; margin-top: .7rem; min-height: 32px;
+  font-size: .82rem; font-weight: 500; color: var(--night-wd); text-decoration: none;
+}
+.sky-card-wiki:hover { text-decoration: underline; }
+.sky-card-wiki .icon { width: 1em; height: 1em; transition: transform .25s ease; }
+.sky-card-wiki:hover .icon { transform: translateX(3px); }
+.sky-card-wiki[hidden] { display: none; }
 .sky-card dt { color: var(--night-ink-2); }
 .sky-card dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
 .sky-card-close { position: absolute; top: .45rem; right: .45rem; width: 32px; height: 32px; border: 0; border-radius: 50%; background: transparent; color: var(--night-ink-2); cursor: pointer; display: grid; place-items: center; }

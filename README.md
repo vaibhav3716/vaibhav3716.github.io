@@ -49,6 +49,12 @@ planets from orbital elements (checked against NASA JPL Horizons), and Earth's r
 wherever it is night right now; light theme wherever it is day (Mumbai or the point opposite it on Earth).
 The view stays still until a visitor presses "Explore the sky"; then they can drag to look around and click
 objects to identify them. They can also choose to see the sky above their own location. The location never leaves their browser.
+Every object's info card links to its Wikipedia article (stars, planets, the Sun and Moon, galaxies,
+and constellations, whose cards open when their name is clicked). The article titles were checked against
+the Wikipedia API and are stored in `assets/data/sky-data.json` (`wiki`, `conWiki`).
+At night a "Constellation art" button draws the classic figures over the constellations: Stellarium's
+illustrations by Johan Meuris (Free Art License, see `assets/img/constellations/LICENSE.txt`), each stretched so
+three anchor points land on their stars (`assets/data/constellation-art.json`). They load only when switched on.
 In daytime a small box beside the Sun gives that place's sunrise and sunset and how much daylight is left
 (on phones, where the Sun sits behind the caption, the same line appears in the caption).
 
