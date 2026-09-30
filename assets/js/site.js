@@ -51,6 +51,27 @@
   }
 
   /* ---------------------------------------------------------------
+     The header shrinks while scrolling down and grows back when
+     scrolling up (or near the top). Never while the menu is open.
+  ---------------------------------------------------------------- */
+  var siteHeader = document.querySelector('.site-header');
+  if (siteHeader) {
+    var lastY = window.scrollY, headerTick = false;
+    window.addEventListener('scroll', function () {
+      if (headerTick) return;
+      headerTick = true;
+      requestAnimationFrame(function () {
+        headerTick = false;
+        var y = window.scrollY, dy = y - lastY;
+        if (Math.abs(dy) < 6) return;                     // ignore tiny jitters
+        var menuOpen = document.getElementById('nav-links') && document.getElementById('nav-links').classList.contains('open');
+        siteHeader.classList.toggle('is-compact', !menuOpen && y > 140 && dy > 0);
+        lastY = y;
+      });
+    }, { passive: true });
+  }
+
+  /* ---------------------------------------------------------------
      Mobile menu
   ---------------------------------------------------------------- */
   var navToggle = document.querySelector('.nav-toggle');
@@ -356,7 +377,7 @@
         var hidden = postGrid.querySelector('article.post-card.reveal:not(.in)') && revealObserver;
         Array.prototype.forEach.call(postGrid.querySelectorAll('article.post-card'), function (c) { c.remove(); });
         cards.forEach(function (c, i) {
-          if (hidden) { c.classList.add('reveal'); c.style.setProperty('--rd', Math.min(i, 6) * 80 + 'ms'); revealObserver.observe(c); }
+          if (hidden) { c.classList.add('reveal', 'reveal-pop'); c.style.setProperty('--rd', Math.min(i, 6) * 80 + 'ms'); revealObserver.observe(c); }
           postGrid.insertBefore(c, moreCard);
         });
       } catch (e) { /* keep the cards in the HTML */ }
@@ -400,8 +421,9 @@
   ---------------------------------------------------------------- */
   var revealGroups = [
     ['.section h2, .feature-title, .section-intro, .meta-line', ''],
-    ['.prose, .interests, .paper-card, .side-project, .results h4, .pipeline h4, .sed-card, .blog-head, .coursework, .gallery-title', ''],
-    ['.interest-list li, .steps li, .result-list li, .project, .pub-list li, .plain-list li, .semesters > li, .course-feature, .edu-list li, .skills div, .contact-links li, .post-card, .fact', 'stagger'],
+    ['.prose, .interests h3, .paper-card, .side-project, .results h4, .pipeline h4, .sed-card, .blog-head, .facts-head, .coursework, .gallery-title', ''],
+    ['.steps li, .result-list li, .project, .pub-list li, .plain-list li, .semesters > li, .course-feature, .edu-list li, .skills div, .contact-links li', 'stagger'],
+    ['.interest-list li, .post-card, .fact', 'pop-stagger'],
     ['.fig, .g-item', 'scale-stagger'],
     ['.quote-panel blockquote, .quote-panel figcaption', 'fade'],
     ['.andromeda-quote blockquote, .andromeda-quote figcaption', 'fade']
@@ -423,6 +445,7 @@
         if (el.getBoundingClientRect().top < fold) return;
         el.classList.add('reveal');
         if (group[1].indexOf('scale') === 0) el.classList.add('reveal-scale');
+        if (group[1].indexOf('pop') === 0) el.classList.add('reveal-pop');
         if (group[1] === 'left') el.classList.add('reveal-left');
         if (group[1] === 'fade') el.classList.add('reveal-fade');
         if (group[1].indexOf('stagger') !== -1) {
@@ -563,7 +586,7 @@
   ---------------------------------------------------------------- */
   if (window.Lenis && !reduceMotion.matches && window.matchMedia('(pointer: fine)').matches) {
     try {
-      new window.Lenis({ autoRaf: true, lerp: 0.11, anchors: { offset: -82 } });
+      new window.Lenis({ autoRaf: true, lerp: 0.11, anchors: { offset: -90 } });
     } catch (e) { /* native scrolling still works */ }
   }
 

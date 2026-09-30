@@ -502,7 +502,7 @@
     if (sub) { ctx.font = FONT_SUB; w = Math.max(w, ctx.measureText(sub).width); }
     var h = sub ? 30 : 15, x = p[0] + 12, y = p[1] - 4;
     if (x + w > W - 12) x = p[0] - 12 - w;
-    if (x < 8 || y < 72 || y + h > H - 36) return;
+    if (x < 8 || y < 88 || y + h > H - 36) return;
     if (!claim(x - 3, y - 12, w + 6, h + 4)) return;
     ctx.font = FONT;
     ctx.fillStyle = (colour || 'rgba(236,240,248,') + a + ')';
@@ -1072,7 +1072,7 @@
     var x = hit.p[0] + 18, y = hit.p[1] - ch / 2;
     if (x + cw > W - 12) x = hit.p[0] - 18 - cw;
     card.style.left = Math.max(12, x) + 'px';
-    card.style.top = Math.max(72, Math.min(H - ch - 16, y)) + 'px';
+    card.style.top = Math.max(88, Math.min(H - ch - 16, y)) + 'px';
     card.classList.add('show');
   }
   function hideCard() { if (card && !card.hidden) { card.classList.remove('show'); card.hidden = true; } }

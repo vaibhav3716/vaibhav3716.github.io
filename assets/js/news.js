@@ -74,7 +74,7 @@
     var later = !reduceMotion.matches && 'IntersectionObserver' in window && top > window.innerHeight;
     list.innerHTML = '';
     cards.forEach(function (c, i) {
-      if (later) { c.classList.add('reveal'); c.style.setProperty('--rd', i * 90 + 'ms'); }
+      if (later) { c.classList.add('reveal', 'reveal-pop'); c.style.setProperty('--rd', i * 110 + 'ms'); }
       list.appendChild(c);
     });
     if (later) {
