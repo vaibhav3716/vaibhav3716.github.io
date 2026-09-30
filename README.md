@@ -52,9 +52,11 @@ objects to identify them. They can also choose to see the sky above their own lo
 Every object's info card links to its Wikipedia article (stars, planets, the Sun and Moon, galaxies,
 and constellations, whose cards open when their name is clicked). The article titles were checked against
 the Wikipedia API and are stored in `assets/data/sky-data.json` (`wiki`, `conWiki`).
-At night a "Constellation art" button draws the classic figures over the constellations: Stellarium's
+At night the classic constellation figures are drawn over the sky by default, with a "Hide constellation art"
+button (a visitor's choice is remembered): Stellarium's
 illustrations by Johan Meuris (Free Art License, see `assets/img/constellations/LICENSE.txt`), each stretched so
-three anchor points land on their stars (`assets/data/constellation-art.json`). They load only when switched on.
+three anchor points land on their stars (`assets/data/constellation-art.json`). They load only once the
+constellations are showing, so daytime visitors never download them.
 In daytime a small box beside the Sun gives that place's sunrise and sunset and how much daylight is left
 (on phones, where the Sun sits behind the caption, the same line appears in the caption).
 

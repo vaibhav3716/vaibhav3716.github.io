@@ -264,9 +264,10 @@
   // ---------------------------------------------------------------
   // Constellation art: Stellarium's illustrations (Free Art License), each pinned to the sky by
   // three stars. The drawing is stretched so its three anchor points land on those stars.
-  // Loaded only when someone switches it on.
+  // On by default (a visitor can hide it, and that choice is remembered); the drawings load
+  // only once the constellations are actually showing, so daytime visitors never fetch them.
   // ---------------------------------------------------------------
-  var ART = null, artOn = false, artLoading = false;
+  var ART = null, artOn = true, artLoading = false;
   var artBtn = document.getElementById('sky-art');
   function loadArt() {
     if (ART || artLoading) return;
@@ -283,7 +284,8 @@
     }).catch(function () { artLoading = false; });
   }
   function drawArt(F, alpha) {
-    if (!ART || alpha < 0.02) return;
+    if (alpha < 0.02) return;
+    if (!ART) { loadArt(); return; }
     ctx.save();
     ctx.globalCompositeOperation = 'lighter';         // the drawings are light on black: black adds nothing
     ctx.globalAlpha = alpha;
@@ -314,19 +316,18 @@
     }
     ctx.restore();
   }
-  function setArt(on) {
+  function setArt(on, remember) {
     artOn = on;
-    if (on) loadArt();
     if (artBtn) {
       artBtn.setAttribute('aria-pressed', String(on));
       artBtn.querySelector('span').textContent = on ? 'Hide constellation art' : 'Constellation art';
     }
-    try { localStorage.setItem('skyArt', on ? '1' : ''); } catch (e) {}
+    if (remember) { try { localStorage.setItem('skyArt', on ? 'on' : 'off'); } catch (e) {} }
     draw(performance.now());
   }
   if (artBtn) {
-    artBtn.addEventListener('click', function () { setArt(!artOn); });
-    try { if (localStorage.getItem('skyArt')) artOn = true; } catch (e) {}
+    artBtn.addEventListener('click', function () { setArt(!artOn, true); });
+    try { if (localStorage.getItem('skyArt') === 'off') artOn = false; } catch (e) {}
   }
 
   // ---------------------------------------------------------------
@@ -1203,7 +1204,7 @@
   updateCaption();
   update();
   loadCatalogue();
-  if (artOn) setArt(true);                 // remembered from an earlier visit
+  setArt(artOn, false);                    // on unless this visitor hid it before
 
   var rt;
   window.addEventListener('resize', function () {
