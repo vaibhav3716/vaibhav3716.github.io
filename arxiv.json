@@ -1,41 +1,41 @@
 {
-  "updated": "2026-09-30T07:13:37Z",
-  "newest": "2609.38179",
+  "updated": "2026-10-01T07:42:06Z",
+  "newest": "2609.40363",
   "plain": false,
   "summarised_by": null,
   "papers": [
     {
-      "id": "2609.38179",
-      "headline": "LYRA: The formation and growth of nuclear star clusters in dwarf galaxies",
-      "summary": "Nuclear star clusters (NSCs) are dense massive star clusters ubiquitous in galactic centres across various mass regimes, present in up to ∼30 per cent of dwarf galaxies with M_star<10⁷ M☉.",
+      "id": "2609.40363",
+      "headline": "Probing the Reionization History and Bubble Sizes with JWST Lyman-α Fraction Measurements",
+      "summary": "Recent James Webb Space Telescope (JWST) measurements quantify the fraction of ultraviolet-selected galaxies showing detectable Lyman-alpha (Ly-α) lines at z ∼ 6-14.",
       "topic": "Galaxies",
-      "title": "LYRA: The formation and growth of nuclear star clusters in dwarf galaxies",
-      "authors": "J. Sureda et al.",
+      "title": "Probing the Reionization History and Bubble Sizes with JWST Lyman-α Fraction Measurements",
+      "authors": "A. Kundu, A. Lidz, G. Sun",
       "category": "astro-ph.GA",
-      "published": "2026-09-29",
-      "url": "https://arxiv.org/abs/2609.38179"
+      "published": "2026-09-30",
+      "url": "https://arxiv.org/abs/2609.40363"
     },
     {
-      "id": "2609.38128",
-      "headline": "Atmospheric dynamics and variability of periodically irradiated tidally locked planets",
-      "summary": "Time-variable stellar heating may create new climate states, such as permanently hot or cold hemispheres, on asynchronous planets.",
-      "topic": "Planets",
-      "title": "Atmospheric dynamics and variability of periodically irradiated tidally locked planets",
-      "authors": "D. Banik et al.",
-      "category": "astro-ph.EP",
-      "published": "2026-09-29",
-      "url": "https://arxiv.org/abs/2609.38128"
+      "id": "2609.40239",
+      "headline": "Two bits about lossy compression: On the limits of compression in cosmology",
+      "summary": "Astronomy is in an era of enormous sky surveys and of the large simulation suites needed to interpret them, both costly to store and slow to share.",
+      "topic": "Instruments",
+      "title": "Two bits about lossy compression: On the limits of compression in cosmology",
+      "authors": "H. M. Tohfa, M. McQuinn",
+      "category": "astro-ph.IM",
+      "published": "2026-09-30",
+      "url": "https://arxiv.org/abs/2609.40239"
     },
     {
-      "id": "2609.38110",
-      "headline": "Gravitational-wave dark sirens as astrophysical probes: inferring galaxy-merger relations and identifying individual hosts",
-      "summary": "Gravitational-wave (GW) ``dark siren'' techniques, namely the statistical association of GW events with a galaxy catalog, have so far been used as a cosmological tool.",
+      "id": "2609.40176",
+      "headline": "Is DESI Seeing Dynamical Dark Energy, or a Cosmic Glitch in Gravity?",
+      "summary": "Combined baryon acoustic oscillation and cosmic microwave background data have begun to mildly favor departures from ΛCDM. This is usually framed as 2-parameter dynamical dark energy.",
       "topic": "Cosmology",
-      "title": "Gravitational-wave dark sirens as astrophysical probes: inferring galaxy-merger relations and identifying individual hosts",
-      "authors": "A. Agapito, M. Mancarella",
+      "title": "Is DESI Seeing Dynamical Dark Energy, or a Cosmic Glitch in Gravity?",
+      "authors": "R. Y. Wen et al.",
       "category": "astro-ph.CO",
-      "published": "2026-09-29",
-      "url": "https://arxiv.org/abs/2609.38110"
+      "published": "2026-09-30",
+      "url": "https://arxiv.org/abs/2609.40176"
     }
   ]
 }
