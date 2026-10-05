@@ -1246,3 +1246,96 @@ h3 { letter-spacing: -.008em; line-height: 1.2; }
     background: var(--surface); border-color: color-mix(in srgb, var(--ink) 45%, transparent);
   }
 }
+
+/* ------------------------------------------------------------------
+   Phones: Liquid Glass controls, even grids, comfortable touch targets
+------------------------------------------------------------------- */
+/* Headlines break into even lines rather than leaving a word alone */
+h1, h2, h3, .hero-lead, .fact-teaser, .news-title, .post-title { text-wrap: balance; }
+.prose p, .section-intro { text-wrap: pretty; }
+
+/* Small uppercase labels stay readable (Apple's floor for captions is about 11 pt) */
+.fact-topic, .news-topic { font-size: max(.72rem, 11.5px); }
+
+/* Back to top: a small drop of glass that materialises once you're well down the page */
+.to-top {
+  position: fixed; z-index: 40; right: max(var(--gutter), env(safe-area-inset-right));
+  bottom: calc(16px + env(safe-area-inset-bottom));
+  display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%;
+  color: var(--ink); text-decoration: none; isolation: isolate;
+  background: var(--glass-tint);
+  -webkit-backdrop-filter: blur(18px) saturate(1.8); backdrop-filter: blur(18px) saturate(1.8);
+  box-shadow: inset 0 1px 1px var(--glass-hi), inset 0 -1px 1px var(--glass-lo), 0 10px 26px -10px rgba(0, 0, 0, .45);
+  opacity: 0; scale: .6; filter: blur(6px); pointer-events: none;
+  transition: opacity .3s ease, scale .5s var(--spring), filter .35s ease;
+}
+.to-top::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; padding: 1px; border-radius: inherit;
+  background: linear-gradient(135deg, var(--glass-rim), transparent 35%, transparent 65%, var(--glass-rim));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); mask-composite: exclude;
+}
+.to-top .icon { width: 20px; height: 20px; rotate: -90deg; }
+.to-top.show { opacity: 1; scale: 1; filter: none; pointer-events: auto; }
+.to-top:active { scale: .92; transition-duration: var(--press-t); }
+.nav-links.open ~ .to-top, body:has(.nav-links.open) .to-top { opacity: 0; pointer-events: none; }
+@media (min-width: 1200px) { .to-top { display: none; } }
+@media (max-width: 1199.98px) { .site-footer { padding-bottom: calc(5rem + env(safe-area-inset-bottom)); } }  /* room for the button at the very end */
+
+/* Touch screens: every control at least 44 points tall */
+@media (pointer: coarse) {
+  .btn-small, .sky-btn { min-height: 44px; }
+  .text-link { min-height: 44px; }
+  .post-title a { display: inline-block; padding-block: .3rem; }
+}
+
+@media (max-width: 719.98px) {
+  /* The tagline can use the full width instead of a narrow column */
+  .hero-lead { max-width: 30ch; }
+
+  /* Sky controls: one Liquid Glass toolbar with equal tiles, like a row of Control Center buttons */
+  .sky-bar { right: var(--gutter); justify-items: stretch; gap: .5rem; }
+  .sky-caption { border-radius: 16px; padding: .55rem .8rem; }
+  .sky-actions {
+    position: relative; isolation: isolate;
+    display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 4px; padding: 4px;
+    border-radius: 22px; background: rgba(10, 16, 32, .34);
+    -webkit-backdrop-filter: blur(20px) saturate(1.7); backdrop-filter: blur(20px) saturate(1.7);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, .22), inset 0 -1px 1px rgba(255, 255, 255, .05), 0 14px 34px -16px rgba(0, 0, 0, .55);
+  }
+  .sky-actions::before {
+    content: ''; position: absolute; inset: 0; z-index: -1; padding: 1px; border-radius: inherit; pointer-events: none;
+    background: linear-gradient(135deg, rgba(255, 255, 255, .4), transparent 30%, transparent 70%, rgba(255, 255, 255, .25));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); mask-composite: exclude;
+  }
+  .sky-btn {
+    flex-direction: column; justify-content: center; gap: .3rem; min-height: 58px; padding: .5rem .35rem;
+    border: 0; border-radius: 18px;              /* concentric: the toolbar's 22 px less its 4 px inset */
+    background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none;
+    font-size: .74rem; line-height: 1.2; text-align: center; letter-spacing: .005em;
+  }
+  .sky-btn .icon { width: 18px; height: 18px; }
+  .sky-btn:hover { background: rgba(255, 255, 255, .08); }
+  .sky-btn[aria-pressed="true"], .sky-btn-primary[aria-pressed="true"] { background: rgba(140, 192, 255, .2); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .14); }
+  .sky-btn-primary { color: #CFE3FF; }
+
+  /* About quick links: an even two-by-two grid */
+  .about-jump { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+  .about-jump a { display: flex; justify-content: center; min-height: 44px; }
+
+  /* Facts and arXiv: the button sits beside its heading, like "See All" */
+  .facts-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: .75rem; }
+
+  /* Contact: even columns rather than a ragged wrap */
+  .contact-links { display: grid; grid-template-columns: 1fr 1fr; }
+  .contact-links a { display: flex; justify-content: center; min-height: 44px; }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .to-top { background: var(--glass-solid); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .sky-actions { background: rgba(8, 12, 24, .92); -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .to-top { scale: 1; filter: none; transition: opacity .2s ease; }
+}
