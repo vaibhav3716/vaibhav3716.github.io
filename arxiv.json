@@ -1,41 +1,41 @@
 {
-  "updated": "2026-10-02T07:24:57Z",
-  "newest": "2610.02149",
+  "updated": "2026-10-05T07:34:34Z",
+  "newest": "2610.03635",
   "plain": false,
   "summarised_by": null,
   "papers": [
     {
-      "id": "2610.02149",
-      "headline": "A New Framework for Modeling Solar Flares from MHD to Kinetic Processes",
-      "summary": "Physical processes in solar flares span many orders of magnitude in spatiotemporal scales, so a single unified model accounting for all relevant processes remains computationally intractable.",
-      "topic": "Stars",
-      "title": "A New Framework for Modeling Solar Flares from MHD to Kinetic Processes",
-      "authors": "J. C. Allred et al.",
-      "category": "astro-ph.SR",
-      "published": "2026-10-01",
-      "url": "https://arxiv.org/abs/2610.02149"
+      "id": "2610.03635",
+      "headline": "Temporal Variability of Titan's Middle-Atmospheric Zonal Winds from Southern Fall to Late Winter (2016-2023)",
+      "summary": "Previous ALMA observations have revealed unexpectedly strong and rapid variations in Titan's high-altitude equatorial zonal winds, which present a challenge to our understanding of this moon's atmospheric dynamics.",
+      "topic": "Planets",
+      "title": "Temporal Variability of Titan's Middle-Atmospheric Zonal Winds from Southern Fall to Late Winter (2016-2023)",
+      "authors": "M. A. Cordiner et al.",
+      "category": "astro-ph.EP",
+      "published": "2026-10-02",
+      "url": "https://arxiv.org/abs/2610.03635"
     },
     {
-      "id": "2610.02138",
-      "headline": "Strongly mixed cosmological collider at unequal sound speeds",
-      "summary": "We derive the canonically normalized modes of a two-field inflationary system with arbitrary constant quadratic mixing and unequal sound speeds c_varphi and c_σ for the curvature and isocurvature perturbations, respectively.",
+      "id": "2610.03572",
+      "headline": "Searching for Green Pea Galaxies in the SFACT Survey",
+      "summary": "Green Pea galaxies (GPs) are a class of rare, extreme star-forming galaxies whose physical properties closely resemble high-redshift Ly-α emitting galaxies.",
+      "topic": "Galaxies",
+      "title": "Searching for Green Pea Galaxies in the SFACT Survey",
+      "authors": "K. N. Baker et al.",
+      "category": "astro-ph.GA",
+      "published": "2026-10-02",
+      "url": "https://arxiv.org/abs/2610.03572"
+    },
+    {
+      "id": "2610.03544",
+      "headline": "Baryonic Imprints on DM Halos: the concentration-mass relation and its dependence on 28 model parameters in the CAMELS suite",
+      "summary": "The evolution of baryons in halos, as well as their gravitational impact on the total-matter phase space, has a rich phenomenology and is vital in answering many questions in both cosmology and astrophysics.",
       "topic": "Cosmology",
-      "title": "Strongly mixed cosmological collider at unequal sound speeds",
-      "authors": "J. Huenupi, G. A. Palma, S. Sypsas",
+      "title": "Baryonic Imprints on DM Halos: the concentration-mass relation and its dependence on 28 model parameters in the CAMELS suite",
+      "authors": "C. Delgado, D. Anbajagane",
       "category": "astro-ph.CO",
-      "published": "2026-10-01",
-      "url": "https://arxiv.org/abs/2610.02138"
-    },
-    {
-      "id": "2610.02088",
-      "headline": "A comprehensive simulation framework for multi-modal kilonova observations from all-sky surveys",
-      "summary": "Current all-sky surveys such as Vera Rubin's Legacy Survey of Space and Time and the Zwicky Transient Facility (ZTF) promise a wealth of scientific gains that are contained in the millions of astrophysical transient candidates produced each night.",
-      "topic": "Instruments",
-      "title": "A comprehensive simulation framework for multi-modal kilonova observations from all-sky surveys",
-      "authors": "F. F. Nunes et al.",
-      "category": "astro-ph.IM",
-      "published": "2026-10-01",
-      "url": "https://arxiv.org/abs/2610.02088"
+      "published": "2026-10-02",
+      "url": "https://arxiv.org/abs/2610.03544"
     }
   ]
 }
