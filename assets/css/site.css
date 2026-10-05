@@ -42,7 +42,7 @@
   --night-ms: #FFB45C;
 
   --serif: 'EB Garamond', 'Cormorant Garamond', Garamond, Georgia, 'Times New Roman', serif;
-  --sans: 'Figtree', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 
   --step--1: .875rem;
   --step-0: 1.0625rem;
@@ -53,8 +53,13 @@
 
   --gutter: 16px;
   --max: 1120px;
-  --radius-s: 6px;
-  --radius-m: 12px;
+  --radius-s: 8px;
+  --radius-m: 18px;
+  --radius-l: 26px;
+  /* Motion, after Apple's springs: critically damped (no overshoot), response 0.4 s */
+  --spring: linear(0, 0.06, 0.186, 0.329, 0.466, 0.584, 0.682, 0.76, 0.821, 0.868, 0.903, 0.929, 0.949, 0.963, 0.973, 0.981, 0.986, 0.99, 0.993, 0.995, 0.997, 0.998, 0.998, 0.999, 1);
+  --spring-t: .6s;
+  --press-t: 100ms;
   --header-h: 66px;
 
   color-scheme: light;
@@ -481,7 +486,7 @@ body { counter-reset: section; }
   content: ''; position: absolute; left: 0; right: 0; top: 0; height: 3px; background: var(--ac); opacity: .85;
 }
 .interests .interest-list li {             /* keep the scroll reveal and the hover lift from fighting */
-  transition: opacity .8s cubic-bezier(.2, .7, .2, 1) var(--rd, 0ms), transform .75s cubic-bezier(.34, 1.4, .64, 1) var(--rd, 0ms),
+  transition: opacity .8s cubic-bezier(.2, .7, .2, 1) var(--rd, 0ms), transform .75s var(--spring) var(--rd, 0ms),
     translate .3s cubic-bezier(.2, .7, .2, 1), box-shadow .3s ease, border-color .3s ease;
 }
 .interest-list li:hover { translate: 0 -3px; border-color: color-mix(in srgb, var(--ac) 45%, transparent); box-shadow: 0 16px 34px -22px rgba(0, 0, 0, .5); }
@@ -549,7 +554,7 @@ body { counter-reset: section; }
 .fig-stack { display: grid; gap: 1.5rem; }
 .fig { margin: 0; }
 .fig-link { display: block; position: relative; background: var(--plate); border: 1px solid var(--rule); border-radius: var(--radius-m); padding: .75rem; cursor: zoom-in; }
-.fig-link img { border-radius: 4px; }
+.fig-link img { border-radius: calc(var(--radius-m) - .75rem); }
 .fig-tall .fig-link img { max-height: 880px; width: auto; margin: 0 auto; }
 .fig-zoom {
   position: absolute; right: .75rem; bottom: .75rem; display: inline-flex; align-items: center; gap: .35rem;
@@ -695,7 +700,7 @@ body { counter-reset: section; }
 .fact-grid { display: grid; gap: 1.1rem; align-content: start; }
 
 .fact { --tc: var(--ms); min-width: 0; cursor: pointer; }
-.fact.reveal { transition: opacity .7s cubic-bezier(.2, .7, .2, 1) var(--rd, 0ms), transform .75s cubic-bezier(.34, 1.4, .64, 1) var(--rd, 0ms); }
+.fact.reveal { transition: opacity .7s cubic-bezier(.2, .7, .2, 1) var(--rd, 0ms), transform .75s var(--spring) var(--rd, 0ms); }
 .fact[hidden] { display: none; }
 .fact-wd { --tc: var(--t-wd); }
 .fact-bin { --tc: var(--t-bin); }
@@ -765,7 +770,7 @@ body { counter-reset: section; }
 }
 /* The hover lift uses translate, so it never fights the scroll reveal's transform */
 .news-list .news-card {
-  transition: opacity .8s cubic-bezier(.2, .7, .2, 1) var(--rd, 0ms), transform .75s cubic-bezier(.34, 1.4, .64, 1) var(--rd, 0ms),
+  transition: opacity .8s cubic-bezier(.2, .7, .2, 1) var(--rd, 0ms), transform .75s var(--spring) var(--rd, 0ms),
     translate .35s cubic-bezier(.2, .7, .2, 1), border-color .35s ease, box-shadow .35s ease;
 }
 .news-list .news-card:not(.news-skeleton):hover { translate: 0 -3px; border-color: color-mix(in srgb, var(--tc) 50%, transparent); box-shadow: 0 22px 50px -28px color-mix(in srgb, var(--tc) 70%, transparent); }
@@ -831,7 +836,7 @@ body { counter-reset: section; }
 .post-card { position: relative; display: flex; flex-direction: column; min-width: 0; border-radius: var(--radius-m); overflow: hidden; }
 /* The hover lift uses translate, so it never fights the scroll reveal's transform */
 .post-grid .post-card {
-  transition: opacity .8s cubic-bezier(.2, .7, .2, 1) var(--rd, 0ms), transform .75s cubic-bezier(.34, 1.4, .64, 1) var(--rd, 0ms),
+  transition: opacity .8s cubic-bezier(.2, .7, .2, 1) var(--rd, 0ms), transform .75s var(--spring) var(--rd, 0ms),
     translate .3s cubic-bezier(.2, .7, .2, 1), box-shadow .3s ease, border-color .3s ease;
 }
 .post-grid .post-card:hover { translate: 0 -4px; border-color: color-mix(in srgb, var(--ms) 50%, transparent); box-shadow: 0 18px 40px -20px rgba(0, 0, 0, .45); }
@@ -1079,13 +1084,12 @@ body { counter-reset: section; }
 }
 
 /* ------------------------------------------------------------------
-   Page-wide star field and frosted-glass cards
+   Page-wide star field and content cards (solid: glass is only for controls)
 ------------------------------------------------------------------- */
 .page-stars { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
 .interest-list li, .project, .outreach-list li, .award-list li, .sed-card, .course-feature, .post-card, .coursework, .contact-links a, .chip, .semesters > li, .pub-list li, .paper-card {
-  background: color-mix(in srgb, var(--surface) 52%, transparent);
-  backdrop-filter: blur(16px) saturate(1.35); -webkit-backdrop-filter: blur(16px) saturate(1.35);
-  border: 1px solid color-mix(in srgb, var(--ink) 11%, transparent);
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
   box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 7%, transparent), 0 10px 30px -18px rgba(0, 0, 0, .35);
 }
 .semesters > li { border-radius: var(--radius-m); padding: 1rem 1.1rem 1.1rem; border-top-width: 3px; }
@@ -1095,7 +1099,7 @@ body { counter-reset: section; }
 .pub-list li { border-radius: var(--radius-m); padding: 1rem 1.25rem 1rem 3rem; position: relative; counter-increment: pub; }
 .pub-list li::before { content: counter(pub); position: absolute; left: 1.15rem; top: 1rem; font-family: var(--serif); color: var(--ink-2); }
 .paper-card { border-radius: var(--radius-m); padding: 1.25rem 1.4rem; }
-.sed-card { background: color-mix(in srgb, var(--bg) 55%, transparent); }
+.sed-card { background: color-mix(in srgb, var(--bg) 94%, transparent); }
 
 /* ------------------------------------------------------------------
    Tools as chips
@@ -1147,3 +1151,98 @@ body { counter-reset: section; }
 ::view-transition-new(root) { z-index: 1; }
 
 @media (max-width: 459.98px) { .nav-actions .btn-small { display: none; } .nav { gap: .5rem; } }
+
+/* ------------------------------------------------------------------
+   Apple design pass (Liquid Glass, WWDC 2025–26 guidance)
+   - Glass is the control layer only: header, its menu, the sky
+     buttons. Content sits on solid surfaces beneath it.
+   - Feedback on press, not release. Springs that settle without
+     overshoot. Corners concentric with what contains them.
+   - Respects Reduce Motion, Reduce Transparency and Increase Contrast.
+------------------------------------------------------------------- */
+
+/* Type: tracking and leading change with size */
+body { font-optical-sizing: auto; }
+h2 { letter-spacing: -.018em; line-height: 1.08; }
+h3 { letter-spacing: -.008em; line-height: 1.2; }
+.hero h1 { letter-spacing: -.03em; line-height: .98; }
+.section-intro, .prose p { letter-spacing: -.003em; }
+
+/* Respond the instant something is pressed */
+.btn, .sky-btn, .icon-btn, .about-jump a, .contact-links a, .nav-links a {
+  transition-property: background-color, border-color, color, box-shadow, scale, translate, opacity, transform, font-size, padding, width, height;
+}
+.btn:active, .sky-btn:active, .icon-btn:active, .about-jump a:active, .contact-links a:active,
+.nav-links a:active, .facts-more:active, .contact-mail:active, .post-card:active, .project:active {
+  scale: .97; transition-duration: var(--press-t); transition-timing-function: ease-out;
+}
+.btn, .sky-btn, .icon-btn, .about-jump a, .contact-links a, .nav-links a { transition-duration: .3s; transition-timing-function: var(--spring); }
+.nav-links a, .nav .icon-btn, .nav .btn-small { transition-duration: .3s, .3s, .3s, .3s, var(--press-t), .3s, .3s, .3s, .45s, .45s, .45s, .45s; }
+
+/* Vibrancy: text on glass is a touch heavier so it stays crisp over whatever passes behind */
+.nav-links a { font-weight: 500; letter-spacing: .005em; }
+
+/* The current section is a single lens of brighter glass that glides between links (site.js places it) */
+.nav-links { position: relative; }
+.nav-lens {
+  position: absolute; top: 50%; left: 0; height: calc(100% - 4px); width: 0; z-index: -1; pointer-events: none;
+  border-radius: 999px; background: var(--glass-pill);
+  box-shadow: inset 0 1px 0 var(--glass-hi), 0 1px 4px rgba(0, 0, 0, .1);
+  translate: var(--lens-x, 0) -50%; opacity: 0;
+  transition: translate .5s var(--spring), width .5s var(--spring), opacity .25s ease;
+}
+.nav-links.has-lens a[aria-current="true"] { background: none; box-shadow: none; }
+.nav-links.has-lens .nav-lens.on { opacity: 1; }
+@media (max-width: 1199.98px) { .nav-lens { display: none; } }
+
+/* Scroll edge: where content slides under the floating header it softens into a blur, instead of
+   meeting a hard line. Only once the page has scrolled past the sky, where content actually overlaps. */
+.site-header::before {
+  content: ''; position: absolute; left: 0; right: 0; top: 0; z-index: -1; pointer-events: none;
+  height: calc(var(--nav-top) + var(--nav-h) + 26px);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--bg) 72%, transparent), transparent);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  -webkit-mask-image: linear-gradient(180deg, #000 45%, transparent); mask-image: linear-gradient(180deg, #000 45%, transparent);
+  opacity: 0; transition: opacity .35s ease, height .45s var(--spring);
+}
+.site-header.is-scrolled::before { opacity: 1; }
+
+/* The phone menu materialises out of its button (top right): scale and blur arrive together */
+@media (max-width: 1199.98px) {
+  .nav-links.open { transform-origin: calc(100% - 28px) 0; animation: glass-in .42s var(--spring) both; }
+}
+@keyframes glass-in {
+  from { opacity: 0; scale: .94; filter: blur(8px); }
+  to   { opacity: 1; scale: 1; filter: none; }
+}
+
+/* Concentric corners: buttons inside a card follow its curve */
+.course-feature, .sed-card, .paper-card, .coursework, .semesters > li, .pub-list li { border-radius: var(--radius-m); }
+.sed-card { border-radius: var(--radius-l); }
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-lens { transition: opacity .2s ease; }
+  .nav-links.open { animation: glass-fade .2s ease both; }
+  .btn:active, .sky-btn:active, .icon-btn:active, .about-jump a:active, .contact-links a:active,
+  .nav-links a:active, .facts-more:active, .contact-mail:active, .post-card:active, .project:active { scale: none; }
+}
+@keyframes glass-fade { from { opacity: 0; } to { opacity: 1; } }
+
+/* Reduce Transparency: glass becomes frosted solid */
+@media (prefers-reduced-transparency: reduce) {
+  .nav { background: var(--glass-solid); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .nav::after { display: none; }
+  .site-header::before { -webkit-backdrop-filter: none; backdrop-filter: none; background: linear-gradient(180deg, var(--bg), transparent); }
+  .sky-btn, .btn-ghost, .sun-box { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(8, 12, 24, .92); }
+}
+
+/* Increase Contrast: near-solid surfaces with a defined edge */
+@media (prefers-contrast: more) {
+  .nav { background: var(--glass-solid); box-shadow: 0 0 0 1.5px var(--ink); }
+  .nav::before, .nav::after { display: none; }
+  .nav-links a { color: var(--ink); }
+  .interest-list li, .project, .outreach-list li, .award-list li, .sed-card, .course-feature, .post-card, .coursework,
+  .contact-links a, .chip, .semesters > li, .pub-list li, .paper-card, .fact-face, .news-card {
+    background: var(--surface); border-color: color-mix(in srgb, var(--ink) 45%, transparent);
+  }
+}

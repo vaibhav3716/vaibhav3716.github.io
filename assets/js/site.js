@@ -63,6 +63,9 @@
       requestAnimationFrame(function () {
         headerTick = false;
         var y = window.scrollY, dy = y - lastY;
+        // Past the sky, content slides under the header: soften that edge (see .site-header::before)
+        var hero = document.querySelector('.hero');
+        siteHeader.classList.toggle('is-scrolled', !!hero && y > hero.offsetHeight - siteHeader.offsetHeight);
         if (Math.abs(dy) < 6) return;                     // ignore tiny jitters
         var menuOpen = document.getElementById('nav-links') && document.getElementById('nav-links').classList.contains('open');
         siteHeader.classList.toggle('is-compact', !menuOpen && y > 140 && dy > 0);
@@ -107,6 +110,30 @@
     where.classList.add('swap');
     requestAnimationFrame(function () { whereText.textContent = text; requestAnimationFrame(function () { where.classList.remove('swap'); }); });
   }
+  // One lens of glass marks the current section and glides from link to link. A CSS transition
+  // retargets from wherever it is, so a quick scroll back simply turns it around mid-flight.
+  var lensHost = document.getElementById('nav-links'), lens = null;
+  if (lensHost && navAnchors.length) {
+    lens = document.createElement('li');          // a list item, so the list stays valid
+    lens.className = 'nav-lens';
+    lens.setAttribute('aria-hidden', 'true');
+    lensHost.insertBefore(lens, lensHost.firstChild);
+    lensHost.classList.add('has-lens');
+  }
+  function placeLens(a) {
+    if (!lens) return;
+    if (!a || !a.offsetWidth) { lens.classList.remove('on'); return; }
+    var first = !lens.classList.contains('on');
+    if (first) lens.style.transition = 'none';     // appear in place, then glide from there on
+    lens.style.setProperty('--lens-x', a.offsetLeft + 'px');
+    lens.style.width = a.offsetWidth + 'px';
+    if (first) { void lens.offsetWidth; lens.style.transition = ''; }
+    lens.classList.add('on');
+  }
+  // The links change size when the header shrinks: follow them
+  if (lens && 'ResizeObserver' in window) {
+    new ResizeObserver(function () { placeLens(document.querySelector('.nav-links a[aria-current="true"]')); }).observe(lensHost);
+  }
   function updateCurrent() {
     navTicking = false;
     var line = window.scrollY + window.innerHeight * 0.4;
@@ -117,6 +144,7 @@
     navAnchors.forEach(function (a, i) {
       if (i === idx) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
     });
+    placeLens(idx >= 0 ? navAnchors[idx] : null);
     setWhere(idx >= 0 ? navAnchors[idx].textContent : '');
   }
   if (navAnchors.length) {
