@@ -1,41 +1,41 @@
 {
-  "updated": "2026-10-05T07:34:34Z",
-  "newest": "2610.03635",
+  "updated": "2026-10-06T08:00:08Z",
+  "newest": "2610.06841",
   "plain": false,
   "summarised_by": null,
   "papers": [
     {
-      "id": "2610.03635",
-      "headline": "Temporal Variability of Titan's Middle-Atmospheric Zonal Winds from Southern Fall to Late Winter (2016-2023)",
-      "summary": "Previous ALMA observations have revealed unexpectedly strong and rapid variations in Titan's high-altitude equatorial zonal winds, which present a challenge to our understanding of this moon's atmospheric dynamics.",
-      "topic": "Planets",
-      "title": "Temporal Variability of Titan's Middle-Atmospheric Zonal Winds from Southern Fall to Late Winter (2016-2023)",
-      "authors": "M. A. Cordiner et al.",
-      "category": "astro-ph.EP",
-      "published": "2026-10-02",
-      "url": "https://arxiv.org/abs/2610.03635"
-    },
-    {
-      "id": "2610.03572",
-      "headline": "Searching for Green Pea Galaxies in the SFACT Survey",
-      "summary": "Green Pea galaxies (GPs) are a class of rare, extreme star-forming galaxies whose physical properties closely resemble high-redshift Ly-α emitting galaxies.",
-      "topic": "Galaxies",
-      "title": "Searching for Green Pea Galaxies in the SFACT Survey",
-      "authors": "K. N. Baker et al.",
-      "category": "astro-ph.GA",
-      "published": "2026-10-02",
-      "url": "https://arxiv.org/abs/2610.03572"
-    },
-    {
-      "id": "2610.03544",
-      "headline": "Baryonic Imprints on DM Halos: the concentration-mass relation and its dependence on 28 model parameters in the CAMELS suite",
-      "summary": "The evolution of baryons in halos, as well as their gravitational impact on the total-matter phase space, has a rich phenomenology and is vital in answering many questions in both cosmology and astrophysics.",
+      "id": "2610.06841",
+      "headline": "Testing Refracted Gravity with the kinematics of stacked galaxy clusters",
+      "summary": "We test Refracted Gravity (RG), a phenomenological modified gravity model that modifies the Poisson equation by introducing an effective gravitational permittivity ε(ρ_bar) which depends on the baryonic matter density ρ_bar and mimics the behaviour of dark matter in cosmic structures.",
       "topic": "Cosmology",
-      "title": "Baryonic Imprints on DM Halos: the concentration-mass relation and its dependence on 28 model parameters in the CAMELS suite",
-      "authors": "C. Delgado, D. Anbajagane",
+      "title": "Testing Refracted Gravity with the kinematics of stacked galaxy clusters",
+      "authors": "D. Primignani et al.",
       "category": "astro-ph.CO",
-      "published": "2026-10-02",
-      "url": "https://arxiv.org/abs/2610.03544"
+      "published": "2026-10-05",
+      "url": "https://arxiv.org/abs/2610.06841"
+    },
+    {
+      "id": "2610.06780",
+      "headline": "Production of White Dwarf Debris Disks from Planetary Collisions and Poynting-Robertson Drag",
+      "summary": "This paper explores the production of debris disks around white dwarfs, which are observed to experience frequent pollution events.",
+      "topic": "Stars",
+      "title": "Production of White Dwarf Debris Disks from Planetary Collisions and Poynting-Robertson Drag",
+      "authors": "F. C. Adams, K. Batygin",
+      "category": "astro-ph.SR",
+      "published": "2026-10-05",
+      "url": "https://arxiv.org/abs/2610.06780"
+    },
+    {
+      "id": "2610.06680",
+      "headline": "Unveiling the Origins of the Molecular Gas Reservoirs in Recently Quenched Massive Galaxies",
+      "summary": "Observations of quenched galaxies across cosmic time have revealed systems containing substantial molecular gas reservoirs, challenging the traditional picture of gas-poor, red and dead galaxies.",
+      "topic": "Galaxies",
+      "title": "Unveiling the Origins of the Molecular Gas Reservoirs in Recently Quenched Massive Galaxies",
+      "authors": "E. Savitch et al.",
+      "category": "astro-ph.GA",
+      "published": "2026-10-05",
+      "url": "https://arxiv.org/abs/2610.06680"
     }
   ]
 }
