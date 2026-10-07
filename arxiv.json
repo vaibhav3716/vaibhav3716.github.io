@@ -1,41 +1,41 @@
 {
-  "updated": "2026-10-06T08:00:08Z",
-  "newest": "2610.06841",
+  "updated": "2026-10-07T07:38:08Z",
+  "newest": "2610.08758",
   "plain": false,
   "summarised_by": null,
   "papers": [
     {
-      "id": "2610.06841",
-      "headline": "Testing Refracted Gravity with the kinematics of stacked galaxy clusters",
-      "summary": "We test Refracted Gravity (RG), a phenomenological modified gravity model that modifies the Poisson equation by introducing an effective gravitational permittivity ε(ρ_bar) which depends on the baryonic matter density ρ_bar and mimics the behaviour of dark matter in cosmic structures.",
-      "topic": "Cosmology",
-      "title": "Testing Refracted Gravity with the kinematics of stacked galaxy clusters",
-      "authors": "D. Primignani et al.",
-      "category": "astro-ph.CO",
-      "published": "2026-10-05",
-      "url": "https://arxiv.org/abs/2610.06841"
-    },
-    {
-      "id": "2610.06780",
-      "headline": "Production of White Dwarf Debris Disks from Planetary Collisions and Poynting-Robertson Drag",
-      "summary": "This paper explores the production of debris disks around white dwarfs, which are observed to experience frequent pollution events.",
+      "id": "2610.08758",
+      "headline": "Coronal Mass Ejections from the Young Sun: Deceleration-Powered Solar Energetic Particles as a Self-Extinguishing Forcing of the Early Earth",
+      "summary": "At ∼3.9 Ga (stellar age ∼0.6 Gyr), the young Sun was far more magnetically active than today. It launched ∼10² large, fast coronal mass ejections (CMEs) per year into a denser, more magnetized wind.",
       "topic": "Stars",
-      "title": "Production of White Dwarf Debris Disks from Planetary Collisions and Poynting-Robertson Drag",
-      "authors": "F. C. Adams, K. Batygin",
+      "title": "Coronal Mass Ejections from the Young Sun: Deceleration-Powered Solar Energetic Particles as a Self-Extinguishing Forcing of the Early Earth",
+      "authors": "O. A. Panasenco",
       "category": "astro-ph.SR",
-      "published": "2026-10-05",
-      "url": "https://arxiv.org/abs/2610.06780"
+      "published": "2026-10-06",
+      "url": "https://arxiv.org/abs/2610.08758"
     },
     {
-      "id": "2610.06680",
-      "headline": "Unveiling the Origins of the Molecular Gas Reservoirs in Recently Quenched Massive Galaxies",
-      "summary": "Observations of quenched galaxies across cosmic time have revealed systems containing substantial molecular gas reservoirs, challenging the traditional picture of gas-poor, red and dead galaxies.",
+      "id": "2610.08754",
+      "headline": "Complex Organic Molecules in Protostars with ALMA Spectral Surveys (COMPASS) – IV. Methyl cyanide isotopologues toward BHR71-IRS1",
+      "summary": "Methyl cyanide is one of the most abundant nitrogen-bearing complex organic molecules observed in the gas phase around low- and high-mass protostars.",
       "topic": "Galaxies",
-      "title": "Unveiling the Origins of the Molecular Gas Reservoirs in Recently Quenched Massive Galaxies",
-      "authors": "E. Savitch et al.",
+      "title": "Complex Organic Molecules in Protostars with ALMA Spectral Surveys (COMPASS) – IV. Methyl cyanide isotopologues toward BHR71-IRS1",
+      "authors": "P. Nazari et al.",
       "category": "astro-ph.GA",
-      "published": "2026-10-05",
-      "url": "https://arxiv.org/abs/2610.06680"
+      "published": "2026-10-06",
+      "url": "https://arxiv.org/abs/2610.08754"
+    },
+    {
+      "id": "2610.08751",
+      "headline": "Mitigating prior-volume effects in galaxy clustering by adopting Mpc over Mpc/h units",
+      "summary": "We investigate prior-volume effects in Bayesian analyses of galaxy clustering based on state-of-the-art models, such as the EFT and the VDG_∞ model.",
+      "topic": "Cosmology",
+      "title": "Mitigating prior-volume effects in galaxy clustering by adopting Mpc over Mpc/h units",
+      "authors": "A. Pezzotta et al.",
+      "category": "astro-ph.CO",
+      "published": "2026-10-06",
+      "url": "https://arxiv.org/abs/2610.08751"
     }
   ]
 }
