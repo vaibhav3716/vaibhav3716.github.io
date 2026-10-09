@@ -1,41 +1,41 @@
 {
-  "updated": "2026-10-08T07:54:23Z",
-  "newest": "2610.10530",
+  "updated": "2026-10-09T07:53:21Z",
+  "newest": "2610.12462",
   "plain": false,
   "summarised_by": null,
   "papers": [
     {
-      "id": "2610.10530",
-      "headline": "Constraints on Primordial Oscillatory Features from the Power Spectrum and Bispectrum of Redshift-Space Galaxy Clustering in DESI DR1",
-      "summary": "We constrain oscillatory features in the primordial power spectrum using the public DESI DR1 galaxy and quasar clustering data.",
-      "topic": "Cosmology",
-      "title": "Constraints on Primordial Oscillatory Features from the Power Spectrum and Bispectrum of Redshift-Space Galaxy Clustering in DESI DR1",
-      "authors": "S. Chen et al.",
-      "category": "astro-ph.CO",
-      "published": "2026-10-07",
-      "url": "https://arxiv.org/abs/2610.10530"
-    },
-    {
-      "id": "2610.10522",
-      "headline": "Widespread steep X-ray spectra of luminous z≃5.85-7.5 quasars and their implications for future X-ray surveys",
-      "summary": "Luminous quasars (QSOs) at the Epoch of Reionization (EoR, z≳6) host billion-solar-mass black holes assembled within the first Gyr of cosmic time.",
+      "id": "2610.12462",
+      "headline": "Disk Structure May Determine AGN Variability and Explain the Accretion Disk Size Problem: No Broad Line Region Required",
+      "summary": "Variability is a crucial probe of active galactic nuclei (AGN) disks, but the impact of the structure and internal physics of the disk on this variability is poorly understood.",
       "topic": "Black holes",
-      "title": "Widespread steep X-ray spectra of luminous z≃5.85-7.5 quasars and their implications for future X-ray surveys",
-      "authors": "A. Tortosa et al.",
+      "title": "Disk Structure May Determine AGN Variability and Explain the Accretion Disk Size Problem: No Broad Line Region Required",
+      "authors": "A. Secunda, Y. Jiang, J. E. Greene",
       "category": "astro-ph.HE",
-      "published": "2026-10-07",
-      "url": "https://arxiv.org/abs/2610.10522"
+      "published": "2026-10-08",
+      "url": "https://arxiv.org/abs/2610.12462"
     },
     {
-      "id": "2610.10434",
-      "headline": "BOLT: Imaging Lightning and Terrestrial Gamma-ray Flashes at the Pierre Auger Observatory",
-      "summary": "Lightning-related phenomena are known to interact with and influence all detector systems of the Pierre Auger Observatory.",
-      "topic": "Instruments",
-      "title": "BOLT: Imaging Lightning and Terrestrial Gamma-ray Flashes at the Pierre Auger Observatory",
-      "authors": "E. d. Boone, f. t. P. A. Collaboration",
-      "category": "astro-ph.IM",
-      "published": "2026-10-07",
-      "url": "https://arxiv.org/abs/2610.10434"
+      "id": "2610.12418",
+      "headline": "Cosmic topology. Part IId. Eigenmodes and correlation matrices of lens spaces",
+      "summary": "The global topology of the Universe is a longstanding open question. In this work, we examine the statistical signatures of a positively curved universe with a Friedmann–Lemaitre–Robertson–Walker metric and the topology of a lens space L(p,q).",
+      "topic": "Cosmology",
+      "title": "Cosmic topology. Part IId. Eigenmodes and correlation matrices of lens spaces",
+      "authors": "M. M. Barandiaran et al.",
+      "category": "astro-ph.CO",
+      "published": "2026-10-08",
+      "url": "https://arxiv.org/abs/2610.12418"
+    },
+    {
+      "id": "2610.12398",
+      "headline": "ACORN I. Massive Black Hole Seeding and Tidal Disruption Events from Star Clusters in Cosmological Simulations",
+      "summary": "JWST has revealed massive star clusters at z≳ 6, which provide promising environments for massive black hole (MBH) seed formation.",
+      "topic": "Galaxies",
+      "title": "ACORN I. Massive Black Hole Seeding and Tidal Disruption Events from Star Clusters in Cosmological Simulations",
+      "authors": "Y. Zhou et al.",
+      "category": "astro-ph.GA",
+      "published": "2026-10-08",
+      "url": "https://arxiv.org/abs/2610.12398"
     }
   ]
 }
