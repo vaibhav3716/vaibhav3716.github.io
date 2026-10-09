@@ -186,8 +186,17 @@
     return best;
   }
   if (lens) {
+    // Browsers otherwise start dragging the link itself (its URL), which cancels the slide
+    navAnchors.forEach(function (a) { a.setAttribute('draggable', 'false'); });
+    lensHost.addEventListener('dragstart', function (e) { if (wideNav.matches) e.preventDefault(); });
     lensHost.addEventListener('pointerdown', function (e) {
-      if (!wideNav.matches || e.button !== 0 || !lens.classList.contains('on')) return;
+      if (!wideNav.matches || e.button !== 0) return;
+      if (e.pointerType === 'mouse') e.preventDefault();   // no text selection or link drag; the click still happens
+      if (!lens.classList.contains('on')) {                 // nothing current yet (up in the sky): the lens appears where you pressed
+        var pressed = e.target.closest('a');
+        if (!pressed) return;
+        placeLens(pressed);
+      }
       var hostLeft = lensHost.getBoundingClientRect().left;
       lensDrag = null;
       var start = { x: e.clientX, id: e.pointerId, hostLeft: hostLeft, moved: false };
@@ -226,9 +235,15 @@
         lensHost.removeEventListener('pointercancel', up);
         if (!start.moved || !lensDrag) { lensDrag = null; return; }
         // Release velocity from the last few moves, then project where the slide was heading
-        var h = lensDrag.hist, v = 0;
-        if (h.length > 1) { var dt = h[h.length - 1].t - h[0].t; if (dt > 0) v = (h[h.length - 1].x - h[0].x) / dt * 1000; }
-        var dec = 0.99, projected = lensX() + (v / 1000) * dec / (1 - dec);
+        // (only the last 100 ms count, and a pointer that had come to rest carries no momentum)
+        var h = lensDrag.hist.filter(function (p) { return ev.timeStamp - p.t < 100; }), v = 0;
+        if (h.length > 1 && ev.timeStamp - h[h.length - 1].t < 60) {
+          var dt = h[h.length - 1].t - h[0].t;
+          if (dt > 8) v = (h[h.length - 1].x - h[0].x) / dt * 1000;
+        }
+        var dec = 0.98, here = lensX(), throwBy = (v / 1000) * dec / (1 - dec);
+        var reach = (lensDrag.over ? lensDrag.over.offsetWidth : 80) * 0.9;   // a flick carries at most about one link further
+        var projected = here + Math.max(-reach, Math.min(reach, throwBy));
         var target = ev.type === 'pointercancel' ? null : linkAt(projected + lens.offsetWidth / 2);
         if (lensDrag.over) lensDrag.over.classList.remove('lens-over');
         lensDrag = null;

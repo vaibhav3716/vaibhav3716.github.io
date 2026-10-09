@@ -1200,6 +1200,7 @@ h3 { letter-spacing: -.008em; line-height: 1.2; }
    springs back to its resting size on the link it lands on. */
 @media (min-width: 1200px) {
   .nav-links.has-lens { cursor: default; }
+  .nav-links.has-lens a { -webkit-user-drag: none; user-select: none; -webkit-user-select: none; touch-action: none; }
   .nav-links.lens-dragging, .nav-links.lens-dragging a { cursor: grabbing; user-select: none; -webkit-user-select: none; }
   .nav-lens { transition: translate .5s var(--spring), width .5s var(--spring), opacity .25s ease, scale .45s var(--spring), box-shadow .35s ease, background-color .35s ease; }
   .nav-lens::after {
