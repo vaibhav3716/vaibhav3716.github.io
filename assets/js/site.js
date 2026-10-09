@@ -133,7 +133,7 @@
     lensLockTimer = setTimeout(function () { lensLock = null; updateCurrent(); }, 2200);
   }
   function placeLens(a) {
-    if (!lens || lensDrag) return;
+    if (!lens) return;
     if (lensLock) a = lensLock;
     if (!a || !a.offsetWidth) { lens.classList.remove('on'); return; }
     var first = !lens.classList.contains('on');
@@ -162,108 +162,8 @@
     setWhere(idx >= 0 ? navAnchors[idx].textContent : '');
   }
 
-  /* ---------------------------------------------------------------
-     Desktop: the lens can be picked up and slid along the bar, like
-     Apple's Liquid Glass tab bar. It swells and glows while held,
-     tracks the pointer 1:1 from where it was grabbed, gives softly
-     past the ends, and on release springs to the link the motion was
-     heading for (momentum projected, as iOS does). Then the page
-     glides to that section. A plain click still works as a click.
-  ---------------------------------------------------------------- */
-  var lensDrag = null;
   var wideNav = window.matchMedia('(min-width: 1200px)');
-  function lensX() {                                   // where the lens is on screen right now, mid-glide or not
-    var tr = getComputedStyle(lens).translate;
-    return tr && tr !== 'none' ? parseFloat(tr) || 0 : 0;
-  }
-  function rubberband(over, dim) { var c = 0.55; return (over * dim * c) / (dim + c * Math.abs(over)); }
-  function linkAt(centre) {                            // the link whose middle is nearest a point on the bar
-    var best = null, bestD = Infinity;
-    navAnchors.forEach(function (a) {
-      var d = Math.abs(a.offsetLeft + a.offsetWidth / 2 - centre);
-      if (d < bestD) { bestD = d; best = a; }
-    });
-    return best;
-  }
   if (lens) {
-    // Browsers otherwise start dragging the link itself (its URL), which cancels the slide
-    navAnchors.forEach(function (a) { a.setAttribute('draggable', 'false'); });
-    lensHost.addEventListener('dragstart', function (e) { if (wideNav.matches) e.preventDefault(); });
-    lensHost.addEventListener('pointerdown', function (e) {
-      if (!wideNav.matches || e.button !== 0) return;
-      if (e.pointerType === 'mouse') e.preventDefault();   // no text selection or link drag; the click still happens
-      if (!lens.classList.contains('on')) {                 // nothing current yet (up in the sky): the lens appears where you pressed
-        var pressed = e.target.closest('a');
-        if (!pressed) return;
-        placeLens(pressed);
-      }
-      var hostLeft = lensHost.getBoundingClientRect().left;
-      lensDrag = null;
-      var start = { x: e.clientX, id: e.pointerId, hostLeft: hostLeft, moved: false };
-      function move(ev) {
-        if (ev.pointerId !== start.id) return;
-        var px = ev.clientX - start.hostLeft;
-        if (!start.moved) {
-          if (Math.abs(ev.clientX - start.x) < 6) return;     // a little give before it counts as a slide
-          start.moved = true;
-          var x0 = lensX(), w0 = lens.offsetWidth;
-          var grabbed = px - x0 >= -4 && px - x0 <= w0 + 4;    // picked up the lens itself, or reached for it
-          lensDrag = { offset: grabbed ? (start.x - start.hostLeft) - x0 : w0 / 2, hist: [] };
-          try { lensHost.setPointerCapture(start.id); } catch (err) { /* fine without */ }
-          lensHost.classList.add('lens-dragging');
-          lens.classList.add('dragging');
-        }
-        var w = lens.offsetWidth, max = lensHost.clientWidth - w;
-        var x = px - lensDrag.offset;
-        if (x < 0) x = -rubberband(-x, w); else if (x > max) x = max + rubberband(x - max, w);
-        lens.style.setProperty('--lens-x', x + 'px');
-        lens.style.setProperty('--glow-x', (px - x) + 'px');  // the glint sits under the pointer
-        var over = linkAt(x + w / 2);
-        if (over !== lensDrag.over) {
-          if (lensDrag.over) lensDrag.over.classList.remove('lens-over');
-          over.classList.add('lens-over');
-          lensDrag.over = over;
-          lens.style.width = over.offsetWidth + 'px';         // the lens reshapes to fit what it's over
-        }
-        lensDrag.hist.push({ x: x, t: ev.timeStamp });
-        if (lensDrag.hist.length > 5) lensDrag.hist.shift();
-      }
-      function up(ev) {
-        if (ev.pointerId !== start.id) return;
-        lensHost.removeEventListener('pointermove', move);
-        lensHost.removeEventListener('pointerup', up);
-        lensHost.removeEventListener('pointercancel', up);
-        if (!start.moved || !lensDrag) { lensDrag = null; return; }
-        // Release velocity from the last few moves, then project where the slide was heading
-        // (only the last 100 ms count, and a pointer that had come to rest carries no momentum)
-        var h = lensDrag.hist.filter(function (p) { return ev.timeStamp - p.t < 100; }), v = 0;
-        if (h.length > 1 && ev.timeStamp - h[h.length - 1].t < 60) {
-          var dt = h[h.length - 1].t - h[0].t;
-          if (dt > 8) v = (h[h.length - 1].x - h[0].x) / dt * 1000;
-        }
-        var dec = 0.98, here = lensX(), throwBy = (v / 1000) * dec / (1 - dec);
-        var reach = (lensDrag.over ? lensDrag.over.offsetWidth : 80) * 0.9;   // a flick carries at most about one link further
-        var projected = here + Math.max(-reach, Math.min(reach, throwBy));
-        var target = ev.type === 'pointercancel' ? null : linkAt(projected + lens.offsetWidth / 2);
-        if (lensDrag.over) lensDrag.over.classList.remove('lens-over');
-        lensDrag = null;
-        lensHost.classList.remove('lens-dragging');
-        lens.classList.remove('dragging');
-        // The browser will follow up with a click on whatever was under the pointer: swallow that one
-        lensHost.addEventListener('click', function swallow(ce) {
-          if (ce.isTrusted) { ce.preventDefault(); ce.stopPropagation(); }
-          lensHost.removeEventListener('click', swallow, true);
-        }, true);
-        setTimeout(function () { lensHost.dispatchEvent(new MouseEvent('click', { bubbles: false })); }, 400);   // clears the swallow if no click came
-        if (!target) { updateCurrent(); return; }
-        lockLens(target);
-        placeLens(target);
-        target.click();                                       // the usual smooth scroll to that section
-      }
-      lensHost.addEventListener('pointermove', move);
-      lensHost.addEventListener('pointerup', up);
-      lensHost.addEventListener('pointercancel', up);
-    });
     // A plain click on a link: the lens goes straight there and waits, rather than visiting every section on the way
     lensHost.addEventListener('click', function (e) {
       var a = e.target.closest('a[href^="#"]');
