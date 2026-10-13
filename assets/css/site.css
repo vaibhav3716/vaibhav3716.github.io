@@ -1350,7 +1350,6 @@ h1, h2, h3, .hero-lead, .fact-teaser, .news-title, .post-title { text-wrap: bala
 .course-pack summary > span:first-child { font-family: var(--serif); font-size: 1.3rem; font-weight: 500; color: var(--ink); }
 .course-pack summary em { font-style: normal; font-family: var(--sans); font-size: .9rem; color: var(--ink-2); }
 .pack-inner { border-top: 1px solid var(--rule); padding: 1rem 0 1.4rem; }
-.pack-intro { margin: 0 0 1.25rem; max-width: 70ch; color: var(--ink-2); font-size: .95rem; }
 .pack-unit { padding: 1.1rem 0 .4rem; border-top: 1px solid var(--rule); }
 .pack-unit:first-of-type { border-top: 0; padding-top: .2rem; }
 .pack-unit h4 { display: flex; flex-wrap: wrap; align-items: baseline; gap: .2rem .7rem; margin: 0 0 .8rem; font-size: 1.2rem; }
