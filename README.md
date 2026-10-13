@@ -25,9 +25,11 @@ Plain HTML, CSS and JavaScript. There is no build step: edit a file, push, and t
 | Stargazing photos | `assets/img/stargazing/` |
 | Quote backgrounds (ESA/Hubble, ESA/Webb) | `assets/img/andromeda-hst.webp`, `assets/img/esa/` |
 | CV | `files/Vaibhav_Yenare_CV.pdf` |
+| Introduction to Astronomy course notes (lecture notes, assignments, resources; no answer keys) | `files/intro-astronomy/`, listed in the `id="intro-astronomy"` panel of the Teaching section |
 
 ## Common updates
 
+- **New or updated lecture notes:** copy the PDF into `files/intro-astronomy/unit-N/` and add or edit its `<li>` in the `id="intro-astronomy"` panel (code, title, pages and size). Never add answer keys, the instructor guide or the final assessment.
 - **New CV:** replace `files/Vaibhav_Yenare_CV.pdf`, keeping the same file name.
 - **Paper submitted or published:** edit the two entries under `id="publications"` in `index.html`,
   and the `paper-card` block in the research section. Add the arXiv or DOI link there.
