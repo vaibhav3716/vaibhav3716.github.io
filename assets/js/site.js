@@ -608,32 +608,94 @@
 
   /* ---------------------------------------------------------------
      A faint star field behind the whole page. It stays fixed while
-     the content scrolls over it.
+     the content scrolls over it. The faint stars are painted once;
+     the brighter ones twinkle: each keeps a steady bright core while
+     four thin spikes grow out of it, fade away, and come back, every
+     star on its own slow rhythm. Reduced motion keeps them still.
   ---------------------------------------------------------------- */
   var pageStars = document.querySelector('.page-stars');
+  var psBase = null, psTwinklers = [], psW = 0, psH = 0, psDpr = 1, psDark = false, psRaf = 0, psLast = 0;
   function drawPageStars() {
     if (!pageStars || !pageStars.getContext) return;
-    var c = pageStars.getContext('2d'), dpr = Math.min(window.devicePixelRatio || 1, 2);
-    var w = pageStars.clientWidth, h = pageStars.clientHeight;
-    pageStars.width = Math.round(w * dpr); pageStars.height = Math.round(h * dpr);
-    c.setTransform(dpr, 0, 0, dpr, 0, 0);
-    c.clearRect(0, 0, w, h);
-    var dark = currentTheme() === 'dark';
+    psDpr = Math.min(window.devicePixelRatio || 1, 2);
+    psW = pageStars.clientWidth; psH = pageStars.clientHeight;
+    if (!psW || !psH) { psBase = null; return; }     // not laid out yet (a background tab): the resize handler draws it later
+    pageStars.width = Math.round(psW * psDpr); pageStars.height = Math.round(psH * psDpr);
+    psDark = currentTheme() === 'dark';
+    // The still layer, drawn once into an offscreen canvas
+    psBase = document.createElement('canvas');
+    psBase.width = pageStars.width; psBase.height = pageStars.height;
+    var b = psBase.getContext('2d');
+    b.setTransform(psDpr, 0, 0, psDpr, 0, 0);
     var seed = 11;
     function rnd() { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
-    var n = Math.round(w * h / 3200);
+    var n = Math.round(psW * psH / 3200);
+    psTwinklers = [];
     for (var i = 0; i < n; i++) {
-      var x = rnd() * w, y = rnd() * h, m = rnd(), r = 0.35 + Math.pow(m, 6) * 1.6;
-      var a = dark ? 0.12 + m * 0.5 : 0.08 + m * 0.22;
+      var x = rnd() * psW, y = rnd() * psH, m = rnd(), r = 0.35 + Math.pow(m, 6) * 1.6;
+      var a = psDark ? 0.12 + m * 0.5 : 0.08 + m * 0.22;
       var warm = rnd() < 0.3;
-      c.fillStyle = dark ? (warm ? 'rgba(255,220,190,' : 'rgba(215,226,255,') + a + ')' : (warm ? 'rgba(150,100,40,' : 'rgba(50,80,140,') + a + ')';
-      c.beginPath(); c.arc(x, y, r, 0, 6.2832); c.fill();
+      var rgb = psDark ? (warm ? '255,220,190' : '215,226,255') : (warm ? '150,100,40' : '50,80,140');
+      var twinkles = m > 0.86;                        // roughly the brightest one star in seven
+      if (twinkles) { r = Math.max(r, 0.9); a = psDark ? Math.min(0.85, a + 0.15) : Math.min(0.45, a + 0.1); }
+      b.fillStyle = 'rgba(' + rgb + ',' + a + ')';
+      b.beginPath(); b.arc(x, y, r, 0, 6.2832); b.fill();
+      if (twinkles) psTwinklers.push({
+        x: x, y: y, r: r, rgb: rgb, a: a,
+        len: 4 + rnd() * 5,                           // longest spike, px
+        period: 2600 + rnd() * 4200,                  // ms per cycle
+        phase: rnd(),
+        tilt: (rnd() - 0.5) * 0.35                    // a slight turn, so the crosses don't all line up
+      });
     }
+    paintStars(performance.now());
+    if (!psRaf && !reduceMotion.matches) psRaf = requestAnimationFrame(twinkle);
+  }
+  function paintStars(now) {
+    if (!psBase || !psBase.width || !psBase.height) return;
+    var c = pageStars.getContext('2d');
+    c.setTransform(1, 0, 0, 1, 0, 0);
+    c.clearRect(0, 0, pageStars.width, pageStars.height);
+    c.drawImage(psBase, 0, 0);
+    if (reduceMotion.matches) return;
+    c.setTransform(psDpr, 0, 0, psDpr, 0, 0);
+    c.lineCap = 'round';
+    for (var i = 0; i < psTwinklers.length; i++) {
+      var s = psTwinklers[i];
+      // Visible for the first 60% of each cycle (swelling then shrinking), dark for the rest
+      var p = ((now / s.period) + s.phase) % 1;
+      var k = p < 0.6 ? Math.pow(Math.sin(Math.PI * p / 0.6), 2) : 0;
+      if (k < 0.02) continue;
+      var L = s.len * k, A = s.a * (0.55 + 0.45 * k);
+      // A soft glow round the core while the spikes are out
+      var g = c.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r * 3.2);
+      g.addColorStop(0, 'rgba(' + s.rgb + ',' + (A * 0.5 * k) + ')');
+      g.addColorStop(1, 'rgba(' + s.rgb + ',0)');
+      c.fillStyle = g;
+      c.beginPath(); c.arc(s.x, s.y, s.r * 3.2, 0, 6.2832); c.fill();
+      // Four spikes, each fading from the core to its tip
+      for (var q = 0; q < 2; q++) {
+        var ang = s.tilt + q * Math.PI / 2, dx = Math.cos(ang) * L, dy = Math.sin(ang) * L;
+        var lg = c.createLinearGradient(s.x - dx, s.y - dy, s.x + dx, s.y + dy);
+        lg.addColorStop(0, 'rgba(' + s.rgb + ',0)');
+        lg.addColorStop(0.5, 'rgba(' + s.rgb + ',' + A + ')');
+        lg.addColorStop(1, 'rgba(' + s.rgb + ',0)');
+        c.strokeStyle = lg; c.lineWidth = Math.max(0.6, s.r * 0.75);
+        c.beginPath(); c.moveTo(s.x - dx, s.y - dy); c.lineTo(s.x + dx, s.y + dy); c.stroke();
+      }
+    }
+  }
+  function twinkle(now) {
+    psRaf = 0;
+    if (reduceMotion.matches || !psBase) return;
+    if (!document.hidden && now - psLast > 33) { psLast = now; paintStars(now); }   // about 30 frames a second is plenty
+    psRaf = requestAnimationFrame(twinkle);
   }
   drawPageStars();
   var psTimer;
   window.addEventListener('resize', function () { clearTimeout(psTimer); psTimer = setTimeout(drawPageStars, 200); });
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', drawPageStars);
+  document.addEventListener('visibilitychange', function () { if (!document.hidden && !psBase) drawPageStars(); });
 
   /* ---------------------------------------------------------------
      Smooth, momentum scrolling for mouse and trackpad (Lenis).
