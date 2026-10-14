@@ -607,8 +607,8 @@
 
 
   /* ---------------------------------------------------------------
-     A faint star field behind the whole page. It stays fixed while
-     the content scrolls over it. The faint stars are painted once;
+     A star field behind the whole page, in the dark theme only. It
+     stays fixed while the content scrolls over it. The faint stars are painted once;
      the brighter ones twinkle: each keeps a steady bright core while
      four thin spikes grow out of it, fade away, and come back, every
      star on its own slow rhythm. Reduced motion keeps them still.
@@ -622,6 +622,11 @@
     if (!psW || !psH) { psBase = null; return; }     // not laid out yet (a background tab): the resize handler draws it later
     pageStars.width = Math.round(psW * psDpr); pageStars.height = Math.round(psH * psDpr);
     psDark = currentTheme() === 'dark';
+    if (!psDark) {                                   // the paper theme has no stars at all
+      psBase = null; psTwinklers = [];
+      pageStars.getContext('2d').clearRect(0, 0, pageStars.width, pageStars.height);
+      return;
+    }
     // The still layer, drawn once into an offscreen canvas
     psBase = document.createElement('canvas');
     psBase.width = pageStars.width; psBase.height = pageStars.height;
@@ -629,20 +634,21 @@
     b.setTransform(psDpr, 0, 0, psDpr, 0, 0);
     var seed = 11;
     function rnd() { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
-    var n = Math.round(psW * psH / 3200);
+    // Fewer, crisper stars: lots of very faint specks read as dust on the screen rather than sky
+    var n = Math.round(psW * psH / 7000);
     psTwinklers = [];
     for (var i = 0; i < n; i++) {
-      var x = rnd() * psW, y = rnd() * psH, m = rnd(), r = 0.35 + Math.pow(m, 6) * 1.6;
-      var a = psDark ? 0.12 + m * 0.5 : 0.08 + m * 0.22;
+      var x = rnd() * psW, y = rnd() * psH, m = rnd(), r = 0.6 + Math.pow(m, 5) * 1.5;
+      var a = 0.32 + m * 0.55;
       var warm = rnd() < 0.3;
-      var rgb = psDark ? (warm ? '255,220,190' : '215,226,255') : (warm ? '150,100,40' : '50,80,140');
-      var twinkles = m > 0.86;                        // roughly the brightest one star in seven
-      if (twinkles) { r = Math.max(r, 0.9); a = psDark ? Math.min(0.85, a + 0.15) : Math.min(0.45, a + 0.1); }
+      var rgb = warm ? '255,224,196' : '222,232,255';
+      var twinkles = m > 0.8;                         // the brightest one star in five
+      if (twinkles) { r = Math.max(r, 1); a = Math.min(0.95, a + 0.1); }
       b.fillStyle = 'rgba(' + rgb + ',' + a + ')';
       b.beginPath(); b.arc(x, y, r, 0, 6.2832); b.fill();
       if (twinkles) psTwinklers.push({
         x: x, y: y, r: r, rgb: rgb, a: a,
-        len: 4 + rnd() * 5,                           // longest spike, px
+        len: 5 + rnd() * 6,                           // longest spike, px
         period: 2600 + rnd() * 4200,                  // ms per cycle
         phase: rnd(),
         tilt: (rnd() - 0.5) * 0.35                    // a slight turn, so the crosses don't all line up
