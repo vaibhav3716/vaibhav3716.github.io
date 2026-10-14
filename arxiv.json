@@ -1,41 +1,41 @@
 {
-  "updated": "2026-10-12T07:52:01Z",
-  "newest": "2610.13942",
+  "updated": "2026-10-14T06:35:48Z",
+  "newest": "2610.18864",
   "plain": false,
   "summarised_by": null,
   "papers": [
     {
-      "id": "2610.13942",
-      "headline": "OGLE-2016-BLG-0523: A Low-mass Brown Dwarf or super-Jupiter in a >100 au Orbit",
-      "summary": "To search for very wide-orbit binary-lens events, we cross-match microlensing events detected by OGLE-IV and KMTNet between 2011 and 2024.",
+      "id": "2610.18864",
+      "headline": "Simulations of the Evolving Ozone Layer: Implications for the Early Earth, Exoplanets, and the Search For Life",
+      "summary": "Over 4 billion years, Earth's atmosphere has been transformed from a composition devoid of molecular oxygen (O₂) to one where O₂ is now 21% of our modern atmosphere by volume.",
       "topic": "Planets",
-      "title": "OGLE-2016-BLG-0523: A Low-mass Brown Dwarf or super-Jupiter in a >100 au Orbit",
-      "authors": "H. Yang et al.",
+      "title": "Simulations of the Evolving Ozone Layer: Implications for the Early Earth, Exoplanets, and the Search For Life",
+      "authors": "A. Kumar, G. J. Cooke",
       "category": "astro-ph.EP",
-      "published": "2026-10-09",
-      "url": "https://arxiv.org/abs/2610.13942"
+      "published": "2026-10-13",
+      "url": "https://arxiv.org/abs/2610.18864"
     },
     {
-      "id": "2610.13926",
-      "headline": "Adiabatic evolution of hadronic neutron stars",
-      "summary": "In this paper we compute several structural properties of static and rotating neutron stars, considering both rigid and differential rotation.",
+      "id": "2610.18840",
+      "headline": "Seeing Double: The Theory Defying Twin Flares of TDE 2022dbl",
+      "summary": "Partial tidal disruption events, in which a star survives a close passage by a supermassive black hole and may be disrupted again on a subsequent encounter, provide a unique probe of supermassive black hole properties and accretion physics.",
       "topic": "Black holes",
-      "title": "Adiabatic evolution of hadronic neutron stars",
-      "authors": "D. Logoteta et al.",
+      "title": "Seeing Double: The Theory Defying Twin Flares of TDE 2022dbl",
+      "authors": "X. Guo et al.",
       "category": "astro-ph.HE",
-      "published": "2026-10-09",
-      "url": "https://arxiv.org/abs/2610.13926"
+      "published": "2026-10-13",
+      "url": "https://arxiv.org/abs/2610.18840"
     },
     {
-      "id": "2610.13920",
-      "headline": "A Comprehensive JWST Slitless Spectroscopic Census of ∼12,000 Emission-Line Galaxies at Redshift 0∼9 in COSMOS",
-      "summary": "Emission-line galaxies provide key diagnostics of star formation, chemical enrichment, and AGN activity across cosmic time.",
-      "topic": "Galaxies",
-      "title": "A Comprehensive JWST Slitless Spectroscopic Census of ∼12,000 Emission-Line Galaxies at Redshift 0∼9 in COSMOS",
-      "authors": "S. Fu et al.",
-      "category": "astro-ph.GA",
-      "published": "2026-10-09",
-      "url": "https://arxiv.org/abs/2610.13920"
+      "id": "2610.18810",
+      "headline": "Differential Luminosity Response of Balmer-Line Profiles in Galactic B/A Luminous Stars",
+      "summary": "We investigate the differential luminosity response of the optical Balmer series from H8 to H-alpha in Galactic B5-A5 luminous stars using homogeneous measurements of central depth, FWHM, and equivalent width at a resolving power of approximately 12,000.",
+      "topic": "Stars",
+      "title": "Differential Luminosity Response of Balmer-Line Profiles in Galactic B/A Luminous Stars",
+      "authors": "N. L. Vaidman et al.",
+      "category": "astro-ph.SR",
+      "published": "2026-10-13",
+      "url": "https://arxiv.org/abs/2610.18810"
     }
   ]
 }
