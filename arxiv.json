@@ -1,41 +1,41 @@
 {
-  "updated": "2026-10-14T06:35:48Z",
-  "newest": "2610.18864",
+  "updated": "2026-10-15T06:18:45Z",
+  "newest": "2610.20599",
   "plain": false,
   "summarised_by": null,
   "papers": [
     {
-      "id": "2610.18864",
-      "headline": "Simulations of the Evolving Ozone Layer: Implications for the Early Earth, Exoplanets, and the Search For Life",
-      "summary": "Over 4 billion years, Earth's atmosphere has been transformed from a composition devoid of molecular oxygen (O₂) to one where O₂ is now 21% of our modern atmosphere by volume.",
-      "topic": "Planets",
-      "title": "Simulations of the Evolving Ozone Layer: Implications for the Early Earth, Exoplanets, and the Search For Life",
-      "authors": "A. Kumar, G. J. Cooke",
-      "category": "astro-ph.EP",
-      "published": "2026-10-13",
-      "url": "https://arxiv.org/abs/2610.18864"
+      "id": "2610.20599",
+      "headline": "International Astrophysical Consortium for High-energy Calibration: Summary of the 18th IACHEC Workshop",
+      "summary": "In this report we summarize the activities of the International Astronomical Consortium for High Energy Calibration (IACHEC) from the 18th IACHEC Workshop at Pelham, Germany.",
+      "topic": "Instruments",
+      "title": "International Astrophysical Consortium for High-energy Calibration: Summary of the 18th IACHEC Workshop",
+      "authors": "K. K. Madsen et al.",
+      "category": "astro-ph.IM",
+      "published": "2026-10-14",
+      "url": "https://arxiv.org/abs/2610.20599"
     },
     {
-      "id": "2610.18840",
-      "headline": "Seeing Double: The Theory Defying Twin Flares of TDE 2022dbl",
-      "summary": "Partial tidal disruption events, in which a star survives a close passage by a supermassive black hole and may be disrupted again on a subsequent encounter, provide a unique probe of supermassive black hole properties and accretion physics.",
+      "id": "2610.20580",
+      "headline": "GRB 181201A: Spectropolarimetric Constraints on Prompt Emission and Magnetic Field Structure",
+      "summary": "Gamma-ray bursts (GRBs) have served as testbeds for high-energy astrophysical phenomena since their discovery over 50 years ago.",
       "topic": "Black holes",
-      "title": "Seeing Double: The Theory Defying Twin Flares of TDE 2022dbl",
-      "authors": "X. Guo et al.",
+      "title": "GRB 181201A: Spectropolarimetric Constraints on Prompt Emission and Magnetic Field Structure",
+      "authors": "D. S. Bal et al.",
       "category": "astro-ph.HE",
-      "published": "2026-10-13",
-      "url": "https://arxiv.org/abs/2610.18840"
+      "published": "2026-10-14",
+      "url": "https://arxiv.org/abs/2610.20580"
     },
     {
-      "id": "2610.18810",
-      "headline": "Differential Luminosity Response of Balmer-Line Profiles in Galactic B/A Luminous Stars",
-      "summary": "We investigate the differential luminosity response of the optical Balmer series from H8 to H-alpha in Galactic B5-A5 luminous stars using homogeneous measurements of central depth, FWHM, and equivalent width at a resolving power of approximately 12,000.",
-      "topic": "Stars",
-      "title": "Differential Luminosity Response of Balmer-Line Profiles in Galactic B/A Luminous Stars",
-      "authors": "N. L. Vaidman et al.",
-      "category": "astro-ph.SR",
-      "published": "2026-10-13",
-      "url": "https://arxiv.org/abs/2610.18810"
+      "id": "2610.20557",
+      "headline": "Binary-lens amplification of starlight: from magnification flares to quasi-periodic tracking of orbital evolution",
+      "summary": "Supermassive black hole binaries (SMBHB) are expected at the center of galaxies as a result of galaxy mergers.",
+      "topic": "Galaxies",
+      "title": "Binary-lens amplification of starlight: from magnification flares to quasi-periodic tracking of orbital evolution",
+      "authors": "H. Wang, B. Kocsis, M. Zumalacárregui",
+      "category": "astro-ph.GA",
+      "published": "2026-10-14",
+      "url": "https://arxiv.org/abs/2610.20557"
     }
   ]
 }
