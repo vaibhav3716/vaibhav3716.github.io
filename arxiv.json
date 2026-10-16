@@ -1,41 +1,41 @@
 {
-  "updated": "2026-10-15T06:18:45Z",
-  "newest": "2610.20599",
+  "updated": "2026-10-16T06:14:28Z",
+  "newest": "2610.22354",
   "plain": false,
   "summarised_by": null,
   "papers": [
     {
-      "id": "2610.20599",
-      "headline": "International Astrophysical Consortium for High-energy Calibration: Summary of the 18th IACHEC Workshop",
-      "summary": "In this report we summarize the activities of the International Astronomical Consortium for High Energy Calibration (IACHEC) from the 18th IACHEC Workshop at Pelham, Germany.",
+      "id": "2610.22354",
+      "headline": "LSST and Keck characterization of outer Main Belt comet P/2026 N2",
+      "summary": "We characterize comet P/2026 N2, whose outer Main Belt orbit has a=3.07 au, e=0.21, and i=2.25^°, using optical observations, archival imaging, and dynamical integrations. Observations from the Legacy Survey of Space and Time (LSST) at NSF-DOE Vera C.",
+      "topic": "Planets",
+      "title": "LSST and Keck characterization of outer Main Belt comet P/2026 N2",
+      "authors": "B. Bolin et al.",
+      "category": "astro-ph.EP",
+      "published": "2026-10-15",
+      "url": "https://arxiv.org/abs/2610.22354"
+    },
+    {
+      "id": "2610.22303",
+      "headline": "Chemical Demographics of Star-forming Regions",
+      "summary": "Our understanding of complex organic chemistry during the formation of stars and planets is shaped by a handful of cherry-picked sources with bright molecular emission lines.",
       "topic": "Instruments",
-      "title": "International Astrophysical Consortium for High-energy Calibration: Summary of the 18th IACHEC Workshop",
-      "authors": "K. K. Madsen et al.",
+      "title": "Chemical Demographics of Star-forming Regions",
+      "authors": "M. N. Drozdovskaya et al.",
       "category": "astro-ph.IM",
-      "published": "2026-10-14",
-      "url": "https://arxiv.org/abs/2610.20599"
+      "published": "2026-10-15",
+      "url": "https://arxiv.org/abs/2610.22303"
     },
     {
-      "id": "2610.20580",
-      "headline": "GRB 181201A: Spectropolarimetric Constraints on Prompt Emission and Magnetic Field Structure",
-      "summary": "Gamma-ray bursts (GRBs) have served as testbeds for high-energy astrophysical phenomena since their discovery over 50 years ago.",
-      "topic": "Black holes",
-      "title": "GRB 181201A: Spectropolarimetric Constraints on Prompt Emission and Magnetic Field Structure",
-      "authors": "D. S. Bal et al.",
-      "category": "astro-ph.HE",
-      "published": "2026-10-14",
-      "url": "https://arxiv.org/abs/2610.20580"
-    },
-    {
-      "id": "2610.20557",
-      "headline": "Binary-lens amplification of starlight: from magnification flares to quasi-periodic tracking of orbital evolution",
-      "summary": "Supermassive black hole binaries (SMBHB) are expected at the center of galaxies as a result of galaxy mergers.",
+      "id": "2610.22202",
+      "headline": "Dark Matter in the Galaxy: Insights from the Dynamics of Stellar Streams",
+      "summary": "Dark matter constitutes most of the matter in the Universe, yet its fundamental nature and distribution remain poorly understood.",
       "topic": "Galaxies",
-      "title": "Binary-lens amplification of starlight: from magnification flares to quasi-periodic tracking of orbital evolution",
-      "authors": "H. Wang, B. Kocsis, M. Zumalacárregui",
+      "title": "Dark Matter in the Galaxy: Insights from the Dynamics of Stellar Streams",
+      "authors": "M. Ayaz, P. Hasan",
       "category": "astro-ph.GA",
-      "published": "2026-10-14",
-      "url": "https://arxiv.org/abs/2610.20557"
+      "published": "2026-10-15",
+      "url": "https://arxiv.org/abs/2610.22202"
     }
   ]
 }
