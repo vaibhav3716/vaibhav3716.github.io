@@ -1,41 +1,41 @@
 {
-  "updated": "2026-10-16T06:14:28Z",
-  "newest": "2610.22354",
+  "updated": "2026-10-19T06:39:31Z",
+  "newest": "2610.23852",
   "plain": false,
   "summarised_by": null,
   "papers": [
     {
-      "id": "2610.22354",
-      "headline": "LSST and Keck characterization of outer Main Belt comet P/2026 N2",
-      "summary": "We characterize comet P/2026 N2, whose outer Main Belt orbit has a=3.07 au, e=0.21, and i=2.25^°, using optical observations, archival imaging, and dynamical integrations. Observations from the Legacy Survey of Space and Time (LSST) at NSF-DOE Vera C.",
+      "id": "2610.23852",
+      "headline": "Flashing with colours: Photometric indicators of an early interaction in type II supernovae",
+      "summary": "We present early-time optical photometry and spectroscopy for a sample 27 previously unpublished type II supernovae (SNe II) observed by the Precision Observations of Infant Supernova Explosions (POISE) collaboration, combined with a literature sample of 59 events to form a total sample of 86 objects.",
+      "topic": "Stars",
+      "title": "Flashing with colours: Photometric indicators of an early interaction in type II supernovae",
+      "authors": "A. Mendez-Llorca et al.",
+      "category": "astro-ph.SR",
+      "published": "2026-10-16",
+      "url": "https://arxiv.org/abs/2610.23852"
+    },
+    {
+      "id": "2610.23850",
+      "headline": "Entering the Era of Circumplanetary Ring Detection with Direct Imaging",
+      "summary": "Rings are ubiquitous among the giant planets in the Solar System, yet their presence around exoplanets remains observationally unconstrained.",
       "topic": "Planets",
-      "title": "LSST and Keck characterization of outer Main Belt comet P/2026 N2",
-      "authors": "B. Bolin et al.",
+      "title": "Entering the Era of Circumplanetary Ring Detection with Direct Imaging",
+      "authors": "S. N. Hasler et al.",
       "category": "astro-ph.EP",
-      "published": "2026-10-15",
-      "url": "https://arxiv.org/abs/2610.22354"
+      "published": "2026-10-16",
+      "url": "https://arxiv.org/abs/2610.23850"
     },
     {
-      "id": "2610.22303",
-      "headline": "Chemical Demographics of Star-forming Regions",
-      "summary": "Our understanding of complex organic chemistry during the formation of stars and planets is shaped by a handful of cherry-picked sources with bright molecular emission lines.",
-      "topic": "Instruments",
-      "title": "Chemical Demographics of Star-forming Regions",
-      "authors": "M. N. Drozdovskaya et al.",
-      "category": "astro-ph.IM",
-      "published": "2026-10-15",
-      "url": "https://arxiv.org/abs/2610.22303"
-    },
-    {
-      "id": "2610.22202",
-      "headline": "Dark Matter in the Galaxy: Insights from the Dynamics of Stellar Streams",
-      "summary": "Dark matter constitutes most of the matter in the Universe, yet its fundamental nature and distribution remain poorly understood.",
-      "topic": "Galaxies",
-      "title": "Dark Matter in the Galaxy: Insights from the Dynamics of Stellar Streams",
-      "authors": "M. Ayaz, P. Hasan",
-      "category": "astro-ph.GA",
-      "published": "2026-10-15",
-      "url": "https://arxiv.org/abs/2610.22202"
+      "id": "2610.23828",
+      "headline": "Revisiting the Mass and Scale Dependence of the \"Lensing is Low\" Effect with DECADE",
+      "summary": "Galaxy-galaxy lensing (GGL) is a critical probe of cosmology and galaxy formation. However, predicted GGL amplitudes tend to be ∼ 20-40% higher than observations, primarily on small scales, a tension called the lensing-is-low problem.",
+      "topic": "Cosmology",
+      "title": "Revisiting the Mass and Scale Dependence of the \"Lensing is Low\" Effect with DECADE",
+      "authors": "K. Queen, A. V. Fisher, J. U. Lange",
+      "category": "astro-ph.CO",
+      "published": "2026-10-16",
+      "url": "https://arxiv.org/abs/2610.23828"
     }
   ]
 }
