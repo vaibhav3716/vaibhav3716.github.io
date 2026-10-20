@@ -1,41 +1,41 @@
 {
-  "updated": "2026-10-19T06:39:31Z",
-  "newest": "2610.23852",
+  "updated": "2026-10-20T06:25:52Z",
+  "newest": "2610.26788",
   "plain": false,
   "summarised_by": null,
   "papers": [
     {
-      "id": "2610.23852",
-      "headline": "Flashing with colours: Photometric indicators of an early interaction in type II supernovae",
-      "summary": "We present early-time optical photometry and spectroscopy for a sample 27 previously unpublished type II supernovae (SNe II) observed by the Precision Observations of Infant Supernova Explosions (POISE) collaboration, combined with a literature sample of 59 events to form a total sample of 86 objects.",
-      "topic": "Stars",
-      "title": "Flashing with colours: Photometric indicators of an early interaction in type II supernovae",
-      "authors": "A. Mendez-Llorca et al.",
-      "category": "astro-ph.SR",
-      "published": "2026-10-16",
-      "url": "https://arxiv.org/abs/2610.23852"
+      "id": "2610.26788",
+      "headline": "Low-mass and High-sSFR Hα Emitters at z ∼ 2 in the ZFOURGE-COSMOS Field",
+      "summary": "We present a near-infrared spectroscopic follow-up study of seven Hα emitter candidates at z∼2 in the ZFOURGE-COSMOS field, selected via the K_s-band flux excess method.",
+      "topic": "Galaxies",
+      "title": "Low-mass and High-sSFR Hα Emitters at z ∼ 2 in the ZFOURGE-COSMOS Field",
+      "authors": "J. Yun et al.",
+      "category": "astro-ph.GA",
+      "published": "2026-10-19",
+      "url": "https://arxiv.org/abs/2610.26788"
     },
     {
-      "id": "2610.23850",
-      "headline": "Entering the Era of Circumplanetary Ring Detection with Direct Imaging",
-      "summary": "Rings are ubiquitous among the giant planets in the Solar System, yet their presence around exoplanets remains observationally unconstrained.",
-      "topic": "Planets",
-      "title": "Entering the Era of Circumplanetary Ring Detection with Direct Imaging",
-      "authors": "S. N. Hasler et al.",
-      "category": "astro-ph.EP",
-      "published": "2026-10-16",
-      "url": "https://arxiv.org/abs/2610.23850"
+      "id": "2610.26769",
+      "headline": "X-ray Comptonization in an Accreting Kerr Black Hole System with a Tilted Disc and Thermal Corona; A General-Relativistic Monte Carlo Simulation: I. Model, Radiative Transfer and Spectral-Timing Properties",
+      "summary": "Quasi-periodic oscillations (QPOs) in the X-ray emission of accreting black hole binaries are commonly attributed to the relativistic Lense–Thirring precession of the inner accretion flow, in which a hot inner flow, tilted with respect to the black hole spin…",
+      "topic": "Black holes",
+      "title": "X-ray Comptonization in an Accreting Kerr Black Hole System with a Tilted Disc and Thermal Corona; A General-Relativistic Monte Carlo Simulation: I. Model, Radiative Transfer and Spectral-Timing Properties",
+      "authors": "M. Chatterjee, D. Bhattacharya",
+      "category": "astro-ph.HE",
+      "published": "2026-10-19",
+      "url": "https://arxiv.org/abs/2610.26769"
     },
     {
-      "id": "2610.23828",
-      "headline": "Revisiting the Mass and Scale Dependence of the \"Lensing is Low\" Effect with DECADE",
-      "summary": "Galaxy-galaxy lensing (GGL) is a critical probe of cosmology and galaxy formation. However, predicted GGL amplitudes tend to be ∼ 20-40% higher than observations, primarily on small scales, a tension called the lensing-is-low problem.",
+      "id": "2610.26727",
+      "headline": "Cosmological implications of two mock TianQin standard siren catalogs generated under different background cosmological models",
+      "summary": "Space-borne gravitational wave (GW) detectors such as TianQin are expected to detect GW standard sirens for cosmological parameter estimation. All previous studies of TianQin adopted the ΛCDM model to generate mock standard siren data.",
       "topic": "Cosmology",
-      "title": "Revisiting the Mass and Scale Dependence of the \"Lensing is Low\" Effect with DECADE",
-      "authors": "K. Queen, A. V. Fisher, J. U. Lange",
+      "title": "Cosmological implications of two mock TianQin standard siren catalogs generated under different background cosmological models",
+      "authors": "J. Li, S. Wang, L. Zhu",
       "category": "astro-ph.CO",
-      "published": "2026-10-16",
-      "url": "https://arxiv.org/abs/2610.23828"
+      "published": "2026-10-19",
+      "url": "https://arxiv.org/abs/2610.26727"
     }
   ]
 }
