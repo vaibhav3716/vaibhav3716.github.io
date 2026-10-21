@@ -1,41 +1,41 @@
 {
-  "updated": "2026-10-20T06:25:52Z",
-  "newest": "2610.26788",
+  "updated": "2026-10-21T06:26:06Z",
+  "newest": "2610.28633",
   "plain": false,
   "summarised_by": null,
   "papers": [
     {
-      "id": "2610.26788",
-      "headline": "Low-mass and High-sSFR Hα Emitters at z ∼ 2 in the ZFOURGE-COSMOS Field",
-      "summary": "We present a near-infrared spectroscopic follow-up study of seven Hα emitter candidates at z∼2 in the ZFOURGE-COSMOS field, selected via the K_s-band flux excess method.",
-      "topic": "Galaxies",
-      "title": "Low-mass and High-sSFR Hα Emitters at z ∼ 2 in the ZFOURGE-COSMOS Field",
-      "authors": "J. Yun et al.",
-      "category": "astro-ph.GA",
-      "published": "2026-10-19",
-      "url": "https://arxiv.org/abs/2610.26788"
-    },
-    {
-      "id": "2610.26769",
-      "headline": "X-ray Comptonization in an Accreting Kerr Black Hole System with a Tilted Disc and Thermal Corona; A General-Relativistic Monte Carlo Simulation: I. Model, Radiative Transfer and Spectral-Timing Properties",
-      "summary": "Quasi-periodic oscillations (QPOs) in the X-ray emission of accreting black hole binaries are commonly attributed to the relativistic Lense–Thirring precession of the inner accretion flow, in which a hot inner flow, tilted with respect to the black hole spin…",
+      "id": "2610.28633",
+      "headline": "Constraints on Millimeter-wave Extragalactic Transient Populations from 4 Years of SPT-3G data",
+      "summary": "Wide-field cosmic microwave background (CMB) instruments have reached sufficient sensitivity and cadence to conduct untargeted millimeter-wave searches for astronomical transients.",
       "topic": "Black holes",
-      "title": "X-ray Comptonization in an Accreting Kerr Black Hole System with a Tilted Disc and Thermal Corona; A General-Relativistic Monte Carlo Simulation: I. Model, Radiative Transfer and Spectral-Timing Properties",
-      "authors": "M. Chatterjee, D. Bhattacharya",
+      "title": "Constraints on Millimeter-wave Extragalactic Transient Populations from 4 Years of SPT-3G data",
+      "authors": "S. Guns et al.",
       "category": "astro-ph.HE",
-      "published": "2026-10-19",
-      "url": "https://arxiv.org/abs/2610.26769"
+      "published": "2026-10-20",
+      "url": "https://arxiv.org/abs/2610.28633"
     },
     {
-      "id": "2610.26727",
-      "headline": "Cosmological implications of two mock TianQin standard siren catalogs generated under different background cosmological models",
-      "summary": "Space-borne gravitational wave (GW) detectors such as TianQin are expected to detect GW standard sirens for cosmological parameter estimation. All previous studies of TianQin adopted the ΛCDM model to generate mock standard siren data.",
+      "id": "2610.28608",
+      "headline": "Slow-Roll Inflation at Arbitrary Order",
+      "summary": "We derive explicit expressions for the primordial scalar and tensor spectra at arbitrary finite order p in the slow-roll expansion, valid both for canonical single-field inflation and k-inflation.",
       "topic": "Cosmology",
-      "title": "Cosmological implications of two mock TianQin standard siren catalogs generated under different background cosmological models",
-      "authors": "J. Li, S. Wang, L. Zhu",
+      "title": "Slow-Roll Inflation at Arbitrary Order",
+      "authors": "W. Giarè",
       "category": "astro-ph.CO",
-      "published": "2026-10-19",
-      "url": "https://arxiv.org/abs/2610.26727"
+      "published": "2026-10-20",
+      "url": "https://arxiv.org/abs/2610.28608"
+    },
+    {
+      "id": "2610.28605",
+      "headline": "Community Lessons from builders of infrared multi-object spectrographs",
+      "summary": "We present a summary of lessons learned from our community on the design and construction of infrared multi-object spectrographs.",
+      "topic": "Instruments",
+      "title": "Community Lessons from builders of infrared multi-object spectrographs",
+      "authors": "S. V. Ramirez et al.",
+      "category": "astro-ph.IM",
+      "published": "2026-10-20",
+      "url": "https://arxiv.org/abs/2610.28605"
     }
   ]
 }
