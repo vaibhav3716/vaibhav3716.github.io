@@ -1,41 +1,41 @@
 {
-  "updated": "2026-10-21T06:26:06Z",
-  "newest": "2610.28633",
+  "updated": "2026-10-22T06:28:55Z",
+  "newest": "2610.30133",
   "plain": false,
   "summarised_by": null,
   "papers": [
     {
-      "id": "2610.28633",
-      "headline": "Constraints on Millimeter-wave Extragalactic Transient Populations from 4 Years of SPT-3G data",
-      "summary": "Wide-field cosmic microwave background (CMB) instruments have reached sufficient sensitivity and cadence to conduct untargeted millimeter-wave searches for astronomical transients.",
-      "topic": "Black holes",
-      "title": "Constraints on Millimeter-wave Extragalactic Transient Populations from 4 Years of SPT-3G data",
-      "authors": "S. Guns et al.",
-      "category": "astro-ph.HE",
-      "published": "2026-10-20",
-      "url": "https://arxiv.org/abs/2610.28633"
-    },
-    {
-      "id": "2610.28608",
-      "headline": "Slow-Roll Inflation at Arbitrary Order",
-      "summary": "We derive explicit expressions for the primordial scalar and tensor spectra at arbitrary finite order p in the slow-roll expansion, valid both for canonical single-field inflation and k-inflation.",
+      "id": "2610.30133",
+      "headline": "Optimal galaxy magnification: generalized fundamental-plane residuals and number counts are all you need",
+      "summary": "Weak-lensing magnification complements cosmic shear through its effects on galaxy fluxes, sizes, and number counts.",
       "topic": "Cosmology",
-      "title": "Slow-Roll Inflation at Arbitrary Order",
-      "authors": "W. Giarè",
+      "title": "Optimal galaxy magnification: generalized fundamental-plane residuals and number counts are all you need",
+      "authors": "K. Xu, R. K. Sheth",
       "category": "astro-ph.CO",
-      "published": "2026-10-20",
-      "url": "https://arxiv.org/abs/2610.28608"
+      "published": "2026-10-21",
+      "url": "https://arxiv.org/abs/2610.30133"
     },
     {
-      "id": "2610.28605",
-      "headline": "Community Lessons from builders of infrared multi-object spectrographs",
-      "summary": "We present a summary of lessons learned from our community on the design and construction of infrared multi-object spectrographs.",
-      "topic": "Instruments",
-      "title": "Community Lessons from builders of infrared multi-object spectrographs",
-      "authors": "S. V. Ramirez et al.",
-      "category": "astro-ph.IM",
-      "published": "2026-10-20",
-      "url": "https://arxiv.org/abs/2610.28605"
+      "id": "2610.30115",
+      "headline": "Predictions for an unseen third planet in the WISPIT 2 system",
+      "summary": "We predict the mass and semi-major axis of a currently unseen but hypothesised planet in the WISPIT 2 system based on the location of the ring observed by ALMA at 144.4 au.",
+      "topic": "Planets",
+      "title": "Predictions for an unseen third planet in the WISPIT 2 system",
+      "authors": "A. Faruqi et al.",
+      "category": "astro-ph.EP",
+      "published": "2026-10-21",
+      "url": "https://arxiv.org/abs/2610.30115"
+    },
+    {
+      "id": "2610.30095",
+      "headline": "Modeling MAD Sgr A* flares and their dependence on spin",
+      "summary": "Aims: This study aims to place constraints on the spin of Sgr A* from recent flare observations.",
+      "topic": "Black holes",
+      "title": "Modeling MAD Sgr A* flares and their dependence on spin",
+      "authors": "E. Antonopoulou et al.",
+      "category": "astro-ph.HE",
+      "published": "2026-10-21",
+      "url": "https://arxiv.org/abs/2610.30095"
     }
   ]
 }
