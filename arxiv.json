@@ -1,41 +1,41 @@
 {
-  "updated": "2026-10-22T06:28:55Z",
-  "newest": "2610.30133",
+  "updated": "2026-10-23T06:24:01Z",
+  "newest": "2610.31664",
   "plain": false,
   "summarised_by": null,
   "papers": [
     {
-      "id": "2610.30133",
-      "headline": "Optimal galaxy magnification: generalized fundamental-plane residuals and number counts are all you need",
-      "summary": "Weak-lensing magnification complements cosmic shear through its effects on galaxy fluxes, sizes, and number counts.",
+      "id": "2610.31664",
+      "headline": "Odd radio circle J1555+2726: Observational evidence for shock re-acceleration of fossil plasma",
+      "summary": "Context. Odd radio circles (ORCs) are peculiar extragalactic sources recently discovered. They are characterised by one or more bright rings extending on scales of hundreds of kiloparsecs, and are filled with fainter emission.",
+      "topic": "Galaxies",
+      "title": "Odd radio circle J1555+2726: Observational evidence for shock re-acceleration of fossil plasma",
+      "authors": "L. Bruno et al.",
+      "category": "astro-ph.GA",
+      "published": "2026-10-22",
+      "url": "https://arxiv.org/abs/2610.31664"
+    },
+    {
+      "id": "2610.31660",
+      "headline": "Sound-Horizon-Agnostic Forecast for Constraints on H₀ and Σm_ν from BAO, CMB Lensing, Supernovae and LSST-like Galaxy Lensing",
+      "summary": "We present a sound-horizon-agnostic forecast for constraints on the Hubble constant H₀ and the sum of the neutrino masses Σm_ν from a combination of LSST-like galaxy weak lensing, Simons-Observatory-like CMB lensing, the completed DESI BAO program, and expanded supernova samples.",
       "topic": "Cosmology",
-      "title": "Optimal galaxy magnification: generalized fundamental-plane residuals and number counts are all you need",
-      "authors": "K. Xu, R. K. Sheth",
+      "title": "Sound-Horizon-Agnostic Forecast for Constraints on H₀ and Σm_ν from BAO, CMB Lensing, Supernovae and LSST-like Galaxy Lensing",
+      "authors": "S. H. Mirpoorian et al.",
       "category": "astro-ph.CO",
-      "published": "2026-10-21",
-      "url": "https://arxiv.org/abs/2610.30133"
+      "published": "2026-10-22",
+      "url": "https://arxiv.org/abs/2610.31660"
     },
     {
-      "id": "2610.30115",
-      "headline": "Predictions for an unseen third planet in the WISPIT 2 system",
-      "summary": "We predict the mass and semi-major axis of a currently unseen but hypothesised planet in the WISPIT 2 system based on the location of the ring observed by ALMA at 144.4 au.",
-      "topic": "Planets",
-      "title": "Predictions for an unseen third planet in the WISPIT 2 system",
-      "authors": "A. Faruqi et al.",
-      "category": "astro-ph.EP",
-      "published": "2026-10-21",
-      "url": "https://arxiv.org/abs/2610.30115"
-    },
-    {
-      "id": "2610.30095",
-      "headline": "Modeling MAD Sgr A* flares and their dependence on spin",
-      "summary": "Aims: This study aims to place constraints on the spin of Sgr A* from recent flare observations.",
-      "topic": "Black holes",
-      "title": "Modeling MAD Sgr A* flares and their dependence on spin",
-      "authors": "E. Antonopoulou et al.",
-      "category": "astro-ph.HE",
-      "published": "2026-10-21",
-      "url": "https://arxiv.org/abs/2610.30095"
+      "id": "2610.31647",
+      "headline": "Magnetic Activity as a Driver of Low-gravity-like Spectral Morphology in Late-M Dwarfs",
+      "summary": "We present a systematic investigation of the connection between magnetic activity and the low-surface-gravity-like near-infrared spectral morphology of late-M dwarfs.",
+      "topic": "Stars",
+      "title": "Magnetic Activity as a Driver of Low-gravity-like Spectral Morphology in Late-M Dwarfs",
+      "authors": "C. Lin et al.",
+      "category": "astro-ph.SR",
+      "published": "2026-10-22",
+      "url": "https://arxiv.org/abs/2610.31647"
     }
   ]
 }
