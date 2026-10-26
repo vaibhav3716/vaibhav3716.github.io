@@ -1,41 +1,41 @@
 {
-  "updated": "2026-10-23T06:24:01Z",
-  "newest": "2610.31664",
+  "updated": "2026-10-26T06:48:43Z",
+  "newest": "2610.32972",
   "plain": false,
   "summarised_by": null,
   "papers": [
     {
-      "id": "2610.31664",
-      "headline": "Odd radio circle J1555+2726: Observational evidence for shock re-acceleration of fossil plasma",
-      "summary": "Context. Odd radio circles (ORCs) are peculiar extragalactic sources recently discovered. They are characterised by one or more bright rings extending on scales of hundreds of kiloparsecs, and are filled with fainter emission.",
+      "id": "2610.32972",
+      "headline": "Comprehensive Visible and Near-infrared Keck and Gemini Monitoring and Characterization of Interstellar Comet 3I/ATLAS during its Encounter with the Solar System",
+      "summary": "We present 14 optical imaging and eight optical spectroscopic epochs of interstellar comet 3I/ATLAS from Keck/LRIS and Gemini/GMOS, two near-infrared (NIR) imaging epochs from Keck/MOSFIRE, and four NIR spectroscopic epochs from Gemini/Flamingos-2 and GNIRS, obtained between 2025 July and 2026 May.",
+      "topic": "Planets",
+      "title": "Comprehensive Visible and Near-infrared Keck and Gemini Monitoring and Characterization of Interstellar Comet 3I/ATLAS during its Encounter with the Solar System",
+      "authors": "B. T. Bolin et al.",
+      "category": "astro-ph.EP",
+      "published": "2026-10-23",
+      "url": "https://arxiv.org/abs/2610.32972"
+    },
+    {
+      "id": "2610.32960",
+      "headline": "A probabilistic approach to separate mergers and jellyfish galaxies: Application of morphological non-parametric indexes to the DESI Legacy Survey",
+      "summary": "Galaxy morphology traces the physical processes that shape galaxy evolution, but non-parametric diagnostic boundaries depend on image quality and preprocessing.",
       "topic": "Galaxies",
-      "title": "Odd radio circle J1555+2726: Observational evidence for shock re-acceleration of fossil plasma",
-      "authors": "L. Bruno et al.",
+      "title": "A probabilistic approach to separate mergers and jellyfish galaxies: Application of morphological non-parametric indexes to the DESI Legacy Survey",
+      "authors": "V. M. Sampaio et al.",
       "category": "astro-ph.GA",
-      "published": "2026-10-22",
-      "url": "https://arxiv.org/abs/2610.31664"
+      "published": "2026-10-23",
+      "url": "https://arxiv.org/abs/2610.32960"
     },
     {
-      "id": "2610.31660",
-      "headline": "Sound-Horizon-Agnostic Forecast for Constraints on H₀ and Σm_ν from BAO, CMB Lensing, Supernovae and LSST-like Galaxy Lensing",
-      "summary": "We present a sound-horizon-agnostic forecast for constraints on the Hubble constant H₀ and the sum of the neutrino masses Σm_ν from a combination of LSST-like galaxy weak lensing, Simons-Observatory-like CMB lensing, the completed DESI BAO program, and expanded supernova samples.",
-      "topic": "Cosmology",
-      "title": "Sound-Horizon-Agnostic Forecast for Constraints on H₀ and Σm_ν from BAO, CMB Lensing, Supernovae and LSST-like Galaxy Lensing",
-      "authors": "S. H. Mirpoorian et al.",
-      "category": "astro-ph.CO",
-      "published": "2026-10-22",
-      "url": "https://arxiv.org/abs/2610.31660"
-    },
-    {
-      "id": "2610.31647",
-      "headline": "Magnetic Activity as a Driver of Low-gravity-like Spectral Morphology in Late-M Dwarfs",
-      "summary": "We present a systematic investigation of the connection between magnetic activity and the low-surface-gravity-like near-infrared spectral morphology of late-M dwarfs.",
-      "topic": "Stars",
-      "title": "Magnetic Activity as a Driver of Low-gravity-like Spectral Morphology in Late-M Dwarfs",
-      "authors": "C. Lin et al.",
-      "category": "astro-ph.SR",
-      "published": "2026-10-22",
-      "url": "https://arxiv.org/abs/2610.31647"
+      "id": "2610.32935",
+      "headline": "Three subpopulations of binary black holes in mass, spin magnitudes and tilts following GWTC-5",
+      "summary": "The mass and spin distributions of merging binary black holes offer clues to their formation pathways, which remain uncertain.",
+      "topic": "Black holes",
+      "title": "Three subpopulations of binary black holes in mass, spin magnitudes and tilts following GWTC-5",
+      "authors": "A. Hussain, M. Isi, A. Zimmerman",
+      "category": "astro-ph.HE",
+      "published": "2026-10-23",
+      "url": "https://arxiv.org/abs/2610.32935"
     }
   ]
 }
