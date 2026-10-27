@@ -1,41 +1,41 @@
 {
-  "updated": "2026-10-26T06:48:43Z",
-  "newest": "2610.32972",
+  "updated": "2026-10-27T06:42:23Z",
+  "newest": "2610.35849",
   "plain": false,
   "summarised_by": null,
   "papers": [
     {
-      "id": "2610.32972",
-      "headline": "Comprehensive Visible and Near-infrared Keck and Gemini Monitoring and Characterization of Interstellar Comet 3I/ATLAS during its Encounter with the Solar System",
-      "summary": "We present 14 optical imaging and eight optical spectroscopic epochs of interstellar comet 3I/ATLAS from Keck/LRIS and Gemini/GMOS, two near-infrared (NIR) imaging epochs from Keck/MOSFIRE, and four NIR spectroscopic epochs from Gemini/Flamingos-2 and GNIRS, obtained between 2025 July and 2026 May.",
-      "topic": "Planets",
-      "title": "Comprehensive Visible and Near-infrared Keck and Gemini Monitoring and Characterization of Interstellar Comet 3I/ATLAS during its Encounter with the Solar System",
-      "authors": "B. T. Bolin et al.",
-      "category": "astro-ph.EP",
-      "published": "2026-10-23",
-      "url": "https://arxiv.org/abs/2610.32972"
-    },
-    {
-      "id": "2610.32960",
-      "headline": "A probabilistic approach to separate mergers and jellyfish galaxies: Application of morphological non-parametric indexes to the DESI Legacy Survey",
-      "summary": "Galaxy morphology traces the physical processes that shape galaxy evolution, but non-parametric diagnostic boundaries depend on image quality and preprocessing.",
-      "topic": "Galaxies",
-      "title": "A probabilistic approach to separate mergers and jellyfish galaxies: Application of morphological non-parametric indexes to the DESI Legacy Survey",
-      "authors": "V. M. Sampaio et al.",
-      "category": "astro-ph.GA",
-      "published": "2026-10-23",
-      "url": "https://arxiv.org/abs/2610.32960"
-    },
-    {
-      "id": "2610.32935",
-      "headline": "Three subpopulations of binary black holes in mass, spin magnitudes and tilts following GWTC-5",
-      "summary": "The mass and spin distributions of merging binary black holes offer clues to their formation pathways, which remain uncertain.",
+      "id": "2610.35849",
+      "headline": "Interaction of Strong X-mode Waves with Magnetized Pair Plasmas",
+      "summary": "The interaction of strong (a₀>1), superluminal X-mode electromagnetic waves with magnetized pair plasma falls into two regimes set by varepsilon_Bequiv a₀ω_B/ω₀, the ratio of the wave strength parameter to its frequency, in units of cyclotron frequency.",
       "topic": "Black holes",
-      "title": "Three subpopulations of binary black holes in mass, spin magnitudes and tilts following GWTC-5",
-      "authors": "A. Hussain, M. Isi, A. Zimmerman",
+      "title": "Interaction of Strong X-mode Waves with Magnetized Pair Plasmas",
+      "authors": "N. Sridhar",
       "category": "astro-ph.HE",
-      "published": "2026-10-23",
-      "url": "https://arxiv.org/abs/2610.32935"
+      "published": "2026-10-26",
+      "url": "https://arxiv.org/abs/2610.35849"
+    },
+    {
+      "id": "2610.35825",
+      "headline": "Spectroscopic Survey of Small Solar System Bodies with Ariel",
+      "summary": "The small Solar System bodies (SSSBs) preserve records of the formation and evolution of the Solar System.",
+      "topic": "Planets",
+      "title": "Spectroscopic Survey of Small Solar System Bodies with Ariel",
+      "authors": "J. Beniyama et al.",
+      "category": "astro-ph.EP",
+      "published": "2026-10-26",
+      "url": "https://arxiv.org/abs/2610.35825"
+    },
+    {
+      "id": "2610.35805",
+      "headline": "The Impact of Flyby Interactions on the Rotation of Open Clusters",
+      "summary": "The Gaia astrometric mission has provided the first evidence for the bulk rotation of open clusters.",
+      "topic": "Galaxies",
+      "title": "The Impact of Flyby Interactions on the Rotation of Open Clusters",
+      "authors": "K. R. Tregoning, J. J. Andrews",
+      "category": "astro-ph.GA",
+      "published": "2026-10-26",
+      "url": "https://arxiv.org/abs/2610.35805"
     }
   ]
 }
