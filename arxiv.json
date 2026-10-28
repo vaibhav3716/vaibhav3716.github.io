@@ -1,41 +1,41 @@
 {
-  "updated": "2026-10-27T06:42:23Z",
-  "newest": "2610.35849",
+  "updated": "2026-10-28T07:14:35Z",
+  "newest": "2610.37664",
   "plain": false,
   "summarised_by": null,
   "papers": [
     {
-      "id": "2610.35849",
-      "headline": "Interaction of Strong X-mode Waves with Magnetized Pair Plasmas",
-      "summary": "The interaction of strong (a₀>1), superluminal X-mode electromagnetic waves with magnetized pair plasma falls into two regimes set by varepsilon_Bequiv a₀ω_B/ω₀, the ratio of the wave strength parameter to its frequency, in units of cyclotron frequency.",
-      "topic": "Black holes",
-      "title": "Interaction of Strong X-mode Waves with Magnetized Pair Plasmas",
-      "authors": "N. Sridhar",
-      "category": "astro-ph.HE",
-      "published": "2026-10-26",
-      "url": "https://arxiv.org/abs/2610.35849"
+      "id": "2610.37664",
+      "headline": "Improving cosmological distance measurements at high redshift using Lyman-Alpha forest BAO reconstruction",
+      "summary": "The Dark Energy Spectroscopic Instrument (DESI) measures baryon acoustic oscillations (BAO) in the Lyman-α (Lyman-alpha) forest and provides a robust probe of the expansion history in the matter-dominated era.",
+      "topic": "Cosmology",
+      "title": "Improving cosmological distance measurements at high redshift using Lyman-Alpha forest BAO reconstruction",
+      "authors": "B. Hadzhiyska, R. d. Belsunce",
+      "category": "astro-ph.CO",
+      "published": "2026-10-27",
+      "url": "https://arxiv.org/abs/2610.37664"
     },
     {
-      "id": "2610.35825",
-      "headline": "Spectroscopic Survey of Small Solar System Bodies with Ariel",
-      "summary": "The small Solar System bodies (SSSBs) preserve records of the formation and evolution of the Solar System.",
-      "topic": "Planets",
-      "title": "Spectroscopic Survey of Small Solar System Bodies with Ariel",
-      "authors": "J. Beniyama et al.",
-      "category": "astro-ph.EP",
-      "published": "2026-10-26",
-      "url": "https://arxiv.org/abs/2610.35825"
-    },
-    {
-      "id": "2610.35805",
-      "headline": "The Impact of Flyby Interactions on the Rotation of Open Clusters",
-      "summary": "The Gaia astrometric mission has provided the first evidence for the bulk rotation of open clusters.",
+      "id": "2610.37661",
+      "headline": "The Spatially-Resolved Recent Star Formation History of the M81 Disk",
+      "summary": "The nearby M81 galaxy–-a tidally interacting L^* spiral disk–-offers a unique perspective on the interplay of secular and external processes in shaping galaxy properties.",
       "topic": "Galaxies",
-      "title": "The Impact of Flyby Interactions on the Rotation of Open Clusters",
-      "authors": "K. R. Tregoning, J. J. Andrews",
+      "title": "The Spatially-Resolved Recent Star Formation History of the M81 Disk",
+      "authors": "V. V. Rao et al.",
       "category": "astro-ph.GA",
-      "published": "2026-10-26",
-      "url": "https://arxiv.org/abs/2610.35805"
+      "published": "2026-10-27",
+      "url": "https://arxiv.org/abs/2610.37661"
+    },
+    {
+      "id": "2610.37617",
+      "headline": "A Quiet Night in the Millihertz Sky? LISA Forecasts from LIGO/Virgo/KAGRA Populations",
+      "summary": "The high-mass black hole population inferred from ground-based observations can substantially affect the number of binaries detectable by the Laser Interferometer Space Antenna (LISA).",
+      "topic": "Black holes",
+      "title": "A Quiet Night in the Millihertz Sky? LISA Forecasts from LIGO/Virgo/KAGRA Populations",
+      "authors": "I. M. Hernandez, A. Palmese",
+      "category": "astro-ph.HE",
+      "published": "2026-10-27",
+      "url": "https://arxiv.org/abs/2610.37617"
     }
   ]
 }
