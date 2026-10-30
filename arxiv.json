@@ -1,41 +1,41 @@
 {
-  "updated": "2026-10-28T07:14:35Z",
-  "newest": "2610.37664",
+  "updated": "2026-10-30T07:39:09Z",
+  "newest": "2610.40656",
   "plain": false,
   "summarised_by": null,
   "papers": [
     {
-      "id": "2610.37664",
-      "headline": "Improving cosmological distance measurements at high redshift using Lyman-Alpha forest BAO reconstruction",
-      "summary": "The Dark Energy Spectroscopic Instrument (DESI) measures baryon acoustic oscillations (BAO) in the Lyman-α (Lyman-alpha) forest and provides a robust probe of the expansion history in the matter-dominated era.",
-      "topic": "Cosmology",
-      "title": "Improving cosmological distance measurements at high redshift using Lyman-Alpha forest BAO reconstruction",
-      "authors": "B. Hadzhiyska, R. d. Belsunce",
-      "category": "astro-ph.CO",
-      "published": "2026-10-27",
-      "url": "https://arxiv.org/abs/2610.37664"
+      "id": "2610.40656",
+      "headline": "The δ Scuti instability strip and period-luminosity relation as seen by TESS and Gaia DR3",
+      "summary": "We present an asteroseismic survey of 1,526,218 A- and F-type stars in and around the δ Scuti instability strip using TESS 10-minute cadence data, which resolve the full δ Scuti pulsation spectra across nearly the entire sky.",
+      "topic": "Stars",
+      "title": "The δ Scuti instability strip and period-luminosity relation as seen by TESS and Gaia DR3",
+      "authors": "D. Hey et al.",
+      "category": "astro-ph.SR",
+      "published": "2026-10-29",
+      "url": "https://arxiv.org/abs/2610.40656"
     },
     {
-      "id": "2610.37661",
-      "headline": "The Spatially-Resolved Recent Star Formation History of the M81 Disk",
-      "summary": "The nearby M81 galaxy–-a tidally interacting L^* spiral disk–-offers a unique perspective on the interplay of secular and external processes in shaping galaxy properties.",
+      "id": "2610.40633",
+      "headline": "PRISMS GHZ8: Evidence for a Young Burst and Potential Merger Activity at z=10.23",
+      "summary": "UV-bright galaxies in the early Universe provide important constraints on the rapid build-up of stellar mass and the sources responsible for cosmic reionization. However, the physical processes that drive their high UV luminosities remain unclear.",
       "topic": "Galaxies",
-      "title": "The Spatially-Resolved Recent Star Formation History of the M81 Disk",
-      "authors": "V. V. Rao et al.",
+      "title": "PRISMS GHZ8: Evidence for a Young Burst and Potential Merger Activity at z=10.23",
+      "authors": "R. Lin et al.",
       "category": "astro-ph.GA",
-      "published": "2026-10-27",
-      "url": "https://arxiv.org/abs/2610.37661"
+      "published": "2026-10-29",
+      "url": "https://arxiv.org/abs/2610.40633"
     },
     {
-      "id": "2610.37617",
-      "headline": "A Quiet Night in the Millihertz Sky? LISA Forecasts from LIGO/Virgo/KAGRA Populations",
-      "summary": "The high-mass black hole population inferred from ground-based observations can substantially affect the number of binaries detectable by the Laser Interferometer Space Antenna (LISA).",
-      "topic": "Black holes",
-      "title": "A Quiet Night in the Millihertz Sky? LISA Forecasts from LIGO/Virgo/KAGRA Populations",
-      "authors": "I. M. Hernandez, A. Palmese",
-      "category": "astro-ph.HE",
-      "published": "2026-10-27",
-      "url": "https://arxiv.org/abs/2610.37617"
+      "id": "2610.40617",
+      "headline": "Field-level inference under pressure: the information content of the thermal Sunyaev-Zel'dovich field",
+      "summary": "The thermal Sunyaev–Zel'dovich (tSZ) field is highly non-Gaussian and contains cosmological information that cannot be fully captured by its angular power spectrum.",
+      "topic": "Cosmology",
+      "title": "Field-level inference under pressure: the information content of the thermal Sunyaev-Zel'dovich field",
+      "authors": "C. E. Villagra et al.",
+      "category": "astro-ph.CO",
+      "published": "2026-10-29",
+      "url": "https://arxiv.org/abs/2610.40617"
     }
   ]
 }
