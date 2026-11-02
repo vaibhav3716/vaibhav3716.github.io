@@ -616,17 +616,15 @@
      The sky also answers the cursor. Stars near the pointer warm up and
      glow, and they keep glowing for a couple of seconds after the
      pointer has moved on, so a sweep of the mouse leaves a fading trail
-     of lit stars, joined by faint constellation lines, with a little
-     stardust shed along the way. Reduced motion keeps everything still.
+     of lit stars. Reduced motion keeps everything still.
   ---------------------------------------------------------------- */
   var pageStars = document.querySelector('.page-stars');
   var psBase = null, psStars = [], psTwinklers = [], psGrid = null, psCols = 0, psRows = 0;
   var psW = 0, psH = 0, psDpr = 1, psDark = false, psRaf = 0, psLast = 0, psPrev = 0;
-  var psHot = [], psDust = [], psPtr = null, psPtrPrev = null, psDustAcc = 0;
+  var psHot = [], psPtr = null;
   var PS_CELL = 80;          // spatial grid cell, px
   var PS_REACH = 130;        // how far from the pointer a star starts to glow, px
   var PS_LINGER = 2600;      // ms for a fully lit star to fade back to rest
-  var PS_LINK = 95;          // lit stars closer than this are joined by a faint line, px
   function drawPageStars() {
     if (!pageStars || !pageStars.getContext) return;
     psDpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -634,7 +632,7 @@
     if (!psW || !psH) { psBase = null; return; }     // not laid out yet (a background tab): the resize handler draws it later
     pageStars.width = Math.round(psW * psDpr); pageStars.height = Math.round(psH * psDpr);
     psDark = currentTheme() === 'dark';
-    psHot = []; psDust = [];
+    psHot = [];
     if (!psDark) {                                   // the paper theme has no stars at all
       psBase = null; psStars = []; psTwinklers = []; psGrid = null;
       pageStars.getContext('2d').clearRect(0, 0, pageStars.width, pageStars.height);
@@ -715,11 +713,6 @@
       h.heat -= dt / PS_LINGER;
       if (h.heat <= 0) { h.heat = 0; h.hot = false; psHot[i] = psHot[psHot.length - 1]; psHot.pop(); }
     }
-    for (var k = psDust.length - 1; k >= 0; k--) {
-      var p = psDust[k];
-      p.life -= dt; p.x += p.vx * dt; p.y += p.vy * dt;
-      if (p.life <= 0) { psDust[k] = psDust[psDust.length - 1]; psDust.pop(); }
-    }
   }
   function paintStars(now) {
     if (!psBase || !psBase.width || !psBase.height) return;
@@ -741,37 +734,15 @@
       glow(c, s, s.r * 3.2, A * 0.5 * k);
       spikes(c, s, s.len * k, A, Math.max(0.6, s.r * 0.75));
     }
-    if (!psHot.length && !psDust.length) return;
+    if (!psHot.length) return;
     c.globalCompositeOperation = 'lighter';           // lit stars add up, like light does
-    // Faint constellation lines between neighbouring lit stars
-    c.lineWidth = 0.7;
-    for (var a = 0; a < psHot.length; a++) {
-      var s1 = psHot[a];
-      if (s1.heat < 0.15) continue;
-      for (var b2 = a + 1; b2 < psHot.length; b2++) {
-        var s2 = psHot[b2];
-        if (s2.heat < 0.15) continue;
-        var dx = s1.x - s2.x, dy = s1.y - s2.y, d2 = dx * dx + dy * dy;
-        if (d2 > PS_LINK * PS_LINK) continue;
-        var la = Math.min(s1.heat, s2.heat) * (1 - Math.sqrt(d2) / PS_LINK) * 0.35;
-        c.strokeStyle = 'rgba(200,215,255,' + la + ')';
-        c.beginPath(); c.moveTo(s1.x, s1.y); c.lineTo(s2.x, s2.y); c.stroke();
-      }
-    }
-    // The lit stars themselves: a wide soft halo, a bright core and, for the warmest, spikes
+    // The lit stars themselves: a wide soft halo round a brighter core
     for (var h = 0; h < psHot.length; h++) {
-      var st = psHot[h], e = st.heat, ease = e * e;
+      var st = psHot[h], e = st.heat;
       if (e < 0.01) continue;
       glow(c, st, st.r * (3 + 9 * e) + 2, 0.55 * e);
       c.fillStyle = 'rgba(255,255,255,' + Math.min(1, 0.35 + 0.65 * e) + ')';
       c.beginPath(); c.arc(st.x, st.y, st.r * (1 + 0.8 * e), 0, 6.2832); c.fill();
-      if (e > 0.25) spikes(c, st, (6 + st.r * 6) * ease + 2, 0.8 * ease, Math.max(0.6, st.r * 0.7));
-    }
-    // Stardust shed by the moving pointer
-    for (var q = 0; q < psDust.length; q++) {
-      var pd = psDust[q], f = pd.life / pd.max;
-      c.fillStyle = 'rgba(' + pd.rgb + ',' + (0.85 * f) + ')';
-      c.beginPath(); c.arc(pd.x, pd.y, pd.r * (0.4 + 0.6 * f), 0, 6.2832); c.fill();
     }
     c.globalCompositeOperation = 'source-over';
   }
@@ -780,7 +751,7 @@
     if (reduceMotion.matches || !psBase) return;
     var dt = psPrev ? Math.min(100, now - psPrev) : 16;
     psPrev = now;
-    var lively = psPtr || psHot.length || psDust.length;
+    var lively = psPtr || psHot.length;
     updateHeat(dt);
     // Full frame rate while the cursor is stirring the sky, about 30 a second otherwise
     if (!document.hidden && (lively || now - psLast > 33)) { psLast = now; paintStars(now); }
@@ -789,24 +760,9 @@
   function psMove(e) {
     if (!psBase || reduceMotion.matches) return;
     var pt = { x: e.clientX, y: e.clientY };
-    if (psPtrPrev) {
-      var dx = pt.x - psPtrPrev.x, dy = pt.y - psPtrPrev.y, dist = Math.sqrt(dx * dx + dy * dy);
-      psDustAcc += dist;
-      // A grain of stardust every so often along the path, scattered a little
-      while (psDustAcc > 22 && psDust.length < 70) {
-        psDustAcc -= 22;
-        var life = 700 + Math.random() * 700;
-        psDust.push({
-          x: pt.x + (Math.random() - 0.5) * 14, y: pt.y + (Math.random() - 0.5) * 14,
-          vx: (Math.random() - 0.5) * 0.02, vy: 0.008 + Math.random() * 0.02,
-          r: 0.6 + Math.random() * 1.1, life: life, max: life,
-          rgb: Math.random() < 0.3 ? '255,224,196' : '222,232,255'
-        });
-      }
-    }
-    psPtr = psPtrPrev = pt;
+    psPtr = pt;
   }
-  function psLeave() { psPtr = psPtrPrev = null; psDustAcc = 0; }
+  function psLeave() { psPtr = null; }
   window.addEventListener('pointermove', psMove, { passive: true });
   window.addEventListener('pointerdown', psMove, { passive: true });
   document.addEventListener('mouseout', function (e) { if (!e.relatedTarget) psLeave(); });
