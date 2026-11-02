@@ -1,41 +1,41 @@
 {
-  "updated": "2026-10-30T07:39:09Z",
-  "newest": "2610.40656",
+  "updated": "2026-11-02T08:06:18Z",
+  "newest": "2610.42151",
   "plain": false,
   "summarised_by": null,
   "papers": [
     {
-      "id": "2610.40656",
-      "headline": "The δ Scuti instability strip and period-luminosity relation as seen by TESS and Gaia DR3",
-      "summary": "We present an asteroseismic survey of 1,526,218 A- and F-type stars in and around the δ Scuti instability strip using TESS 10-minute cadence data, which resolve the full δ Scuti pulsation spectra across nearly the entire sky.",
-      "topic": "Stars",
-      "title": "The δ Scuti instability strip and period-luminosity relation as seen by TESS and Gaia DR3",
-      "authors": "D. Hey et al.",
-      "category": "astro-ph.SR",
-      "published": "2026-10-29",
-      "url": "https://arxiv.org/abs/2610.40656"
-    },
-    {
-      "id": "2610.40633",
-      "headline": "PRISMS GHZ8: Evidence for a Young Burst and Potential Merger Activity at z=10.23",
-      "summary": "UV-bright galaxies in the early Universe provide important constraints on the rapid build-up of stellar mass and the sources responsible for cosmic reionization. However, the physical processes that drive their high UV luminosities remain unclear.",
-      "topic": "Galaxies",
-      "title": "PRISMS GHZ8: Evidence for a Young Burst and Potential Merger Activity at z=10.23",
-      "authors": "R. Lin et al.",
-      "category": "astro-ph.GA",
-      "published": "2026-10-29",
-      "url": "https://arxiv.org/abs/2610.40633"
-    },
-    {
-      "id": "2610.40617",
-      "headline": "Field-level inference under pressure: the information content of the thermal Sunyaev-Zel'dovich field",
-      "summary": "The thermal Sunyaev–Zel'dovich (tSZ) field is highly non-Gaussian and contains cosmological information that cannot be fully captured by its angular power spectrum.",
+      "id": "2610.42151",
+      "headline": "Model-Independent Assessments of Tidal Alignment and Density-Weighting Dependence in Galaxy Intrinsic Alignments",
+      "summary": "Intrinsic alignments (IA) of galaxies are an important source of systematic uncertainty in weak gravitational lensing measurements and also serve as a test for models of galaxy formation and evolution.",
       "topic": "Cosmology",
-      "title": "Field-level inference under pressure: the information content of the thermal Sunyaev-Zel'dovich field",
-      "authors": "C. E. Villagra et al.",
+      "title": "Model-Independent Assessments of Tidal Alignment and Density-Weighting Dependence in Galaxy Intrinsic Alignments",
+      "authors": "P. Rogozenski et al.",
       "category": "astro-ph.CO",
-      "published": "2026-10-29",
-      "url": "https://arxiv.org/abs/2610.40617"
+      "published": "2026-10-30",
+      "url": "https://arxiv.org/abs/2610.42151"
+    },
+    {
+      "id": "2610.42132",
+      "headline": "Nova V1674 Her as a fast magnetic rotator",
+      "summary": "We report on the results of our XMM-Newton and NuSTAR campaign targeting V1674 Her in October 2023.",
+      "topic": "Black holes",
+      "title": "Nova V1674 Her as a fast magnetic rotator",
+      "authors": "G. J. M. Luna et al.",
+      "category": "astro-ph.HE",
+      "published": "2026-10-30",
+      "url": "https://arxiv.org/abs/2610.42132"
+    },
+    {
+      "id": "2610.42035",
+      "headline": "Distinguishing N₂₋Dominated from O₂₋Dominated Atmospheres on Terrestrial Exoplanets with Reflected-Light Spectroscopy",
+      "summary": "Reflected-light spectra of Earth-sized exoplanets promise to probe habitability and biosignatures, but interpreting atmospheric oxygen can be challenging because O₂ can arise from both biological and abiotic processes.",
+      "topic": "Planets",
+      "title": "Distinguishing N₂₋Dominated from O₂₋Dominated Atmospheres on Terrestrial Exoplanets with Reflected-Light Spectroscopy",
+      "authors": "N. Burri, M. Damiano, R. Hu",
+      "category": "astro-ph.EP",
+      "published": "2026-10-30",
+      "url": "https://arxiv.org/abs/2610.42035"
     }
   ]
 }
