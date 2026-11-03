@@ -1,41 +1,41 @@
 {
-  "updated": "2026-11-02T08:06:18Z",
-  "newest": "2610.42151",
+  "updated": "2026-11-03T08:26:38Z",
+  "newest": "2611.03645",
   "plain": false,
   "summarised_by": null,
   "papers": [
     {
-      "id": "2610.42151",
-      "headline": "Model-Independent Assessments of Tidal Alignment and Density-Weighting Dependence in Galaxy Intrinsic Alignments",
-      "summary": "Intrinsic alignments (IA) of galaxies are an important source of systematic uncertainty in weak gravitational lensing measurements and also serve as a test for models of galaxy formation and evolution.",
-      "topic": "Cosmology",
-      "title": "Model-Independent Assessments of Tidal Alignment and Density-Weighting Dependence in Galaxy Intrinsic Alignments",
-      "authors": "P. Rogozenski et al.",
-      "category": "astro-ph.CO",
-      "published": "2026-10-30",
-      "url": "https://arxiv.org/abs/2610.42151"
+      "id": "2611.03645",
+      "headline": "Episodic Star Formation - II. The Origin of the Fundamental Metallicity Relation",
+      "summary": "The Fundamental Metallicity Relation (FMR) extends the mass-metallicity relation (MZR) by including star formation rate (SFR) as a third parameter. At fixed stellar mass, galaxies with higher SFRs tend to have lower gas-phase metallicities.",
+      "topic": "Galaxies",
+      "title": "Episodic Star Formation - II. The Origin of the Fundamental Metallicity Relation",
+      "authors": "X. Mei et al.",
+      "category": "astro-ph.GA",
+      "published": "2026-11-02",
+      "url": "https://arxiv.org/abs/2611.03645"
     },
     {
-      "id": "2610.42132",
-      "headline": "Nova V1674 Her as a fast magnetic rotator",
-      "summary": "We report on the results of our XMM-Newton and NuSTAR campaign targeting V1674 Her in October 2023.",
-      "topic": "Black holes",
-      "title": "Nova V1674 Her as a fast magnetic rotator",
-      "authors": "G. J. M. Luna et al.",
-      "category": "astro-ph.HE",
-      "published": "2026-10-30",
-      "url": "https://arxiv.org/abs/2610.42132"
-    },
-    {
-      "id": "2610.42035",
-      "headline": "Distinguishing N₂₋Dominated from O₂₋Dominated Atmospheres on Terrestrial Exoplanets with Reflected-Light Spectroscopy",
-      "summary": "Reflected-light spectra of Earth-sized exoplanets promise to probe habitability and biosignatures, but interpreting atmospheric oxygen can be challenging because O₂ can arise from both biological and abiotic processes.",
+      "id": "2611.03643",
+      "headline": "The Neptunian ridge through the lens of TESS",
+      "summary": "The Neptunian desert and savanna are separated by a ridge, an overdensity at orbital periods of approximately 3-6 d identified with Kepler.",
       "topic": "Planets",
-      "title": "Distinguishing N₂₋Dominated from O₂₋Dominated Atmospheres on Terrestrial Exoplanets with Reflected-Light Spectroscopy",
-      "authors": "N. Burri, M. Damiano, R. Hu",
+      "title": "The Neptunian ridge through the lens of TESS",
+      "authors": "A. Castro-González",
       "category": "astro-ph.EP",
-      "published": "2026-10-30",
-      "url": "https://arxiv.org/abs/2610.42035"
+      "published": "2026-11-02",
+      "url": "https://arxiv.org/abs/2611.03643"
+    },
+    {
+      "id": "2611.03637",
+      "headline": "Mercury (Hg): a relativistic N-body simulation for Horndeski gravity",
+      "summary": "We present Mercury, a relativistic N-body code for cosmological simulations in the α-basis formulation of Horndeski gravity.",
+      "topic": "Cosmology",
+      "title": "Mercury (Hg): a relativistic N-body simulation for Horndeski gravity",
+      "authors": "A. Nouri-Zonoz et al.",
+      "category": "astro-ph.CO",
+      "published": "2026-11-02",
+      "url": "https://arxiv.org/abs/2611.03637"
     }
   ]
 }
