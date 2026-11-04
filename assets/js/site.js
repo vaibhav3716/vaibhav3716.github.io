@@ -67,12 +67,14 @@
         // Past the sky, content slides under the header: soften that edge (see .site-header::before)
         var hero = document.querySelector('.hero');
         siteHeader.classList.toggle('is-scrolled', !!hero && y > hero.offsetHeight - siteHeader.offsetHeight);
+        if (Math.abs(dy) < 6) return;                     // ignore tiny jitters
         if (toTop) {
-          var showTop = y > window.innerHeight * 1.5;
+          // Only while scrolling back up (or at the very end), so it never sits on top of text being read
+          var nearEnd = window.innerHeight + y >= document.documentElement.scrollHeight - 80;
+          var showTop = y > window.innerHeight * 1.5 && (dy < 0 || nearEnd);
           toTop.classList.toggle('show', showTop);
           toTop.tabIndex = showTop ? 0 : -1;
         }
-        if (Math.abs(dy) < 6) return;                     // ignore tiny jitters
         var menuOpen = document.getElementById('nav-links') && document.getElementById('nav-links').classList.contains('open');
         siteHeader.classList.toggle('is-compact', !menuOpen && y > 140 && dy > 0);
         lastY = y;
