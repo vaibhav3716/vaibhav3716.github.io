@@ -1,41 +1,41 @@
 {
-  "updated": "2026-11-03T08:26:38Z",
-  "newest": "2611.03645",
+  "updated": "2026-11-04T07:54:22Z",
+  "newest": "2611.05367",
   "plain": false,
   "summarised_by": null,
   "papers": [
     {
-      "id": "2611.03645",
-      "headline": "Episodic Star Formation - II. The Origin of the Fundamental Metallicity Relation",
-      "summary": "The Fundamental Metallicity Relation (FMR) extends the mass-metallicity relation (MZR) by including star formation rate (SFR) as a third parameter. At fixed stellar mass, galaxies with higher SFRs tend to have lower gas-phase metallicities.",
-      "topic": "Galaxies",
-      "title": "Episodic Star Formation - II. The Origin of the Fundamental Metallicity Relation",
-      "authors": "X. Mei et al.",
-      "category": "astro-ph.GA",
-      "published": "2026-11-02",
-      "url": "https://arxiv.org/abs/2611.03645"
-    },
-    {
-      "id": "2611.03643",
-      "headline": "The Neptunian ridge through the lens of TESS",
-      "summary": "The Neptunian desert and savanna are separated by a ridge, an overdensity at orbital periods of approximately 3-6 d identified with Kepler.",
-      "topic": "Planets",
-      "title": "The Neptunian ridge through the lens of TESS",
-      "authors": "A. Castro-González",
-      "category": "astro-ph.EP",
-      "published": "2026-11-02",
-      "url": "https://arxiv.org/abs/2611.03643"
-    },
-    {
-      "id": "2611.03637",
-      "headline": "Mercury (Hg): a relativistic N-body simulation for Horndeski gravity",
-      "summary": "We present Mercury, a relativistic N-body code for cosmological simulations in the α-basis formulation of Horndeski gravity.",
+      "id": "2611.05367",
+      "headline": "SBi3PCF: cosmology with Dark Energy Survey Year 3 cosmic shear",
+      "summary": "We present the first cosmic shear data analysis of the integrated 3-point correlation function (i3PCF), a higher-order weak lensing statistic, and the first simulation-based inference (SBI) analysis of a three-point cosmic shear correlation function on survey data.",
       "topic": "Cosmology",
-      "title": "Mercury (Hg): a relativistic N-body simulation for Horndeski gravity",
-      "authors": "A. Nouri-Zonoz et al.",
+      "title": "SBi3PCF: cosmology with Dark Energy Survey Year 3 cosmic shear",
+      "authors": "D. Gebauer et al.",
       "category": "astro-ph.CO",
-      "published": "2026-11-02",
-      "url": "https://arxiv.org/abs/2611.03637"
+      "published": "2026-11-03",
+      "url": "https://arxiv.org/abs/2611.05367"
+    },
+    {
+      "id": "2611.05353",
+      "headline": "Beyond just a torus? Re-contextualising the AGN type paradigm using data-driven host galaxy quenching histories",
+      "summary": "The orientation of a dusty torus within a unified model explains the presence (Type-1) or absence (Type-2) of broad emission lines in Active Galactic Nuclei (AGN) spectra.",
+      "topic": "Galaxies",
+      "title": "Beyond just a torus? Re-contextualising the AGN type paradigm using data-driven host galaxy quenching histories",
+      "authors": "S. D. Krishna et al.",
+      "category": "astro-ph.GA",
+      "published": "2026-11-03",
+      "url": "https://arxiv.org/abs/2611.05353"
+    },
+    {
+      "id": "2611.05328",
+      "headline": "SN 2019qem: decades of extreme mass loss before the explosion of a luminous, long-lived Type IIn supernova",
+      "summary": "We present the luminous, long-lived Type IIn SN 2019qem and use it to reconstruct how much mass its progenitor lost and when. We combine host-subtracted optical and mid-infrared photometry and 26 optical spectra from -22 to +699 d.",
+      "topic": "Black holes",
+      "title": "SN 2019qem: decades of extreme mass loss before the explosion of a luminous, long-lived Type IIn supernova",
+      "authors": "J. Majumdar et al.",
+      "category": "astro-ph.HE",
+      "published": "2026-11-03",
+      "url": "https://arxiv.org/abs/2611.05328"
     }
   ]
 }
