@@ -67,14 +67,12 @@
         // Past the sky, content slides under the header: soften that edge (see .site-header::before)
         var hero = document.querySelector('.hero');
         siteHeader.classList.toggle('is-scrolled', !!hero && y > hero.offsetHeight - siteHeader.offsetHeight);
-        if (Math.abs(dy) < 6) return;                     // ignore tiny jitters
         if (toTop) {
-          // Only while scrolling back up (or at the very end), so it never sits on top of text being read
-          var nearEnd = window.innerHeight + y >= document.documentElement.scrollHeight - 80;
-          var showTop = y > window.innerHeight * 1.5 && (dy < 0 || nearEnd);
+          var showTop = y > window.innerHeight * 1.5;
           toTop.classList.toggle('show', showTop);
           toTop.tabIndex = showTop ? 0 : -1;
         }
+        if (Math.abs(dy) < 6) return;                     // ignore tiny jitters
         var menuOpen = document.getElementById('nav-links') && document.getElementById('nav-links').classList.contains('open');
         siteHeader.classList.toggle('is-compact', !menuOpen && y > 140 && dy > 0);
         lastY = y;
@@ -109,7 +107,6 @@
   ---------------------------------------------------------------- */
   var navAnchors = Array.prototype.slice.call(document.querySelectorAll('.nav-links a[href^="#"]'));
   var navSections = navAnchors.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
-  var allSections = Array.prototype.slice.call(document.querySelectorAll('main > section[id]'));
   var navTicking = false;
   var where = document.querySelector('.nav-where'), whereText = where && where.querySelector('span'), whereNow = null;
   function setWhere(text) {
@@ -154,19 +151,15 @@
     navTicking = false;
     var line = window.scrollY + window.innerHeight * 0.4;
     var atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
-    // Find the section being read among all of them, so one that isn't in the menu (Projects,
-    // Blog, Education) lights nothing rather than the menu item above it
-    var cur = null;
-    allSections.forEach(function (sec) { if (sec.offsetTop <= line) cur = sec; });
-    if (atBottom && allSections.length) cur = allSections[allSections.length - 1];
-    var idx = navSections.indexOf(cur);
+    var idx = -1;
+    navSections.forEach(function (sec, i) { if (sec && sec.offsetTop <= line) idx = i; });
+    if (atBottom) idx = navSections.length - 1;
     navAnchors.forEach(function (a, i) {
       if (i === idx) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
     });
     if (lensLock && navAnchors[idx] === lensLock) { lensLock = null; clearTimeout(lensLockTimer); }   // arrived
     placeLens(idx >= 0 ? navAnchors[idx] : null);
-    var curTitle = cur && cur.id !== 'home' && cur.querySelector('h2');
-    setWhere(idx >= 0 ? navAnchors[idx].textContent : (curTitle ? curTitle.textContent.trim() : ''));
+    setWhere(idx >= 0 ? navAnchors[idx].textContent : '');
   }
 
   var wideNav = window.matchMedia('(min-width: 1200px)');
@@ -615,23 +608,13 @@
 
   /* ---------------------------------------------------------------
      A star field behind the whole page, in the dark theme only. It
-     stays fixed while the content scrolls over it. The faint stars are
-     painted once; the brighter ones twinkle: each keeps a steady bright
-     core while four thin spikes grow out of it, fade away, and come
-     back, every star on its own slow rhythm.
-
-     The sky also answers the cursor. Stars near the pointer warm up and
-     glow, and they keep glowing for a couple of seconds after the
-     pointer has moved on, so a sweep of the mouse leaves a fading trail
-     of lit stars. Reduced motion keeps everything still.
+     stays fixed while the content scrolls over it. The faint stars are painted once;
+     the brighter ones twinkle: each keeps a steady bright core while
+     four thin spikes grow out of it, fade away, and come back, every
+     star on its own slow rhythm. Reduced motion keeps them still.
   ---------------------------------------------------------------- */
   var pageStars = document.querySelector('.page-stars');
-  var psBase = null, psStars = [], psTwinklers = [], psGrid = null, psCols = 0, psRows = 0;
-  var psW = 0, psH = 0, psDpr = 1, psDark = false, psRaf = 0, psLast = 0, psPrev = 0;
-  var psHot = [], psPtr = null;
-  var PS_CELL = 80;          // spatial grid cell, px
-  var PS_REACH = 130;        // how far from the pointer a star starts to glow, px
-  var PS_LINGER = 2600;      // ms for a fully lit star to fade back to rest
+  var psBase = null, psTwinklers = [], psW = 0, psH = 0, psDpr = 1, psDark = false, psRaf = 0, psLast = 0;
   function drawPageStars() {
     if (!pageStars || !pageStars.getContext) return;
     psDpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -639,9 +622,8 @@
     if (!psW || !psH) { psBase = null; return; }     // not laid out yet (a background tab): the resize handler draws it later
     pageStars.width = Math.round(psW * psDpr); pageStars.height = Math.round(psH * psDpr);
     psDark = currentTheme() === 'dark';
-    psHot = [];
     if (!psDark) {                                   // the paper theme has no stars at all
-      psBase = null; psStars = []; psTwinklers = []; psGrid = null;
+      psBase = null; psTwinklers = [];
       pageStars.getContext('2d').clearRect(0, 0, pageStars.width, pageStars.height);
       return;
     }
@@ -652,74 +634,28 @@
     b.setTransform(psDpr, 0, 0, psDpr, 0, 0);
     var seed = 11;
     function rnd() { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
-    // A fuller sky: plenty of small stars, with only a few bright ones so it reads as sky, not dust
-    var n = Math.round(psW * psH / 2600);
-    psStars = []; psTwinklers = [];
-    psCols = Math.ceil(psW / PS_CELL); psRows = Math.ceil(psH / PS_CELL);
-    psGrid = new Array(psCols * psRows);
+    // Fewer, crisper stars: lots of very faint specks read as dust on the screen rather than sky
+    var n = Math.round(psW * psH / 7000);
+    psTwinklers = [];
     for (var i = 0; i < n; i++) {
-      var x = rnd() * psW, y = rnd() * psH, m = rnd(), r = 0.5 + Math.pow(m, 5) * 1.5;
-      var a = 0.22 + m * 0.62;
+      var x = rnd() * psW, y = rnd() * psH, m = rnd(), r = 0.6 + Math.pow(m, 5) * 1.5;
+      var a = 0.32 + m * 0.55;
       var warm = rnd() < 0.3;
       var rgb = warm ? '255,224,196' : '222,232,255';
-      var twinkles = m > 0.86;                        // the brightest few
+      var twinkles = m > 0.8;                         // the brightest one star in five
       if (twinkles) { r = Math.max(r, 1); a = Math.min(0.95, a + 0.1); }
       b.fillStyle = 'rgba(' + rgb + ',' + a + ')';
       b.beginPath(); b.arc(x, y, r, 0, 6.2832); b.fill();
-      var s = { x: x, y: y, r: r, rgb: rgb, a: a, heat: 0, hot: false, tilt: (rnd() - 0.5) * 0.35 };
-      psStars.push(s);
-      var cell = Math.min(psRows - 1, y / PS_CELL | 0) * psCols + Math.min(psCols - 1, x / PS_CELL | 0);
-      (psGrid[cell] || (psGrid[cell] = [])).push(s);
-      if (twinkles) {
-        s.len = 5 + rnd() * 6;                        // longest spike, px
-        s.period = 2600 + rnd() * 4200;               // ms per cycle
-        s.phase = rnd();
-        psTwinklers.push(s);
-      }
+      if (twinkles) psTwinklers.push({
+        x: x, y: y, r: r, rgb: rgb, a: a,
+        len: 5 + rnd() * 6,                           // longest spike, px
+        period: 2600 + rnd() * 4200,                  // ms per cycle
+        phase: rnd(),
+        tilt: (rnd() - 0.5) * 0.35                    // a slight turn, so the crosses don't all line up
+      });
     }
     paintStars(performance.now());
     if (!psRaf && !reduceMotion.matches) psRaf = requestAnimationFrame(twinkle);
-  }
-  function spikes(c, s, L, A, w) {
-    for (var q = 0; q < 2; q++) {
-      var ang = s.tilt + q * Math.PI / 2, dx = Math.cos(ang) * L, dy = Math.sin(ang) * L;
-      var lg = c.createLinearGradient(s.x - dx, s.y - dy, s.x + dx, s.y + dy);
-      lg.addColorStop(0, 'rgba(' + s.rgb + ',0)');
-      lg.addColorStop(0.5, 'rgba(' + s.rgb + ',' + A + ')');
-      lg.addColorStop(1, 'rgba(' + s.rgb + ',0)');
-      c.strokeStyle = lg; c.lineWidth = w;
-      c.beginPath(); c.moveTo(s.x - dx, s.y - dy); c.lineTo(s.x + dx, s.y + dy); c.stroke();
-    }
-  }
-  function glow(c, s, R, A) {
-    var g = c.createRadialGradient(s.x, s.y, 0, s.x, s.y, R);
-    g.addColorStop(0, 'rgba(' + s.rgb + ',' + A + ')');
-    g.addColorStop(1, 'rgba(' + s.rgb + ',0)');
-    c.fillStyle = g;
-    c.beginPath(); c.arc(s.x, s.y, R, 0, 6.2832); c.fill();
-  }
-  // Warm up the stars round the pointer, and let every lit star cool down slowly
-  function updateHeat(dt) {
-    if (psPtr && psGrid) {
-      var cx0 = Math.max(0, (psPtr.x - PS_REACH) / PS_CELL | 0), cx1 = Math.min(psCols - 1, (psPtr.x + PS_REACH) / PS_CELL | 0);
-      var cy0 = Math.max(0, (psPtr.y - PS_REACH) / PS_CELL | 0), cy1 = Math.min(psRows - 1, (psPtr.y + PS_REACH) / PS_CELL | 0);
-      for (var gy = cy0; gy <= cy1; gy++) for (var gx = cx0; gx <= cx1; gx++) {
-        var list = psGrid[gy * psCols + gx];
-        if (!list) continue;
-        for (var j = 0; j < list.length; j++) {
-          var s = list[j], dx = s.x - psPtr.x, dy = s.y - psPtr.y, d = Math.sqrt(dx * dx + dy * dy);
-          if (d >= PS_REACH) continue;
-          var t = 1 - d / PS_REACH, target = t * t * (3 - 2 * t);      // smooth falloff
-          if (s.heat < target) s.heat = Math.min(target, s.heat + dt / 140);   // a quick but soft rise
-          if (!s.hot) { s.hot = true; psHot.push(s); }
-        }
-      }
-    }
-    for (var i = psHot.length - 1; i >= 0; i--) {
-      var h = psHot[i];
-      h.heat -= dt / PS_LINGER;
-      if (h.heat <= 0) { h.heat = 0; h.hot = false; psHot[i] = psHot[psHot.length - 1]; psHot.pop(); }
-    }
   }
   function paintStars(now) {
     if (!psBase || !psBase.width || !psBase.height) return;
@@ -732,50 +668,35 @@
     c.lineCap = 'round';
     for (var i = 0; i < psTwinklers.length; i++) {
       var s = psTwinklers[i];
-      if (s.hot) continue;                            // the cursor glow draws this one
       // Visible for the first 60% of each cycle (swelling then shrinking), dark for the rest
       var p = ((now / s.period) + s.phase) % 1;
       var k = p < 0.6 ? Math.pow(Math.sin(Math.PI * p / 0.6), 2) : 0;
       if (k < 0.02) continue;
-      var A = s.a * (0.55 + 0.45 * k);
-      glow(c, s, s.r * 3.2, A * 0.5 * k);
-      spikes(c, s, s.len * k, A, Math.max(0.6, s.r * 0.75));
+      var L = s.len * k, A = s.a * (0.55 + 0.45 * k);
+      // A soft glow round the core while the spikes are out
+      var g = c.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r * 3.2);
+      g.addColorStop(0, 'rgba(' + s.rgb + ',' + (A * 0.5 * k) + ')');
+      g.addColorStop(1, 'rgba(' + s.rgb + ',0)');
+      c.fillStyle = g;
+      c.beginPath(); c.arc(s.x, s.y, s.r * 3.2, 0, 6.2832); c.fill();
+      // Four spikes, each fading from the core to its tip
+      for (var q = 0; q < 2; q++) {
+        var ang = s.tilt + q * Math.PI / 2, dx = Math.cos(ang) * L, dy = Math.sin(ang) * L;
+        var lg = c.createLinearGradient(s.x - dx, s.y - dy, s.x + dx, s.y + dy);
+        lg.addColorStop(0, 'rgba(' + s.rgb + ',0)');
+        lg.addColorStop(0.5, 'rgba(' + s.rgb + ',' + A + ')');
+        lg.addColorStop(1, 'rgba(' + s.rgb + ',0)');
+        c.strokeStyle = lg; c.lineWidth = Math.max(0.6, s.r * 0.75);
+        c.beginPath(); c.moveTo(s.x - dx, s.y - dy); c.lineTo(s.x + dx, s.y + dy); c.stroke();
+      }
     }
-    if (!psHot.length) return;
-    c.globalCompositeOperation = 'lighter';           // lit stars add up, like light does
-    // The lit stars themselves: a wide soft halo round a brighter core
-    for (var h = 0; h < psHot.length; h++) {
-      var st = psHot[h], e = st.heat;
-      if (e < 0.01) continue;
-      glow(c, st, st.r * (3 + 9 * e) + 2, 0.55 * e);
-      c.fillStyle = 'rgba(255,255,255,' + Math.min(1, 0.35 + 0.65 * e) + ')';
-      c.beginPath(); c.arc(st.x, st.y, st.r * (1 + 0.8 * e), 0, 6.2832); c.fill();
-    }
-    c.globalCompositeOperation = 'source-over';
   }
   function twinkle(now) {
     psRaf = 0;
     if (reduceMotion.matches || !psBase) return;
-    var dt = psPrev ? Math.min(100, now - psPrev) : 16;
-    psPrev = now;
-    var lively = psPtr || psHot.length;
-    updateHeat(dt);
-    // Full frame rate while the cursor is stirring the sky, about 30 a second otherwise
-    if (!document.hidden && (lively || now - psLast > 33)) { psLast = now; paintStars(now); }
+    if (!document.hidden && now - psLast > 33) { psLast = now; paintStars(now); }   // about 30 frames a second is plenty
     psRaf = requestAnimationFrame(twinkle);
   }
-  function psMove(e) {
-    if (!psBase || reduceMotion.matches) return;
-    var pt = { x: e.clientX, y: e.clientY };
-    psPtr = pt;
-  }
-  function psLeave() { psPtr = null; }
-  window.addEventListener('pointermove', psMove, { passive: true });
-  window.addEventListener('pointerdown', psMove, { passive: true });
-  document.addEventListener('mouseout', function (e) { if (!e.relatedTarget) psLeave(); });
-  window.addEventListener('blur', psLeave);
-  window.addEventListener('pointerup', function (e) { if (e.pointerType !== 'mouse') psLeave(); });
-  window.addEventListener('pointercancel', psLeave);
   drawPageStars();
   var psTimer;
   window.addEventListener('resize', function () { clearTimeout(psTimer); psTimer = setTimeout(drawPageStars, 200); });
