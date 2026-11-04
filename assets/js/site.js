@@ -615,10 +615,9 @@
      core while four thin spikes grow out of it, fade away, and come
      back, every star on its own slow rhythm.
 
-     The sky also answers the cursor. Stars near the pointer warm up and
-     glow, and they keep glowing for a couple of seconds after the
-     pointer has moved on, so a sweep of the mouse leaves a fading trail
-     of lit stars. Reduced motion keeps everything still.
+     The sky also answers the cursor: only the stars round the pointer
+     glow, and they go back to rest as soon as it moves away, so there
+     is no trail. Reduced motion keeps everything still.
   ---------------------------------------------------------------- */
   var pageStars = document.querySelector('.page-stars');
   var psBase = null, psStars = [], psTwinklers = [], psGrid = null, psCols = 0, psRows = 0;
@@ -626,7 +625,7 @@
   var psHot = [], psPtr = null;
   var PS_CELL = 80;          // spatial grid cell, px
   var PS_REACH = 130;        // how far from the pointer a star starts to glow, px
-  var PS_LINGER = 2600;      // ms for a fully lit star to fade back to rest
+  var PS_EASE = 90;          // ms to light up or go dark: just enough to avoid popping, too short to leave a trail
   function drawPageStars() {
     if (!pageStars || !pageStars.getContext) return;
     psDpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -693,8 +692,9 @@
     c.fillStyle = g;
     c.beginPath(); c.arc(s.x, s.y, R, 0, 6.2832); c.fill();
   }
-  // Warm up the stars round the pointer, and let every lit star cool down slowly
+  // Light the stars round the pointer; every other lit star goes straight back to rest
   function updateHeat(dt) {
+    for (var k = 0; k < psHot.length; k++) psHot[k].target = 0;
     if (psPtr && psGrid) {
       var cx0 = Math.max(0, (psPtr.x - PS_REACH) / PS_CELL | 0), cx1 = Math.min(psCols - 1, (psPtr.x + PS_REACH) / PS_CELL | 0);
       var cy0 = Math.max(0, (psPtr.y - PS_REACH) / PS_CELL | 0), cy1 = Math.min(psRows - 1, (psPtr.y + PS_REACH) / PS_CELL | 0);
@@ -705,15 +705,16 @@
           var s = list[j], dx = s.x - psPtr.x, dy = s.y - psPtr.y, d = Math.sqrt(dx * dx + dy * dy);
           if (d >= PS_REACH) continue;
           var t = 1 - d / PS_REACH, target = t * t * (3 - 2 * t);      // smooth falloff
-          if (s.heat < target) s.heat = Math.min(target, s.heat + dt / 140);   // a quick but soft rise
-          if (!s.hot) { s.hot = true; psHot.push(s); }
+          s.target = target;
+          if (!s.hot) { s.hot = true; s.heat = 0; psHot.push(s); }
         }
       }
     }
     for (var i = psHot.length - 1; i >= 0; i--) {
       var h = psHot[i];
-      h.heat -= dt / PS_LINGER;
-      if (h.heat <= 0) { h.heat = 0; h.hot = false; psHot[i] = psHot[psHot.length - 1]; psHot.pop(); }
+      var step = dt / PS_EASE;
+      h.heat = h.heat < h.target ? Math.min(h.target, h.heat + step) : Math.max(h.target, h.heat - step);
+      if (h.heat <= 0 && h.target <= 0) { h.heat = 0; h.hot = false; psHot[i] = psHot[psHot.length - 1]; psHot.pop(); }
     }
   }
   function paintStars(now) {
