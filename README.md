@@ -9,10 +9,7 @@ Plain HTML, CSS and JavaScript. There is no build step: edit a file, push, and t
 
 | What | File |
 |---|---|
-| Home page: about, research summary, projects, publications, teaching and outreach summaries, blog, education, contact | `index.html` |
-| Full research write-up (selection steps, figures, results) | `research.html` |
-| Teaching page, with the Introduction to Astronomy course notes | `teaching.html` |
-| Outreach page: stargazing photos, Did you know? facts, Fresh from arXiv | `outreach.html` |
+| All page text (research, teaching, publications, contact) | `index.html` |
 | Colours, fonts, layout | `assets/css/site.css` (colour tokens are at the top) |
 | Theme chosen from day or night where the visitor is | `assets/js/daynight.js` |
 | Live hero sky (Mumbai at night, the opposite side of Earth by day) | `assets/js/sky.js` |
@@ -22,40 +19,29 @@ Plain HTML, CSS and JavaScript. There is no build step: edit a file, push, and t
 | Tool logos | `assets/img/logos/` (Simple Icons, CC0; Astropy logo CC BY-SA 3.0) |
 | Portrait (square crop of the original photo, with room above the head) | `assets/img/portrait.jpg` and `assets/img/portrait.webp` |
 | About: portrait with engraved orbiting planets | `assets/js/orbits.js` |
-| Did you know? (fact flip cards, three at a time) | the `id="facts"` section in `outreach.html`, dealt by `assets/js/facts.js` |
+| Did you know? (fact flip cards, three at a time) | the `id="facts"` section in `index.html`, dealt by `assets/js/facts.js` |
 | What's new in research (three new arXiv papers in plain words) | `assets/js/news.js`, fed daily by `scripts/update_arxiv.py` and `.github/workflows/research-feed.yml` |
 | Paper figures | `assets/img/research/` |
-| Stargazing photos | `assets/img/stargazing/`, shown in `outreach.html` |
+| Stargazing photos | `assets/img/stargazing/` |
 | Quote backgrounds (ESA/Hubble, ESA/Webb) | `assets/img/andromeda-hst.webp`, `assets/img/esa/` |
 | CV | `files/Vaibhav_Yenare_CV.pdf` |
-| Introduction to Astronomy course notes (lecture notes, assignments, resources; no answer keys) | `files/intro-astronomy/`, listed in the `id="intro-astronomy"` panel of `teaching.html` |
-
-## Pages
-
-The home page is kept short on purpose. Longer material lives on three pages beside it, each linked from the
-matching home-page section by a wide card: `research.html`, `teaching.html` and `outreach.html`. The four pages share
-the same header, icon set and footer, copied into each file (there is no build step), so a change to the menu
-or the footer has to be made in all four. On the home page the menu scrolls to sections; on the other pages it
-links to them, and `aria-current="page"` marks the page you are on.
+| Introduction to Astronomy course notes (lecture notes, assignments, resources; no answer keys) | `files/intro-astronomy/`, listed in the `id="intro-astronomy"` panel of the Teaching section |
 
 ## Common updates
 
-
-- **New or updated lecture notes:** copy the PDF into `files/intro-astronomy/unit-N/` and add or edit its `<li>` in the `id="intro-astronomy"` panel of `teaching.html` (code, title, pages and size). If the totals change, update the count on the home page's course-notes card too. Never add answer keys, the instructor guide or the final assessment.
+- **New or updated lecture notes:** copy the PDF into `files/intro-astronomy/unit-N/` and add or edit its `<li>` in the `id="intro-astronomy"` panel (code, title, pages and size). Never add answer keys, the instructor guide or the final assessment.
 - **New CV:** replace `files/Vaibhav_Yenare_CV.pdf`, keeping the same file name.
 - **Paper submitted or published:** edit the two entries under `id="publications"` in `index.html`,
-  and the `paper-card` block in both the home research section and `research.html`. Add the arXiv or DOI link there,
-  and add Google Scholar, NASA ADS and arXiv author links to the Contact section once those profiles exist.
-- **Quotes:** the home page keeps two (Hubble over Andromeda, Chandrasekhar over the Ring Nebula); the research,
-  teaching and outreach pages end with one each. Each is a `<section class="quote-panel">` block. Copy one, point `--img` at a new image, and keep the credit line: ESA/Hubble and ESA/Webb images are CC BY 4.0 and must be credited.
-- **New stargazing photo:** convert it to WebP, put it in `assets/img/stargazing/`, and copy a `<figure class="g-item">` block in `outreach.html`.
-- **New fact:** copy one `<article class="fact ...">` block in the `id="facts"` section of `outreach.html`. The class sets the colour:
+  and the `paper-card` block in the research section. Add the arXiv or DOI link there.
+- **Quotes:** each quote is a `<section class="quote-panel">` block in `index.html`. Copy one, point `--img` at a new image, and keep the credit line: ESA/Hubble and ESA/Webb images are CC BY 4.0 and must be credited.
+- **New stargazing photo:** convert it to WebP, put it in `assets/img/stargazing/`, and copy a `<figure class="g-item">` block.
+- **New fact:** copy one `<article class="fact ...">` block in the `id="facts"` section. The class sets the colour:
   `fact-wd` white dwarfs, `fact-bin` binaries, `fact-sun` the Sun and stars, `fact-bh` neutron stars and black holes,
   `fact-cos` the Universe. Give the source, with a DOI link for papers. The cards are shuffled on every visit.
 - **New blog post:** nothing to do. The Blog section loads the six newest posts from Blogger as cards
   (cover image, date, reading time, opening lines). The two cards written into `index.html` are only a
   fallback for when Blogger can't be reached.
-- **New figure (on `research.html`):** export it to WebP (for example `magick figure.pdf -density 200 -resize 1600x figure.webp`),
+- **New figure:** export it to WebP (for example `magick figure.pdf -density 200 -resize 1600x figure.webp`),
   put it in `assets/img/research/`, and copy one of the `<figure class="fig">` blocks.
 
 ## The live sky

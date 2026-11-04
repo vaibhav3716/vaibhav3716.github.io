@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap">
   <link rel="stylesheet" href="assets/js/vendor/lenis.css?v=20261014c">
-  <link rel="stylesheet" href="assets/css/site.css?v=20261104a">
+  <link rel="stylesheet" href="assets/css/site.css?v=20261014c">
 
   <!-- Picks the theme from day or night where the visitor is, before the first paint -->
   <script src="assets/js/daynight.js?v=20261014c"></script>
@@ -86,9 +86,12 @@
       <ul class="nav-links" id="nav-links" data-lenis-prevent>
         <li><a href="#about">About</a></li>
         <li><a href="#research">Research</a></li>
+        <li><a href="#projects">Projects</a></li>
         <li><a href="#publications">Publications</a></li>
         <li><a href="#teaching">Teaching</a></li>
         <li><a href="#outreach">Outreach</a></li>
+        <li><a href="#blog">Blog</a></li>
+        <li><a href="#education">Education</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
       <div class="nav-actions">
@@ -151,7 +154,7 @@
         <p class="sky-caption">
           <span id="sky-live" aria-live="off">A live view of the sky from Mumbai, or from the opposite side of Earth when it is daytime there.</span>
           <span class="sky-sun" id="sky-sun" hidden><svg class="icon" aria-hidden="true"><use href="#i-sun"/></svg><span></span></span>
-          <span class="sky-cap-hint">The theme follows day and night where you are.</span>
+          <span class="sky-cap-hint">The theme follows day and night where you are. Switch it to fly to the other side of Earth, where it is day when it is night here.</span>
         </p>
         <div class="sky-actions">
           <button class="sky-btn sky-btn-primary" type="button" id="sky-explore" aria-pressed="false" title="Drag to look around, and click a star, planet or galaxy to identify it">
@@ -259,20 +262,74 @@
                 <div><dt>White dwarf's share of Gaia G-band light</dt><dd id="share-g">–</dd></div>
                 <div><dt>White dwarf outshines its companion below</dt><dd id="crossover">–</dd></div>
               </dl>
-              <p class="fine">Blackbody illustration with typical radii: 0.013 R<sub>☉</sub> for the white dwarf, and a main sequence radius for the companion. The paper fits Koester and Kurucz model atmospheres in VOSA. The starting values match the fitted example in <a href="research.html">the full write-up</a>.</p>
+              <p class="fine">Blackbody illustration with typical radii: 0.013 R<sub>☉</sub> for the white dwarf, and a main sequence radius for the companion. The paper fits Koester and Kurucz model atmospheres in VOSA. The starting values match the fitted example below.</p>
             </div>
           </div>
         </div>
 
+        <!-- Selection sequence -->
+        <div class="pipeline">
+          <h4>From 133,731 stars to 5,468 binaries</h4>
+          <ol class="steps">
+            <li><span class="n">133,731</span><span class="d">quality-filtered sources that appear in both GALEX GR6+7 and Gaia DR3</span></li>
+            <li><span class="n">8,939</span><span class="d">candidates left after three colour–magnitude cuts, one ultraviolet and two optical</span></li>
+            <li><span class="n">6,666</span><span class="d">show an excess of more than 3σ in both the far- and near-ultraviolet bands</span></li>
+            <li><span class="n">5,468</span><span class="d">have an acceptable two-component SED fit, giving temperature, luminosity and radius for both stars</span></li>
+            <li><span class="n">5,099</span><span class="d">of those are new: they appear in none of the six earlier catalogs I compared against</span></li>
+          </ol>
+        </div>
+
+        <!-- What I changed in the method -->
+        <div class="results contrib">
+          <h4>Two problems I had to solve</h4>
+          <ul class="result-list">
+            <li><strong>Selection cuts built from the data.</strong> Standard selection criteria were excluding viable candidates in this dataset. Rather than relying on clustering filters, I set the cuts by studying where the stars actually fall in the colour–magnitude diagrams, which gave a more complete and more robust sample.</li>
+            <li><strong>Fitting without a known metallicity.</strong> VOSA, the standard fitting tool, could not handle the missing metallicities. I split the fit in two: first constrain the metallicity from models of the main sequence companion, then use it as a prior when fitting both stars together.</li>
+          </ul>
+          <p class="contrib-note">Both taught me that a solution often needs a closer look at the physics rather than more code, and that a result is only as good as one's understanding of the data's systematics.</p>
+        </div>
+
+        <!-- Figures from the paper -->
+        <div class="figures">
+          <figure class="fig fig-tall">
+            <a class="fig-link" href="assets/img/research/cmd-cuts.webp" data-lightbox>
+              <img src="assets/img/research/cmd-cuts.webp" width="1200" height="2273" loading="lazy" alt="Four pairs of colour–magnitude diagrams. Left panels show GALEX FUV against FUV minus NUV; right panels show Gaia absolute G against BP minus RP. Orange candidate points are kept at each of three cuts, grey points are discarded.">
+              <span class="fig-zoom"><svg class="icon" aria-hidden="true"><use href="#i-expand"/></svg>Enlarge</span>
+            </a>
+            <figcaption><strong>The selection, step by step.</strong> Left: the GALEX ultraviolet diagram. Right: the Gaia optical diagram. Orange points survive each cut. The final panel adds MIST isochrones and removes sources on the white dwarf sequence.</figcaption>
+          </figure>
+          <div class="fig-stack">
+            <figure class="fig">
+              <a class="fig-link" href="assets/img/research/sed-fit.webp" data-lightbox>
+                <img src="assets/img/research/sed-fit.webp" width="1400" height="1101" loading="lazy" alt="Spectral energy distribution of Gaia DR3 5060197324707968 from the ultraviolet to the infrared, with observed fluxes, a Kurucz model for the companion, a Koester model for the white dwarf, and their sum, plus a residual panel.">
+                <span class="fig-zoom"><svg class="icon" aria-hidden="true"><use href="#i-expand"/></svg>Enlarge</span>
+              </a>
+              <figcaption><strong>A two-component SED fit.</strong> Gaia DR3 5060197324707968: a 4,750&nbsp;K companion plus a 16,500&nbsp;K white dwarf. The white dwarf (dark grey) dominates below about 3,000&nbsp;Å.</figcaption>
+            </figure>
+            <figure class="fig">
+              <a class="fig-link" href="assets/img/research/cmd-literature.webp" data-lightbox>
+                <img src="assets/img/research/cmd-literature.webp" width="1600" height="1112" loading="lazy" alt="Gaia colour–magnitude diagram with the new candidates as orange circles lying along the main sequence, and earlier catalogs RM25, L25 and N23 as crosses, mostly between the main sequence and the white dwarf sequence.">
+                <span class="fig-zoom"><svg class="icon" aria-hidden="true"><use href="#i-expand"/></svg>Enlarge</span>
+              </a>
+              <figcaption><strong>Where the new binaries sit.</strong> Earlier catalogs (crosses) mostly fill the gap between the main sequence and the white dwarf sequence. This sample (orange) lies on the main sequence itself, where optical searches can't see the white dwarf.</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="results">
+          <h4>What the catalog shows so far</h4>
+          <ul class="result-list">
+            <li><strong>White dwarf masses for 3,213 systems</strong>, from 0.2 to 1.3 M<sub>☉</sub>, found by interpolating cooling tracks.</li>
+            <li><strong>306 possible extremely low-mass white dwarfs</strong> (below about 0.3 M<sub>☉</sub>). I treat these as targets for spectroscopic follow-up, not confirmed detections.</li>
+            <li><strong>A magnitude-limited sample.</strong> Almost every system lies beyond 100&nbsp;pc and well over half beyond 500&nbsp;pc, so it reaches a population that 100&nbsp;pc surveys can't.</li>
+            <li><strong>White dwarf temperatures agree with five independent catalogs</strong> below about 20,000&nbsp;K, across three different measurement techniques.</li>
+          </ul>
+        </div>
 
         <div class="paper-card">
           <p class="paper-status">Manuscript in preparation for <em>The Astrophysical Journal</em>. Abstract selected for a poster at <a href="https://astron-soc.in/asi2026/sites/default/files/Bpage_file/ASI2026_StarsInterstellarMediumAstrochemistryMilkyWay.pdf" target="_blank" rel="noopener">ASI&nbsp;2026</a>.</p>
           <p class="paper-cite"><strong>Yenare, V.</strong>, Chatterjee, S., Ganguly, A., Nayak, P. K. <span class="paper-title">White Dwarf–Main Sequence Binaries Using Multi-band Photometry: Discovery and Characterisation.</span></p>
         </div>
-        <a class="link-card" href="research.html">
-          <span><strong>How I found them:</strong> the selection step by step, figures from the paper, and what the catalog shows</span>
-          <span class="link-card-meta">Full write-up<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span>
-        </a>
 
         <!-- Second research line -->
         <article class="side-project">
@@ -386,6 +443,15 @@
       </div>
     </section>
 
+    <section class="quote-panel quote-pillars img-left" aria-label="A quote from Cecilia Payne-Gaposchkin" style="--img:url('../../assets/img/esa/pillars-hubble.webp'); --img-small:url('../../assets/img/esa/pillars-hubble-small.webp')">
+      <div class="quote-panel-img" aria-hidden="true"></div>
+      <figure class="wrap quote-panel-inner">
+        <blockquote><p>The reward of the young scientist is the emotional thrill of being the first person in the history of the world to see something or to understand something.</p></blockquote>
+        <figcaption>Cecilia Payne-Gaposchkin, who showed in 1925 that stars are made mostly of hydrogen and helium</figcaption>
+      </figure>
+      <p class="panel-credit">Pillars of Creation, clouds of hydrogen where new stars are forming. Hubble Space Telescope. Image: <a href="https://esahubble.org/images/heic1501a/" target="_blank" rel="noopener">NASA, ESA/Hubble and the Hubble Heritage Team</a> (CC BY 4.0)</p>
+    </section>
+
     <!-- Teaching -->
     <section class="section" id="teaching" aria-labelledby="teaching-h">
       <div class="wrap">
@@ -422,11 +488,68 @@
             <p>I supervise short research projects for undergraduates, guiding them from choosing a question through method, analysis and write-up. I also help with assessment design and academic mentoring in the department.</p>
           </div>
         </div>
-        <a class="link-card" href="teaching.html#intro-astronomy">
-          <span><strong>Introduction to Astronomy</strong> course notes</span>
-          <span class="link-card-meta">16 lectures · 9 assignments<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span>
-        </a>
+        <!-- Introduction to Astronomy: the course pack, unit by unit. Answer keys and the final paper are deliberately not published. -->
+        <details class="coursework course-pack" id="intro-astronomy">
+          <summary><span>Introduction to Astronomy <em>· course notes</em></span><span class="coursework-count">16 lectures · 9 assignments</span></summary>
+          <div class="coursework-body">
+            <div class="pack-inner">
+                <section class="pack-unit" aria-labelledby="pack-u1"><h4 id="pack-u1"><span>Unit 1</span>Motion of the Sky and Time-Keeping</h4><div class="pack-cols">
+                <div><p class="pack-kind">Lecture notes</p><ol class="pack-list">
+                <li style="--i:0"><a class="pack-link" href="files/intro-astronomy/unit-1/L1.1_Earth_Rotation_and_Diurnal_Motion.pdf" target="_blank" rel="noopener"><span class="pack-code">L1.1</span><span class="pack-title">Earth’s Rotation and the Daily Motion of the Sky</span><span class="pack-meta">7 pages<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span><span class="visually-hidden"> (lecture notes, PDF, opens in a new tab)</span></a></li>
+                <li style="--i:1"><a class="pack-link" href="files/intro-astronomy/unit-1/L1.2_Earth_Revolution_Seasons_Equinoxes_Solstices.pdf" target="_blank" rel="noopener"><span class="pack-code">L1.2</span><span class="pack-title">Earth’s Revolution: Seasons, the Ecliptic, Equinoxes and Solstices</span><span class="pack-meta">7 pages<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span><span class="visually-hidden"> (lecture notes, PDF, opens in a new tab)</span></a></li>
+                <li style="--i:2"><a class="pack-link" href="files/intro-astronomy/unit-1/L1.3_Moon_Phases_and_Eclipses.pdf" target="_blank" rel="noopener"><span class="pack-code">L1.3</span><span class="pack-title">The Moon: Phases, Months and Eclipses</span><span class="pack-meta">7 pages<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span><span class="visually-hidden"> (lecture notes, PDF, opens in a new tab)</span></a></li>
+                <li style="--i:3"><a class="pack-link" href="files/intro-astronomy/unit-1/L1.4_Hindu_Timekeeping_Panchang.pdf" target="_blank" rel="noopener"><span class="pack-code">L1.4</span><span class="pack-title">Indian (Hindu) Time-Keeping: Weekdays, Tithis, Nakshatras and the Panchang</span><span class="pack-meta">8 pages<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span><span class="visually-hidden"> (lecture notes, PDF, opens in a new tab)</span></a></li>
+                <li style="--i:4"><a class="pack-link" href="files/intro-astronomy/unit-1/L1.5_Islamic_Hijri_Calendar.pdf" target="_blank" rel="noopener"><span class="pack-code">L1.5</span><span class="pack-title">The Islamic (Hijri) Calendar and Time-Keeping in the Islamic World</span><span class="pack-meta">5 pages<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span><span class="visually-hidden"> (lecture notes, PDF, opens in a new tab)</span></a></li>
+                <li style="--i:5"><a class="pack-link" href="files/intro-astronomy/unit-1/L1.6_Gregorian_Calendar_Leap_Years_and_Clock_Time.pdf" target="_blank" rel="noopener"><span class="pack-code">L1.6</span><span class="pack-title">The Gregorian Calendar, Leap Years and Clock Time (IST)</span><span class="pack-meta">5 pages<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span><span class="visually-hidden"> (lecture notes, PDF, opens in a new tab)</span></a></li>
+                </ol></div><div><p class="pack-kind">Assignments</p><ol class="pack-list">
+                <li style="--i:6"><a class="pack-link" href="files/intro-astronomy/unit-1/Assignment_1A_Sky_Motion_Seasons_Moon_Eclipses.pdf" target="_blank" rel="noopener"><span class="pack-code">1A</span><span class="pack-title">Sky Motion, Seasons, the Moon and Eclipses</span><span class="pack-meta">4 pages<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span><span class="visually-hidden"> (assignment, PDF, opens in a new tab)</span></a></li>
+                <li style="--i:7"><a class="pack-link" href="files/intro-astronomy/unit-1/Assignment_1B_Calendars_and_Timekeeping.pdf" target="_blank" rel="noopener"><span class="pack-code">1B</span><span class="pack-title">Calendars and Time-Keeping across Cultures</span><span class="pack-meta">4 pages<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span><span class="visually-hidden"> (assignment, PDF, opens in a new tab)</span></a></li>
+                <li style="--i:8"><a class="pack-link" href="files/intro-astronomy/unit-1/Assignment_1C_Observation_Project_Moon_Diary_and_Shadow_Stick.pdf" target="_blank" rel="noopener"><span class="pack-code">1C</span><span class="pack-title">Observation Project: The Moon Diary and the Shadow Stick</span><span class="pack-meta">3 pages<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span><span class="visually-hidden"> (assignment, PDF, opens in a new tab)</span></a></li>
+                </ol></div></div></section>
+                <section class="pack-unit" aria-labelledby="pack-u2"><h4 id="pack-u2"><span>Unit 2</span>Sky, Stars and Constellations</h4><div class="pack-cols">
+                <div><p class="pack-kind">Lecture notes</p><ol class="pack-list">
+                <li style="--i:9"><a class="pack-link" href="files/intro-astronomy/unit-2/L2.1_The_Celestial_Sphere.pdf" target="_blank" rel="noopener"><span class="pack-code">L2.1</span><span class="pack-title">The Celestial Sphere: A Map for the Sky</span><span class="pack-meta">5 pages<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span><span class="visually-hidden"> (lecture notes, PDF, opens in a new tab)</span></a></li>
+                <li style="--i:10"><a class="pack-link" href="files/intro-astronomy/unit-2/L2.2_Celestial_Coordinate_Systems.pdf" target="_blank" rel="noopener"><span class="pack-code">L2.2</span><span class="pack-title">Celestial Coordinate Systems: Alt–Az and RA–Dec</span><span class="pack-meta">5 pages<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span><span class="visually-hidden"> (lecture notes, PDF, opens in a new tab)</span></a></li>
+                <li style="--i:11"><a class="pack-link" href="files/intro-astronomy/unit-2/L2.3_Constellations_History_and_the_Modern_88.pdf" target="_blank" rel="noopener"><span class="pack-code">L2.3</span><span class="pack-title">Constellations: From Ancient Stories to the Modern 88</span><span class="pack-meta">5 pages<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span><span class="visually-hidden"> (lecture notes, PDF, opens in a new tab)</span></a></li>
+                <li style="--i:12"><a class="pack-link" href="files/intro-astronomy/unit-2/L2.4_Asterisms_Zodiac_and_Bright_Stars.pdf" target="_blank" rel="noopener"><span class="pack-code">L2.4</span><span class="pack-title">Asterisms, the Zodiac and the Brightest Stars</span><span class="pack-meta">11 pages<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span><span class="visually-hidden"> (lecture notes, PDF, opens in a new tab)</span></a></li>
+                <li style="--i:13"><a class="pack-link" href="files/intro-astronomy/unit-2/L2.5_Stargazing_Field_Guide_for_India.pdf" target="_blank" rel="noopener"><span class="pack-code">L2.5</span><span class="pack-title">Stargazing Field Guide: Finding Your Way Around the Sky from India</span><span class="pack-meta">8 pages<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span><span class="visually-hidden"> (lecture notes, PDF, opens in a new tab)</span></a></li>
+                </ol></div><div><p class="pack-kind">Assignments</p><ol class="pack-list">
+                <li style="--i:14"><a class="pack-link" href="files/intro-astronomy/unit-2/Assignment_2A_Celestial_Sphere_and_Coordinates.pdf" target="_blank" rel="noopener"><span class="pack-code">2A</span><span class="pack-title">The Celestial Sphere, Coordinates and Constellation History</span><span class="pack-meta">3 pages<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span><span class="visually-hidden"> (assignment, PDF, opens in a new tab)</span></a></li>
+                <li style="--i:15"><a class="pack-link" href="files/intro-astronomy/unit-2/Assignment_2B_Identify_Constellations_and_Asterisms.pdf" target="_blank" rel="noopener"><span class="pack-code">2B</span><span class="pack-title">Picture Quiz: Identify the Constellations and Asterisms</span><span class="pack-meta">7 pages<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span><span class="visually-hidden"> (assignment, PDF, opens in a new tab)</span></a></li>
+                <li style="--i:16"><a class="pack-link" href="files/intro-astronomy/unit-2/Assignment_2C_Observation_Project_Constellation_Hunt.pdf" target="_blank" rel="noopener"><span class="pack-code">2C</span><span class="pack-title">Observation Project: The Constellation Hunt</span><span class="pack-meta">3 pages<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span><span class="visually-hidden"> (assignment, PDF, opens in a new tab)</span></a></li>
+                </ol></div></div></section>
+                <section class="pack-unit" aria-labelledby="pack-u3"><h4 id="pack-u3"><span>Unit 3</span>Magnitudes, Telescopes and Catalogues</h4><div class="pack-cols">
+                <div><p class="pack-kind">Lecture notes</p><ol class="pack-list">
+                <li style="--i:17"><a class="pack-link" href="files/intro-astronomy/unit-3/L3.1_Apparent_and_Absolute_Magnitudes.pdf" target="_blank" rel="noopener"><span class="pack-code">L3.1</span><span class="pack-title">How Bright? Apparent and Absolute Magnitudes</span><span class="pack-meta">5 pages<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span><span class="visually-hidden"> (lecture notes, PDF, opens in a new tab)</span></a></li>
+                <li style="--i:18"><a class="pack-link" href="files/intro-astronomy/unit-3/L3.2_Telescopes_Types_and_How_They_Work.pdf" target="_blank" rel="noopener"><span class="pack-code">L3.2</span><span class="pack-title">Telescopes: Types and How They Work</span><span class="pack-meta">6 pages<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span><span class="visually-hidden"> (lecture notes, PDF, opens in a new tab)</span></a></li>
+                <li style="--i:19"><a class="pack-link" href="files/intro-astronomy/unit-3/L3.3_Telescope_Calculations.pdf" target="_blank" rel="noopener"><span class="pack-code">L3.3</span><span class="pack-title">Telescope Calculations You Will Actually Use</span><span class="pack-meta">5 pages<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span><span class="visually-hidden"> (lecture notes, PDF, opens in a new tab)</span></a></li>
+                <li style="--i:20"><a class="pack-link" href="files/intro-astronomy/unit-3/L3.4_Setting_Up_and_Using_a_Telescope.pdf" target="_blank" rel="noopener"><span class="pack-code">L3.4</span><span class="pack-title">Setting Up and Using a Telescope: A Practical Guide</span><span class="pack-meta">5 pages<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span><span class="visually-hidden"> (lecture notes, PDF, opens in a new tab)</span></a></li>
+                <li style="--i:21"><a class="pack-link" href="files/intro-astronomy/unit-3/L3.5_Star_and_Deep_Sky_Catalogs.pdf" target="_blank" rel="noopener"><span class="pack-code">L3.5</span><span class="pack-title">Catalogues: How Astronomers Keep Track of Billions of Objects</span><span class="pack-meta">5 pages<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span><span class="visually-hidden"> (lecture notes, PDF, opens in a new tab)</span></a></li>
+                </ol></div><div><p class="pack-kind">Assignments</p><ol class="pack-list">
+                <li style="--i:22"><a class="pack-link" href="files/intro-astronomy/unit-3/Assignment_3A_Magnitudes.pdf" target="_blank" rel="noopener"><span class="pack-code">3A</span><span class="pack-title">Magnitudes: How Bright Is It Really?</span><span class="pack-meta">3 pages<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span><span class="visually-hidden"> (assignment, PDF, opens in a new tab)</span></a></li>
+                <li style="--i:23"><a class="pack-link" href="files/intro-astronomy/unit-3/Assignment_3B_Telescope_Calculations.pdf" target="_blank" rel="noopener"><span class="pack-code">3B</span><span class="pack-title">Telescope Calculations for Real Observing</span><span class="pack-meta">2 pages<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span><span class="visually-hidden"> (assignment, PDF, opens in a new tab)</span></a></li>
+                <li style="--i:24"><a class="pack-link" href="files/intro-astronomy/unit-3/Assignment_3C_Catalogs_and_Observing_Plan.pdf" target="_blank" rel="noopener"><span class="pack-code">3C</span><span class="pack-title">Capstone: Catalogues and Your Own Observing Plan</span><span class="pack-meta">3 pages<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span><span class="visually-hidden"> (assignment, PDF, opens in a new tab)</span></a></li>
+                </ol></div></div></section>
+                <section class="pack-unit pack-resources" aria-labelledby="pack-res"><h4 id="pack-res"><span>For every unit</span>Course resources</h4><ol class="pack-list pack-list-grid">
+                <li style="--i:26"><a class="pack-link" href="files/intro-astronomy/resources/Formula_Sheet_and_Key_Numbers.pdf" target="_blank" rel="noopener"><span class="pack-code"></span><span class="pack-title">Formula sheet and key numbers</span><span class="pack-meta">2 pages<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span><span class="visually-hidden"> (course resource, PDF, opens in a new tab)</span></a></li>
+                <li style="--i:27"><a class="pack-link" href="files/intro-astronomy/resources/Glossary.pdf" target="_blank" rel="noopener"><span class="pack-code"></span><span class="pack-title">Glossary</span><span class="pack-meta">2 pages<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span><span class="visually-hidden"> (course resource, PDF, opens in a new tab)</span></a></li>
+                <li style="--i:28"><a class="pack-link" href="files/intro-astronomy/resources/Observation_Log_Template.pdf" target="_blank" rel="noopener"><span class="pack-code"></span><span class="pack-title">Observation log sheet</span><span class="pack-meta">2 pages<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span><span class="visually-hidden"> (course resource, PDF, opens in a new tab)</span></a></li>
+                <li style="--i:29"><a class="pack-link" href="files/intro-astronomy/resources/References_and_Further_Reading.pdf" target="_blank" rel="noopener"><span class="pack-code"></span><span class="pack-title">References and further reading</span><span class="pack-meta">2 pages<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span><span class="visually-hidden"> (course resource, PDF, opens in a new tab)</span></a></li>
+                <li style="--i:30"><a class="pack-link" href="files/intro-astronomy/resources/Image_Credits.pdf" target="_blank" rel="noopener"><span class="pack-code"></span><span class="pack-title">Image credits</span><span class="pack-meta">2 pages<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span><span class="visually-hidden"> (course resource, PDF, opens in a new tab)</span></a></li>
+                </ol></section>
+            </div>
+          </div>
+        </details>
       </div>
+    </section>
+
+    <section class="quote-panel quote-crab img-right" aria-label="A quote from Carl Sagan" style="--img:url('../../assets/img/esa/crab-nebula-hubble.webp'); --img-small:url('../../assets/img/esa/crab-nebula-hubble-small.webp')">
+      <div class="quote-panel-img" aria-hidden="true"></div>
+      <figure class="wrap quote-panel-inner">
+        <blockquote><p>The cosmos is within us. We are made of star-stuff. We are a way for the universe to know itself.</p></blockquote>
+        <figcaption>Carl Sagan, <cite>Cosmos</cite>, 1980</figcaption>
+      </figure>
+      <p class="panel-credit">Crab Nebula, the remains of a star that exploded in 1054, seeding space with new elements. Hubble Space Telescope. Image: <a href="https://esahubble.org/images/heic0515a/" target="_blank" rel="noopener">NASA, ESA and Allison Loll/Jeff Hester (Arizona State University). Acknowledgement: Davide De Martin (ESA/Hubble)</a> (CC BY 4.0)</p>
     </section>
 
     <!-- Outreach -->
@@ -439,11 +562,679 @@
           <li><strong>The Astrophysicist's Log</strong><span>My blog, where I try to explain astrophysics simply enough for anyone to follow. <a href="#blog">Recent posts</a></span></li>
         </ul>
       </div>
+
       <div class="wrap">
-        <a class="link-card" href="outreach.html">
-          <span><strong>Photos from stargazing nights</strong>, facts from the cosmos, and new papers in plain words</span>
-          <span class="link-card-meta">Outreach page<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></span>
-        </a>
+        <h3 class="gallery-title">From stargazing nights</h3>
+        <div class="gallery">
+          <figure class="g-item g-tall g-feature">
+            <a class="fig-link" href="assets/img/stargazing/session-talk.webp" data-lightbox>
+              <img src="assets/img/stargazing/session-talk.webp" width="1050" height="1400" loading="lazy" alt="Night-time stargazing session outdoors: students seated on mats face a projector screen while Vaibhav gives a talk.">
+            </a>
+            <figcaption>Giving the talk at a stargazing session</figcaption>
+          </figure>
+          <figure class="g-item g-tall">
+            <a class="fig-link" href="assets/img/stargazing/orion.webp" data-lightbox>
+              <img src="assets/img/stargazing/orion.webp" width="1212" height="1400" loading="lazy" alt="The constellation Orion in a dark sky above a large tree.">
+            </a>
+            <figcaption>Orion, 3 November 2024</figcaption>
+          </figure>
+          <figure class="g-item g-tall">
+            <a class="fig-link" href="assets/img/stargazing/andromeda.webp" data-lightbox>
+              <img src="assets/img/stargazing/andromeda.webp" width="1050" height="1400" loading="lazy" alt="A star-filled sky with the Andromeda Galaxy as a small elongated smudge near the top right, and a tree silhouette at the lower right.">
+            </a>
+            <figcaption>The Andromeda Galaxy: the faint smudge near the top right</figcaption>
+          </figure>
+          <figure class="g-item g-tall">
+            <a class="fig-link" href="assets/img/stargazing/moon.webp" data-lightbox>
+              <img src="assets/img/stargazing/moon.webp" width="1050" height="1400" loading="lazy" alt="Close-up of the Moon in black and white, showing craters, dark maria and bright ray systems.">
+            </a>
+            <figcaption>The Moon, close up</figcaption>
+          </figure>
+          <figure class="g-item g-contain">
+            <a class="fig-link" href="assets/img/stargazing/lunar-eclipse.webp" data-lightbox>
+              <img src="assets/img/stargazing/lunar-eclipse.webp" width="1400" height="933" loading="lazy" alt="A totally eclipsed Moon glowing deep red-orange against a black sky.">
+            </a>
+            <figcaption>A total lunar eclipse. Sunlight bent through Earth's atmosphere turns the Moon red.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- Did you know / What's new in research: a band of night sky in two halves.
+         Left, flip cards (facts.js deals three at a time). Right, three new arXiv papers in
+         plain words (news.js; written daily by .github/workflows/research-feed.yml). -->
+    <section class="section facts" id="facts" aria-label="Did you know, and what's new in research">
+      <div class="wrap facts-split">
+        <div class="facts-col" role="region" aria-labelledby="facts-h">
+          <div class="facts-head">
+            <div>
+              <p class="facts-eyebrow">Did you know?</p>
+              <h2 id="facts-h">Facts from the cosmos</h2>
+            </div>
+            <button class="btn btn-small facts-more" type="button" hidden><svg class="icon" aria-hidden="true"><use href="#i-shuffle"/></svg>More facts</button>
+          </div>
+          <p class="section-intro">Some of my favourite facts about stars, what they leave behind, and the Universe around them. Tap a card to find out more.</p>
+          <div class="fact-grid" id="fact-grid">
+            <article class="fact fact-wd">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">White dwarfs</p>
+                  <p class="fact-stat">5 tonnes</p>
+                  <h3 class="fact-teaser">The weight of one teaspoon of white dwarf</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">A white dwarf packs about the Sun's mass into a ball the size of Earth, so its matter weighs roughly a tonne per cubic centimetre. Only the pressure of tightly packed electrons stops it collapsing further.</p>
+                  <p class="fact-source">Source: Worked out from a typical white dwarf density</p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-wd">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">White dwarfs</p>
+                  <p class="fact-stat">97%</p>
+                  <h3 class="fact-teaser">Of all stars will end their lives as white dwarfs</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">Every star born with less than about 8 to 10 times the Sun's mass ends as a white dwarf. That includes the Sun, in roughly 5 billion years.</p>
+                  <p class="fact-source">Source: <a href="https://doi.org/10.1086/319535" target="_blank" rel="noopener">Fontaine, Brassard &amp; Bergeron 2001, PASP 113, 409</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-wd">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">White dwarfs</p>
+                  <p class="fact-stat">1.4 M<sub>☉</sub></p>
+                  <h3 class="fact-teaser">The heaviest a white dwarf can ever be</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">Subrahmanyan Chandrasekhar worked out this limit in 1930, aged 19, on the voyage from India to England. Heavier remnants collapse into neutron stars or black holes. It earned him a share of the 1983 Nobel Prize in Physics.</p>
+                  <p class="fact-source">Source: <a href="https://www.nobelprize.org/prizes/physics/1983/chandrasekhar/facts/" target="_blank" rel="noopener">The Nobel Prize in Physics 1983</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-wd">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">White dwarfs</p>
+                  <p class="fact-stat">Frozen</p>
+                  <h3 class="fact-teaser">Old white dwarfs turn solid as they cool</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">Gaia's measurements of thousands of nearby white dwarfs show a pile-up where their carbon–oxygen cores crystallise. The heat released as they freeze slows their cooling by up to 2 billion years.</p>
+                  <p class="fact-source">Source: <a href="https://doi.org/10.1038/s41586-018-0791-x" target="_blank" rel="noopener">Tremblay et al. 2019, Nature 565, 202</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-wd">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">White dwarfs</p>
+                  <p class="fact-stat">Earth-sized</p>
+                  <h3 class="fact-teaser">Sirius B, the hidden partner of the brightest star in the sky</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">Sirius, the brightest star in the night sky, has a white dwarf companion with about the mass of the Sun (1.02 M<sub>☉</sub>) squeezed into a sphere slightly smaller than Earth.</p>
+                  <p class="fact-source">Source: <a href="https://doi.org/10.3847/1538-4357/aa6af8" target="_blank" rel="noopener">Bond et al. 2017, ApJ 840, 70</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-bin">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">Binary stars</p>
+                  <p class="fact-stat">70%+</p>
+                  <h3 class="fact-teaser">Of massive stars will swap mass with a partner</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">Most massive O-type stars have a close companion, and more than 70% will exchange mass with it during their lives. That reshapes how they evolve, and how they explode.</p>
+                  <p class="fact-source">Source: <a href="https://doi.org/10.1126/science.1223344" target="_blank" rel="noopener">Sana et al. 2012, Science 337, 444</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-bin">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">Binary stars</p>
+                  <p class="fact-stat">2.87 days</p>
+                  <h3 class="fact-teaser">How often Algol, the ‘Demon Star’, fades</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">Algol is an eclipsing binary: every 2.87 days the fainter star passes in front of the brighter one. Oddly, its less massive star is the more evolved one, because it has already handed much of its mass to its partner.</p>
+                  <p class="fact-source">Source: The Algol paradox, a classic case of mass transfer</p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-sun">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">The Sun and stars</p>
+                  <p class="fact-stat">8 min 20 s</p>
+                  <h3 class="fact-teaser">Sunlight's journey to Earth</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">Light leaving the Sun's surface reaches us in about 8 minutes 20 seconds. But the energy it carries spent somewhere between 10,000 and 170,000 years scattering its way out from the core.</p>
+                  <p class="fact-source">Source: NASA</p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-sun">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">The Sun and stars</p>
+                  <p class="fact-stat">4 million tonnes</p>
+                  <h3 class="fact-teaser">The mass the Sun turns into light every second</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">The Sun fuses about 600 million tonnes of hydrogen into helium each second. The 4 million tonnes that go missing leave as energy, exactly as E = mc<sup>2</sup> says.</p>
+                  <p class="fact-source">Source: Worked out from the Sun's luminosity, 3.83 × 10<sup>26</sup> W</p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-sun">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">The Sun and stars</p>
+                  <p class="fact-stat">Past Mars</p>
+                  <h3 class="fact-teaser">Where Betelgeuse would reach if it replaced the Sun</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">The red supergiant on Orion's shoulder is roughly 700 times wider than the Sun. Put in the Sun's place, its surface would stretch beyond the orbit of Mars.</p>
+                  <p class="fact-source">Source: ESO and NASA</p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-bh">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">Neutron stars and black holes</p>
+                  <p class="fact-stat">716 turns/s</p>
+                  <h3 class="fact-teaser">The fastest-spinning neutron star known</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">The pulsar PSR J1748−2446ad, in the globular cluster Terzan 5, spins 716 times every second. A point on its equator moves at tens of thousands of kilometres per second.</p>
+                  <p class="fact-source">Source: <a href="https://doi.org/10.1126/science.1123430" target="_blank" rel="noopener">Hessels et al. 2006, Science 311, 1901</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-bh">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">Neutron stars and black holes</p>
+                  <p class="fact-stat">Billions of tonnes</p>
+                  <h3 class="fact-teaser">The weight of one teaspoon of neutron star</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">A neutron star crushes more than the Sun's mass into a ball about 20 km across. A teaspoon of it would weigh a few billion tonnes, several times the combined mass of every person alive.</p>
+                  <p class="fact-source">Source: Worked out from a typical neutron star density</p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-bh">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">Neutron stars and black holes</p>
+                  <p class="fact-stat">3 M<sub>☉</sub></p>
+                  <h3 class="fact-teaser">Turned into gravitational waves in a split second</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">On 14 September 2015 LIGO caught two black holes, of 36 and 29 solar masses, merging 1.3 billion light-years away. About three Suns' worth of mass left as ripples in spacetime in a fraction of a second.</p>
+                  <p class="fact-source">Source: <a href="https://doi.org/10.1103/PhysRevLett.116.061102" target="_blank" rel="noopener">LIGO and Virgo, Abbott et al. 2016, PRL 116, 061102</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-bh">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">Neutron stars and black holes</p>
+                  <p class="fact-stat">6.5 billion M<sub>☉</sub></p>
+                  <h3 class="fact-teaser">The first black hole ever photographed</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">In 2019 the Event Horizon Telescope, an Earth-sized network of radio dishes, imaged the shadow of the black hole at the heart of the galaxy M87, 55 million light-years away.</p>
+                  <p class="fact-source">Source: <a href="https://doi.org/10.3847/2041-8213/ab0ec7" target="_blank" rel="noopener">Event Horizon Telescope Collaboration 2019, ApJL 875, L1</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-cos">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">The Universe</p>
+                  <p class="fact-stat">1912</p>
+                  <h3 class="fact-teaser">The year a pulsing star became a cosmic ruler</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">Henrietta Swan Leavitt found that brighter Cepheid variables pulse more slowly. That let Edwin Hubble measure the distance to Andromeda in the 1920s and show it is a galaxy far beyond our own.</p>
+                  <p class="fact-source">Source: <a href="https://ui.adsabs.harvard.edu/abs/1912HarCi.173....1L/abstract" target="_blank" rel="noopener">Leavitt &amp; Pickering 1912, Harvard College Observatory Circular 173</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-cos">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">The Universe</p>
+                  <p class="fact-stat">2.725 K</p>
+                  <h3 class="fact-teaser">The temperature of the Big Bang’s afterglow</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">The cosmic microwave background is light released about 380,000 years after the Big Bang, when the Universe first became transparent. Today it fills all of space at just 2.725 degrees above absolute zero.</p>
+                  <p class="fact-source">Source: <a href="https://doi.org/10.1088/0004-637X/707/2/916" target="_blank" rel="noopener">Fixsen 2009, ApJ 707, 916</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-cos">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">The Universe</p>
+                  <p class="fact-stat">75,000 years</p>
+                  <h3 class="fact-teaser">Voyager 1's travel time to the nearest star</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">Proxima Centauri is 4.24 light-years away. At its 17 km/s, Voyager 1, one of the fastest spacecraft ever launched, would need about 75,000 years to cover that distance.</p>
+                  <p class="fact-source">Source: NASA/JPL</p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-cos">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">The Universe</p>
+                  <p class="fact-stat">243 days</p>
+                  <h3 class="fact-teaser">A day on Venus lasts longer than its year</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">Venus turns once every 243 Earth days, and backwards, but goes round the Sun in 225. So a Venusian day is longer than a Venusian year.</p>
+                  <p class="fact-source">Source: NASA</p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-wd">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">White dwarfs</p>
+                  <p class="fact-stat">27%</p>
+                  <h3 class="fact-teaser">Of young white dwarfs are swallowing the remains of planets</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">Hubble found metals in the atmospheres of more than half the young white dwarfs it studied, and 27% must be taking in rocky material right now. The likeliest source is asteroids or planets torn apart by the white dwarf's gravity.</p>
+                  <p class="fact-source">Source: <a href="https://doi.org/10.1051/0004-6361/201423691" target="_blank" rel="noopener">Koester et al. 2014, A&amp;A 566, A34</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-wd">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">White dwarfs</p>
+                  <p class="fact-stat">1.4 days</p>
+                  <h3 class="fact-teaser">How fast a giant planet circles a dead star</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">WD 1856+534 b, found by NASA's TESS, is a Jupiter-sized planet orbiting a white dwarf every 1.4 days. The star is only about as big as Earth, so the planet is roughly seven times wider than the star it circles.</p>
+                  <p class="fact-source">Source: <a href="https://doi.org/10.1038/s41586-020-2713-y" target="_blank" rel="noopener">Vanderburg et al. 2020, Nature 585, 363</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-wd">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">White dwarfs</p>
+                  <p class="fact-stat">0</p>
+                  <h3 class="fact-teaser">Black dwarfs anywhere in the Universe</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">A white dwarf slowly cools and fades. Cooling all the way to a cold, dark ‘black dwarf’ takes far longer than the Universe's 13.8-billion-year age, so not a single one has formed yet.</p>
+                  <p class="fact-source">Source: <a href="https://doi.org/10.1051/0004-6361/201833910" target="_blank" rel="noopener">White dwarf cooling theory; the Universe's age from Planck Collaboration 2020, A&amp;A 641, A6</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-wd">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">White dwarfs</p>
+                  <p class="fact-stat">2011</p>
+                  <h3 class="fact-teaser">The Nobel Prize won with exploding white dwarfs</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">Type Ia supernovae, white dwarfs in binaries blowing themselves apart, are so evenly bright that they work as distance markers. In 1998 they showed that the Universe's expansion is speeding up, which earned the 2011 Nobel Prize in Physics.</p>
+                  <p class="fact-source">Source: <a href="https://www.nobelprize.org/prizes/physics/2011/summary/" target="_blank" rel="noopener">The Nobel Prize in Physics 2011</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-wd">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">White dwarfs</p>
+                  <p class="fact-stat">100,000×</p>
+                  <h3 class="fact-teaser">Gravity on a white dwarf's surface, compared with Earth</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">At the surface of a typical white dwarf, gravity is about 100,000 times Earth's. A 70 kg person standing there would weigh around 7,000 tonnes.</p>
+                  <p class="fact-source">Source: Worked out from a typical white dwarf surface gravity (log g ≈ 8)</p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-bin">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">Binary stars</p>
+                  <p class="fact-stat">Years to hours</p>
+                  <h3 class="fact-teaser">How a shared envelope shrinks a binary star's orbit</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">When a giant star swells and engulfs its companion, both orbit inside one shared envelope of gas. Drag pulls them together until the envelope is thrown off, leaving a white dwarf and its partner circling in hours instead of years. My own research hunts for pairs like these.</p>
+                  <p class="fact-source">Source: <a href="https://doi.org/10.1007/s00159-013-0059-2" target="_blank" rel="noopener">Ivanova et al. 2013, A&amp;A Review 21, 59</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-bin">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">Binary stars</p>
+                  <p class="fact-stat">5.4 minutes</p>
+                  <h3 class="fact-teaser">How often the white dwarfs of HM Cancri circle each other</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">HM Cancri is a pair of white dwarfs orbiting each other every 5.4 minutes, one of the tightest binaries known. They are slowly spiralling together as they give off gravitational waves.</p>
+                  <p class="fact-source">Source: <a href="https://doi.org/10.1088/2041-8205/711/2/L138" target="_blank" rel="noopener">Roelofs et al. 2010, ApJL 711, L138</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-bin">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">Binary stars</p>
+                  <p class="fact-stat">46%</p>
+                  <h3 class="fact-teaser">Of Sun-like stars have at least one companion</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">A careful census of 454 nearby Sun-like stars found that 46% have a companion star or brown dwarf. The other 54% are single, like the Sun.</p>
+                  <p class="fact-source">Source: <a href="https://doi.org/10.1088/0067-0049/190/1/1" target="_blank" rel="noopener">Raghavan et al. 2010, ApJS 190, 1</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-bin">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">Binary stars</p>
+                  <p class="fact-stat">Two suns</p>
+                  <h3 class="fact-teaser">Kepler-16b, a real planet with double sunsets</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">Kepler-16b is a Saturn-sized planet that orbits a pair of stars every 229 days, so it would see two suns set, like Tatooine in Star Wars. It was the first planet found passing in front of two stars.</p>
+                  <p class="fact-source">Source: <a href="https://doi.org/10.1126/science.1210923" target="_blank" rel="noopener">Doyle et al. 2011, Science 333, 1602</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-bh">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">Neutron stars and black holes</p>
+                  <p class="fact-stat">21 M<sub>☉</sub></p>
+                  <h3 class="fact-teaser">Cygnus X-1, the first black hole ever identified</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">Cygnus X-1 was found as a bright X-ray source in 1964 and recognised as a black hole in the early 1970s. It weighs about 21 Suns and pulls gas off a giant blue companion star, 7,200 light-years away.</p>
+                  <p class="fact-source">Source: <a href="https://doi.org/10.1126/science.abb3363" target="_blank" rel="noopener">Miller-Jones et al. 2021, Science 371, 1046</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-bh">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">Neutron stars and black holes</p>
+                  <p class="fact-stat">450 per second</p>
+                  <h3 class="fact-teaser">How fast the X-rays near a black hole can flicker</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">In black hole X-ray binaries the X-rays flicker in near-regular rhythms called quasi-periodic oscillations, some as fast as 450 times a second. They come from gas swirling very close to the black hole, which makes them a probe of gravity at its strongest.</p>
+                  <p class="fact-source">Source: <a href="https://doi.org/10.1146/annurev.astro.44.051905.092532" target="_blank" rel="noopener">Remillard &amp; McClintock 2006, ARA&amp;A 44, 49</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-bh">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">Neutron stars and black holes</p>
+                  <p class="fact-stat">2.35 M<sub>☉</sub></p>
+                  <h3 class="fact-teaser">The heaviest well-measured neutron star</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">PSR J0952−0607 packs about 2.35 Suns into a ball the size of a city and spins 707 times a second. It is a ‘black widow’ pulsar, slowly evaporating the small companion star that fed it.</p>
+                  <p class="fact-source">Source: <a href="https://doi.org/10.3847/2041-8213/ac8007" target="_blank" rel="noopener">Romani et al. 2022, ApJL 934, L17</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-bh">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">Neutron stars and black holes</p>
+                  <p class="fact-stat">2017</p>
+                  <h3 class="fact-teaser">The year colliding neutron stars were both heard and seen</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">On 17 August 2017 LIGO and Virgo caught gravitational waves from two neutron stars merging 130 million light-years away, and telescopes worldwide then watched the explosion. Its glow carried the signature of freshly made heavy elements, the family that includes gold and platinum.</p>
+                  <p class="fact-source">Source: <a href="https://doi.org/10.1103/PhysRevLett.119.161101" target="_blank" rel="noopener">LIGO and Virgo, Abbott et al. 2017, PRL 119, 161101</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-bh">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">Neutron stars and black holes</p>
+                  <p class="fact-stat">4 million M<sub>☉</sub></p>
+                  <h3 class="fact-teaser">The black hole at the centre of our galaxy</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">Sagittarius A*, 26,000 light-years away, has about 4 million times the Sun's mass. Decades of tracking stars racing around it proved it is a black hole, and earned Reinhard Genzel and Andrea Ghez a share of the 2020 Nobel Prize in Physics.</p>
+                  <p class="fact-source">Source: <a href="https://www.nobelprize.org/prizes/physics/2020/summary/" target="_blank" rel="noopener">The Nobel Prize in Physics 2020</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-bh">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">Neutron stars and black holes</p>
+                  <p class="fact-stat">10<sup>15</sup> gauss</p>
+                  <h3 class="fact-teaser">The magnetic field of a magnetar</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">Magnetars are neutron stars with the strongest magnetic fields known, up to about 10<sup>15</sup> gauss, some thousand trillion times Earth's. The field is so strong that it cracks the star's crust, setting off bursts of X-rays and gamma rays.</p>
+                  <p class="fact-source">Source: <a href="https://doi.org/10.1146/annurev-astro-081915-023329" target="_blank" rel="noopener">Kaspi &amp; Beloborodov 2017, ARA&amp;A 55, 261</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-bh">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">Neutron stars and black holes</p>
+                  <p class="fact-stat">1967</p>
+                  <h3 class="fact-teaser">The year a PhD student found the first pulsar</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">Jocelyn Bell Burnell, a PhD student at Cambridge, spotted a radio signal repeating every 1.34 seconds. Jokingly labelled LGM-1, for ‘little green men’, it turned out to be a spinning neutron star.</p>
+                  <p class="fact-source">Source: <a href="https://doi.org/10.1038/217709a0" target="_blank" rel="noopener">Hewish et al. 1968, Nature 217, 709</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-sun">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">The Sun and stars</p>
+                  <p class="fact-stat">75%</p>
+                  <h3 class="fact-teaser">Of the stars near the Sun are red dwarfs</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">Small, cool red dwarfs make up 284 of the 378 stars within 33 light-years of us. They are so dim that almost none of them can be seen without a telescope.</p>
+                  <p class="fact-source">Source: <a href="http://www.recons.org/census.posted.htm" target="_blank" rel="noopener">RECONS census of stars within 10 parsecs</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-sun">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">The Sun and stars</p>
+                  <p class="fact-stat">15 million °C</p>
+                  <h3 class="fact-teaser">The temperature at the Sun's core</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">The Sun's core is about 15 million °C, hot and dense enough to fuse hydrogen into helium. Its visible surface, by comparison, is a mild 5,500 °C.</p>
+                  <p class="fact-source">Source: NASA</p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-sun">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">The Sun and stars</p>
+                  <p class="fact-stat">65 billion</p>
+                  <h3 class="fact-teaser">Solar neutrinos passing through your thumbnail every second</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">The Sun's core also releases ghostly particles called neutrinos. About 65 billion of them pass through every square centimetre of you each second, day and night, because they fly straight through the Earth.</p>
+                  <p class="fact-source">Source: The standard solar model</p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-cos">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">The Universe</p>
+                  <p class="fact-stat">2.5 million years</p>
+                  <h3 class="fact-teaser">The age of the light you see from the Andromeda Galaxy</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">Andromeda is about 2.5 million light-years away, so the light reaching you tonight left it around the time the first members of our genus, Homo, appeared on Earth. It is the most distant thing most people can see with the naked eye.</p>
+                  <p class="fact-source">Source: NASA</p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-cos">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">The Universe</p>
+                  <p class="fact-stat">85%</p>
+                  <h3 class="fact-teaser">Of the matter in the Universe is dark matter</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">Everything we can see, from stars and gas to planets and people, makes up only about 15% of the Universe's matter. The rest is dark matter, which gives off no light and is known only through its gravity.</p>
+                  <p class="fact-source">Source: <a href="https://doi.org/10.1051/0004-6361/201833910" target="_blank" rel="noopener">Planck Collaboration 2020, A&amp;A 641, A6</a></p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+            <article class="fact fact-cos">
+              <div class="fact-inner">
+                <div class="fact-face fact-front">
+                  <p class="fact-topic">The Universe</p>
+                  <p class="fact-stat">90%</p>
+                  <h3 class="fact-teaser">Of your body's mass was made inside stars</h3>
+                  <button class="fact-btn" type="button" aria-expanded="false">Tap to find out<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+                <div class="fact-face fact-back">
+                  <p class="fact-answer">The oxygen, carbon, nitrogen and calcium in your body were forged inside stars and scattered when they died. Only the hydrogen, about a tenth of your weight, dates back to the Big Bang.</p>
+                  <p class="fact-source">Source: Worked out from the body's make-up by mass</p>
+                  <button class="fact-btn fact-btn-back" type="button">Flip back<svg class="icon" aria-hidden="true"><use href="#i-flip"/></svg></button>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="news-col" role="region" aria-labelledby="news-h">
+          <div class="facts-head">
+            <div>
+              <p class="facts-eyebrow news-eyebrow">What's new in research</p>
+              <h2 id="news-h">Fresh from arXiv</h2>
+            </div>
+            <a class="btn btn-small" href="https://arxiv.org/list/astro-ph/new" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-doc"/></svg>All new papers</a>
+          </div>
+          <p class="section-intro">Three new astrophysics papers, explained in plain words. <span class="news-updated" id="news-updated">Updated every morning.</span></p>
+          <div class="news-list" id="news-list">
+            <div class="news-card news-skeleton" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+            <div class="news-card news-skeleton" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+            <div class="news-card news-skeleton" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+          </div>
+          <noscript><p class="news-credit"><a href="https://arxiv.org/list/astro-ph/new">See today's new astrophysics papers on arXiv</a></p></noscript>
+          <p class="news-credit" id="news-credit">Summaries are written by Claude, an AI model, from each paper's abstract, so they leave out detail: the paper has the full story. Thank you to arXiv for use of its open access interoperability.</p>
+        </div>
       </div>
     </section>
 
@@ -523,9 +1314,10 @@
         <div id="skills">
           <h2>Tools</h2>
           <div class="skills">
-            <div class="skill-group"><h3>Programming and writing</h3><ul class="chips"><li class="chip"><span class="chip-logo logo-python" aria-hidden="true"></span>Python</li><li class="chip"><span class="chip-logo logo-gnubash" aria-hidden="true"></span>Bash</li><li class="chip"><span class="chip-mono" aria-hidden="true">SQL</span>SQL</li><li class="chip chip-latex"><span class="latex" role="img" aria-label="LaTeX">L<span class="latex-a">a</span>T<span class="latex-e">e</span>X</span></li></ul></div>
+            <div class="skill-group"><h3>Programming</h3><ul class="chips"><li class="chip"><span class="chip-logo logo-python" aria-hidden="true"></span>Python</li><li class="chip"><span class="chip-logo logo-gnubash" aria-hidden="true"></span>Bash</li><li class="chip"><span class="chip-mono" aria-hidden="true">SQL</span>SQL</li></ul></div>
             <div class="skill-group"><h3>Astronomy software</h3><ul class="chips"><li class="chip"><span class="chip-mono" aria-hidden="true">Vo</span>VOSA</li><li class="chip"><span class="chip-mono" aria-hidden="true">He</span>HEASoft (XSPEC)</li><li class="chip"><span class="chip-mono" aria-hidden="true">Ca</span>CASA</li><li class="chip"><span class="chip-mono" aria-hidden="true">Ct</span>CARTA</li><li class="chip"><span class="chip-mono" aria-hidden="true">Ci</span>CIAO</li><li class="chip"><span class="chip-mono" aria-hidden="true">Me</span>MESA</li><li class="chip"><span class="chip-mono" aria-hidden="true">D9</span>SAOImage DS9</li></ul></div>
             <div class="skill-group"><h3>Python libraries</h3><ul class="chips"><li class="chip"><img class="chip-img" src="assets/img/logos/astropy.svg" alt="" width="18" height="18">Astropy</li><li class="chip"><span class="chip-mono" aria-hidden="true">ga</span>galpy</li><li class="chip"><span class="chip-mono" aria-hidden="true">mw</span>mwdust</li><li class="chip"><span class="chip-mono" aria-hidden="true">Bp</span>Bagpipes</li><li class="chip"><span class="chip-mono" aria-hidden="true">Bi</span>Bilby</li><li class="chip"><span class="chip-mono" aria-hidden="true">GW</span>GWpy</li><li class="chip"><span class="chip-mono" aria-hidden="true">Ei</span>EinsteinPy</li><li class="chip"><span class="chip-logo logo-scikitlearn" aria-hidden="true"></span>scikit-learn</li><li class="chip"><span class="chip-logo logo-opencv" aria-hidden="true"></span>OpenCV</li></ul></div>
+            <div class="skill-group"><h3>Writing</h3><ul class="chips"><li class="chip chip-latex"><span class="latex" role="img" aria-label="LaTeX">L<span class="latex-a">a</span>T<span class="latex-e">e</span>X</span></li></ul></div>
           </div>
         </div>
       </div>
@@ -571,6 +1363,8 @@
   <script src="assets/js/vendor/lenis.min.js?v=20261014c" defer></script>
   <script src="assets/js/sky.js?v=20261014c" defer></script>
   <script src="assets/js/orbits.js?v=20261014c" defer></script>
-  <script src="assets/js/site.js?v=20261104a" defer></script>
+  <script src="assets/js/facts.js?v=20261014c" defer></script>
+  <script src="assets/js/news.js?v=20261014c" defer></script>
+  <script src="assets/js/site.js?v=20261014c" defer></script>
 </body>
 </html>
