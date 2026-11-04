@@ -67,12 +67,14 @@
         // Past the sky, content slides under the header: soften that edge (see .site-header::before)
         var hero = document.querySelector('.hero');
         siteHeader.classList.toggle('is-scrolled', !!hero && y > hero.offsetHeight - siteHeader.offsetHeight);
+        if (Math.abs(dy) < 6) return;                     // ignore tiny jitters
         if (toTop) {
-          var showTop = y > window.innerHeight * 1.5;
+          // Only while scrolling back up (or at the very end), so it never sits on top of text being read
+          var nearEnd = window.innerHeight + y >= document.documentElement.scrollHeight - 80;
+          var showTop = y > window.innerHeight * 1.5 && (dy < 0 || nearEnd);
           toTop.classList.toggle('show', showTop);
           toTop.tabIndex = showTop ? 0 : -1;
         }
-        if (Math.abs(dy) < 6) return;                     // ignore tiny jitters
         var menuOpen = document.getElementById('nav-links') && document.getElementById('nav-links').classList.contains('open');
         siteHeader.classList.toggle('is-compact', !menuOpen && y > 140 && dy > 0);
         lastY = y;
@@ -107,6 +109,7 @@
   ---------------------------------------------------------------- */
   var navAnchors = Array.prototype.slice.call(document.querySelectorAll('.nav-links a[href^="#"]'));
   var navSections = navAnchors.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+  var allSections = Array.prototype.slice.call(document.querySelectorAll('main > section[id]'));
   var navTicking = false;
   var where = document.querySelector('.nav-where'), whereText = where && where.querySelector('span'), whereNow = null;
   function setWhere(text) {
@@ -151,15 +154,19 @@
     navTicking = false;
     var line = window.scrollY + window.innerHeight * 0.4;
     var atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
-    var idx = -1;
-    navSections.forEach(function (sec, i) { if (sec && sec.offsetTop <= line) idx = i; });
-    if (atBottom) idx = navSections.length - 1;
+    // Find the section being read among all of them, so one that isn't in the menu (Projects,
+    // Blog, Education) lights nothing rather than the menu item above it
+    var cur = null;
+    allSections.forEach(function (sec) { if (sec.offsetTop <= line) cur = sec; });
+    if (atBottom && allSections.length) cur = allSections[allSections.length - 1];
+    var idx = navSections.indexOf(cur);
     navAnchors.forEach(function (a, i) {
       if (i === idx) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
     });
     if (lensLock && navAnchors[idx] === lensLock) { lensLock = null; clearTimeout(lensLockTimer); }   // arrived
     placeLens(idx >= 0 ? navAnchors[idx] : null);
-    setWhere(idx >= 0 ? navAnchors[idx].textContent : '');
+    var curTitle = cur && cur.id !== 'home' && cur.querySelector('h2');
+    setWhere(idx >= 0 ? navAnchors[idx].textContent : (curTitle ? curTitle.textContent.trim() : ''));
   }
 
   var wideNav = window.matchMedia('(min-width: 1200px)');
