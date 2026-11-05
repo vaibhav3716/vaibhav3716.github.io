@@ -1,41 +1,41 @@
 {
-  "updated": "2026-11-04T07:54:22Z",
-  "newest": "2611.05367",
+  "updated": "2026-11-05T08:20:44Z",
+  "newest": "2611.06916",
   "plain": false,
   "summarised_by": null,
   "papers": [
     {
-      "id": "2611.05367",
-      "headline": "SBi3PCF: cosmology with Dark Energy Survey Year 3 cosmic shear",
-      "summary": "We present the first cosmic shear data analysis of the integrated 3-point correlation function (i3PCF), a higher-order weak lensing statistic, and the first simulation-based inference (SBI) analysis of a three-point cosmic shear correlation function on survey data.",
-      "topic": "Cosmology",
-      "title": "SBi3PCF: cosmology with Dark Energy Survey Year 3 cosmic shear",
-      "authors": "D. Gebauer et al.",
-      "category": "astro-ph.CO",
-      "published": "2026-11-03",
-      "url": "https://arxiv.org/abs/2611.05367"
-    },
-    {
-      "id": "2611.05353",
-      "headline": "Beyond just a torus? Re-contextualising the AGN type paradigm using data-driven host galaxy quenching histories",
-      "summary": "The orientation of a dusty torus within a unified model explains the presence (Type-1) or absence (Type-2) of broad emission lines in Active Galactic Nuclei (AGN) spectra.",
+      "id": "2611.06916",
+      "headline": "ReveaLLAGN 3: Revealing the Infrared Spectral Energy Distributions of Low Luminosity AGN",
+      "summary": "The spectral energy distributions of active galactic nuclei (AGN) provide valuable information on the emission mechanisms taking place in their inner regions.",
       "topic": "Galaxies",
-      "title": "Beyond just a torus? Re-contextualising the AGN type paradigm using data-driven host galaxy quenching histories",
-      "authors": "S. D. Krishna et al.",
+      "title": "ReveaLLAGN 3: Revealing the Infrared Spectral Energy Distributions of Low Luminosity AGN",
+      "authors": "D. Ohlson et al.",
       "category": "astro-ph.GA",
-      "published": "2026-11-03",
-      "url": "https://arxiv.org/abs/2611.05353"
+      "published": "2026-11-04",
+      "url": "https://arxiv.org/abs/2611.06916"
     },
     {
-      "id": "2611.05328",
-      "headline": "SN 2019qem: decades of extreme mass loss before the explosion of a luminous, long-lived Type IIn supernova",
-      "summary": "We present the luminous, long-lived Type IIn SN 2019qem and use it to reconstruct how much mass its progenitor lost and when. We combine host-subtracted optical and mid-infrared photometry and 26 optical spectra from -22 to +699 d.",
-      "topic": "Black holes",
-      "title": "SN 2019qem: decades of extreme mass loss before the explosion of a luminous, long-lived Type IIn supernova",
-      "authors": "J. Majumdar et al.",
-      "category": "astro-ph.HE",
-      "published": "2026-11-03",
-      "url": "https://arxiv.org/abs/2611.05328"
+      "id": "2611.06915",
+      "headline": "Preparing for the Gaia DR4 Epochalypse: Simulated Epoch Astrometry for Substellar Companion Orbit-Modeling Benchmarks",
+      "summary": "Gaia's fourth data release (DR4) will provide epoch astrometry for billions of sources, enabling the detection of potentially tens of thousands of substellar companions.",
+      "topic": "Planets",
+      "title": "Preparing for the Gaia DR4 Epochalypse: Simulated Epoch Astrometry for Substellar Companion Orbit-Modeling Benchmarks",
+      "authors": "D. A. Yahalomi et al.",
+      "category": "astro-ph.EP",
+      "published": "2026-11-04",
+      "url": "https://arxiv.org/abs/2611.06915"
+    },
+    {
+      "id": "2611.06873",
+      "headline": "Tracking turbulence for wind-driven halo removal using MagAO-X pyramid wavefront sensor images",
+      "summary": "The wind-driven halo (WDH) is a persistent, low spatial frequency noise artifact that arises due to the servo-lag error inherent to all adaptive optics (AO) instruments.",
+      "topic": "Instruments",
+      "title": "Tracking turbulence for wind-driven halo removal using MagAO-X pyramid wavefront sensor images",
+      "authors": "J. K. Kueny et al.",
+      "category": "astro-ph.IM",
+      "published": "2026-11-04",
+      "url": "https://arxiv.org/abs/2611.06873"
     }
   ]
 }
