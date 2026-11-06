@@ -1,41 +1,41 @@
 {
-  "updated": "2026-11-05T08:20:44Z",
-  "newest": "2611.06916",
+  "updated": "2026-11-06T08:23:50Z",
+  "newest": "2611.08489",
   "plain": false,
   "summarised_by": null,
   "papers": [
     {
-      "id": "2611.06916",
-      "headline": "ReveaLLAGN 3: Revealing the Infrared Spectral Energy Distributions of Low Luminosity AGN",
-      "summary": "The spectral energy distributions of active galactic nuclei (AGN) provide valuable information on the emission mechanisms taking place in their inner regions.",
-      "topic": "Galaxies",
-      "title": "ReveaLLAGN 3: Revealing the Infrared Spectral Energy Distributions of Low Luminosity AGN",
-      "authors": "D. Ohlson et al.",
-      "category": "astro-ph.GA",
-      "published": "2026-11-04",
-      "url": "https://arxiv.org/abs/2611.06916"
-    },
-    {
-      "id": "2611.06915",
-      "headline": "Preparing for the Gaia DR4 Epochalypse: Simulated Epoch Astrometry for Substellar Companion Orbit-Modeling Benchmarks",
-      "summary": "Gaia's fourth data release (DR4) will provide epoch astrometry for billions of sources, enabling the detection of potentially tens of thousands of substellar companions.",
+      "id": "2611.08489",
+      "headline": "BeAR: The Bern Atmospheric Retrieval code - A GPU-accelerated framework for low-resolution, high-resolution, and joint retrievals of exoplanet atmospheres",
+      "summary": "We present BeAR, the Bern Atmospheric Retrieval code and successor of Helios-r, and its new high-resolution cross-correlation framework for emission and transmission spectra.",
       "topic": "Planets",
-      "title": "Preparing for the Gaia DR4 Epochalypse: Simulated Epoch Astrometry for Substellar Companion Orbit-Modeling Benchmarks",
-      "authors": "D. A. Yahalomi et al.",
+      "title": "BeAR: The Bern Atmospheric Retrieval code - A GPU-accelerated framework for low-resolution, high-resolution, and joint retrievals of exoplanet atmospheres",
+      "authors": "E. Wang et al.",
       "category": "astro-ph.EP",
-      "published": "2026-11-04",
-      "url": "https://arxiv.org/abs/2611.06915"
+      "published": "2026-11-05",
+      "url": "https://arxiv.org/abs/2611.08489"
     },
     {
-      "id": "2611.06873",
-      "headline": "Tracking turbulence for wind-driven halo removal using MagAO-X pyramid wavefront sensor images",
-      "summary": "The wind-driven halo (WDH) is a persistent, low spatial frequency noise artifact that arises due to the servo-lag error inherent to all adaptive optics (AO) instruments.",
+      "id": "2611.08481",
+      "headline": "Joint analysis of the Macquart relation and the dispersion measure power spectrum: cross-covariance and redshift self-calibration",
+      "summary": "The dispersion measures (DMs) of fast radio bursts (FRBs) trace ionised baryons along the line of sight, probing baryonic feedback.",
+      "topic": "Cosmology",
+      "title": "Joint analysis of the Macquart relation and the dispersion measure power spectrum: cross-covariance and redshift self-calibration",
+      "authors": "A. Wayland, R. Reischke",
+      "category": "astro-ph.CO",
+      "published": "2026-11-05",
+      "url": "https://arxiv.org/abs/2611.08481"
+    },
+    {
+      "id": "2611.08410",
+      "headline": "Tensor Networks for Block Adaptive Thermal Radiation Transport",
+      "summary": "Thermal radiation transport (TRT) is computationally challenging because the photon specific intensity depends simultaneously on space, angle, and frequency, producing a high-dimensional state space whose cost grows rapidly with resolution.",
       "topic": "Instruments",
-      "title": "Tracking turbulence for wind-driven halo removal using MagAO-X pyramid wavefront sensor images",
-      "authors": "J. K. Kueny et al.",
+      "title": "Tensor Networks for Block Adaptive Thermal Radiation Transport",
+      "authors": "A. A. Gorodetsky et al.",
       "category": "astro-ph.IM",
-      "published": "2026-11-04",
-      "url": "https://arxiv.org/abs/2611.06873"
+      "published": "2026-11-05",
+      "url": "https://arxiv.org/abs/2611.08410"
     }
   ]
 }
