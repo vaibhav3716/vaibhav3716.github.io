@@ -1,41 +1,41 @@
 {
-  "updated": "2026-11-06T08:23:50Z",
-  "newest": "2611.08489",
+  "updated": "2026-11-09T08:33:42Z",
+  "newest": "2611.09884",
   "plain": false,
   "summarised_by": null,
   "papers": [
     {
-      "id": "2611.08489",
-      "headline": "BeAR: The Bern Atmospheric Retrieval code - A GPU-accelerated framework for low-resolution, high-resolution, and joint retrievals of exoplanet atmospheres",
-      "summary": "We present BeAR, the Bern Atmospheric Retrieval code and successor of Helios-r, and its new high-resolution cross-correlation framework for emission and transmission spectra.",
+      "id": "2611.09884",
+      "headline": "VLT and Keck recovery and characterisation of 2025 SC₇₉: linking 'Ayló'chaxnim and Atira asteroids",
+      "summary": "Asteroids near the boundary between the Atira and 'Ayló'chaxnim classes can trace dynamical links between the two populations, but their small solar elongations make recovery and physical characterisation difficult.",
       "topic": "Planets",
-      "title": "BeAR: The Bern Atmospheric Retrieval code - A GPU-accelerated framework for low-resolution, high-resolution, and joint retrievals of exoplanet atmospheres",
-      "authors": "E. Wang et al.",
+      "title": "VLT and Keck recovery and characterisation of 2025 SC₇₉: linking 'Ayló'chaxnim and Atira asteroids",
+      "authors": "B. T. Bolin et al.",
       "category": "astro-ph.EP",
-      "published": "2026-11-05",
-      "url": "https://arxiv.org/abs/2611.08489"
+      "published": "2026-11-06",
+      "url": "https://arxiv.org/abs/2611.09884"
     },
     {
-      "id": "2611.08481",
-      "headline": "Joint analysis of the Macquart relation and the dispersion measure power spectrum: cross-covariance and redshift self-calibration",
-      "summary": "The dispersion measures (DMs) of fast radio bursts (FRBs) trace ionised baryons along the line of sight, probing baryonic feedback.",
+      "id": "2611.09875",
+      "headline": "SN 2026ahvu in NGC 1433 May Be a Prompt Type Ia Supernova with a Delay Time Under 100 Myr",
+      "summary": "SN 2026ahvu is a Type Ia supernova (SN) that occurred in the nearby galaxy NGC 1433. Using archival Hubble and JWST imaging from the PHANGS survey, we show that the SN lies within 0.19'' and 0.26'' of two UV-bright star clusters.",
+      "topic": "Galaxies",
+      "title": "SN 2026ahvu in NGC 1433 May Be a Prompt Type Ia Supernova with a Delay Time Under 100 Myr",
+      "authors": "S. K. Sarbadhicary et al.",
+      "category": "astro-ph.GA",
+      "published": "2026-11-06",
+      "url": "https://arxiv.org/abs/2611.09875"
+    },
+    {
+      "id": "2611.09856",
+      "headline": "Lessons from double-plane lenses for galaxy profiles, the Hubble tension, and the mass-sheet degeneracy",
+      "summary": "Double-plane lenses, like single-plane lenses, are subject to the mass-sheet degeneracy, a fundamental limit to our knowledge of the deflector mass profiles from lensing.",
       "topic": "Cosmology",
-      "title": "Joint analysis of the Macquart relation and the dispersion measure power spectrum: cross-covariance and redshift self-calibration",
-      "authors": "A. Wayland, R. Reischke",
+      "title": "Lessons from double-plane lenses for galaxy profiles, the Hubble tension, and the mass-sheet degeneracy",
+      "authors": "D. P. Johnson et al.",
       "category": "astro-ph.CO",
-      "published": "2026-11-05",
-      "url": "https://arxiv.org/abs/2611.08481"
-    },
-    {
-      "id": "2611.08410",
-      "headline": "Tensor Networks for Block Adaptive Thermal Radiation Transport",
-      "summary": "Thermal radiation transport (TRT) is computationally challenging because the photon specific intensity depends simultaneously on space, angle, and frequency, producing a high-dimensional state space whose cost grows rapidly with resolution.",
-      "topic": "Instruments",
-      "title": "Tensor Networks for Block Adaptive Thermal Radiation Transport",
-      "authors": "A. A. Gorodetsky et al.",
-      "category": "astro-ph.IM",
-      "published": "2026-11-05",
-      "url": "https://arxiv.org/abs/2611.08410"
+      "published": "2026-11-06",
+      "url": "https://arxiv.org/abs/2611.09856"
     }
   ]
 }
