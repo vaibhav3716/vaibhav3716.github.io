@@ -1,41 +1,41 @@
 {
-  "updated": "2026-11-09T08:33:42Z",
-  "newest": "2611.09884",
+  "updated": "2026-11-10T08:45:09Z",
+  "newest": "2611.12881",
   "plain": false,
   "summarised_by": null,
   "papers": [
     {
-      "id": "2611.09884",
-      "headline": "VLT and Keck recovery and characterisation of 2025 SC₇₉: linking 'Ayló'chaxnim and Atira asteroids",
-      "summary": "Asteroids near the boundary between the Atira and 'Ayló'chaxnim classes can trace dynamical links between the two populations, but their small solar elongations make recovery and physical characterisation difficult.",
+      "id": "2611.12881",
+      "headline": "The Brown Dwarf Desert is a Mass-Ratio Desert: Astrometric Demographics of 63,254 Stars",
+      "summary": "Brown dwarfs are rare as close companions to stars compared to planets and stellar companions, a paucity known as the brown dwarf desert.",
       "topic": "Planets",
-      "title": "VLT and Keck recovery and characterisation of 2025 SC₇₉: linking 'Ayló'chaxnim and Atira asteroids",
-      "authors": "B. T. Bolin et al.",
+      "title": "The Brown Dwarf Desert is a Mass-Ratio Desert: Astrometric Demographics of 63,254 Stars",
+      "authors": "W. Thompson et al.",
       "category": "astro-ph.EP",
-      "published": "2026-11-06",
-      "url": "https://arxiv.org/abs/2611.09884"
+      "published": "2026-11-09",
+      "url": "https://arxiv.org/abs/2611.12881"
     },
     {
-      "id": "2611.09875",
-      "headline": "SN 2026ahvu in NGC 1433 May Be a Prompt Type Ia Supernova with a Delay Time Under 100 Myr",
-      "summary": "SN 2026ahvu is a Type Ia supernova (SN) that occurred in the nearby galaxy NGC 1433. Using archival Hubble and JWST imaging from the PHANGS survey, we show that the SN lies within 0.19'' and 0.26'' of two UV-bright star clusters.",
-      "topic": "Galaxies",
-      "title": "SN 2026ahvu in NGC 1433 May Be a Prompt Type Ia Supernova with a Delay Time Under 100 Myr",
-      "authors": "S. K. Sarbadhicary et al.",
-      "category": "astro-ph.GA",
-      "published": "2026-11-06",
-      "url": "https://arxiv.org/abs/2611.09875"
-    },
-    {
-      "id": "2611.09856",
-      "headline": "Lessons from double-plane lenses for galaxy profiles, the Hubble tension, and the mass-sheet degeneracy",
-      "summary": "Double-plane lenses, like single-plane lenses, are subject to the mass-sheet degeneracy, a fundamental limit to our knowledge of the deflector mass profiles from lensing.",
+      "id": "2611.12861",
+      "headline": "Little Red Dots from Primordial Black Holes: Non-Gaussianity and Accretion Evade μ-Distortion Constraints",
+      "summary": "Recent JWST observations of \"Little Red Dots\" (LRDs) at z ≳ 4 suggest the existence of early supermassive black holes (SMBHs) with masses ≳ 10⁶ M☉.",
       "topic": "Cosmology",
-      "title": "Lessons from double-plane lenses for galaxy profiles, the Hubble tension, and the mass-sheet degeneracy",
-      "authors": "D. P. Johnson et al.",
+      "title": "Little Red Dots from Primordial Black Holes: Non-Gaussianity and Accretion Evade μ-Distortion Constraints",
+      "authors": "S. Balaji et al.",
       "category": "astro-ph.CO",
-      "published": "2026-11-06",
-      "url": "https://arxiv.org/abs/2611.09856"
+      "published": "2026-11-09",
+      "url": "https://arxiv.org/abs/2611.12861"
+    },
+    {
+      "id": "2611.12860",
+      "headline": "Search for a Dispersion Measure Excess Toward Nearby Galaxy Halos Using Fast Radio Bursts from the Second CHIME/FRB Baseband Catalog",
+      "summary": "Fast radio bursts (FRBs) probe foreground ionized baryons via their dispersion measures (DM).",
+      "topic": "Galaxies",
+      "title": "Search for a Dispersion Measure Excess Toward Nearby Galaxy Halos Using Fast Radio Bursts from the Second CHIME/FRB Baseband Catalog",
+      "authors": "A. Khadir et al.",
+      "category": "astro-ph.GA",
+      "published": "2026-11-09",
+      "url": "https://arxiv.org/abs/2611.12860"
     }
   ]
 }
