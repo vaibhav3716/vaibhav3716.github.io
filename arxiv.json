@@ -1,41 +1,41 @@
 {
-  "updated": "2026-11-10T08:45:09Z",
-  "newest": "2611.12881",
+  "updated": "2026-11-11T08:11:55Z",
+  "newest": "2611.14479",
   "plain": false,
   "summarised_by": null,
   "papers": [
     {
-      "id": "2611.12881",
-      "headline": "The Brown Dwarf Desert is a Mass-Ratio Desert: Astrometric Demographics of 63,254 Stars",
-      "summary": "Brown dwarfs are rare as close companions to stars compared to planets and stellar companions, a paucity known as the brown dwarf desert.",
-      "topic": "Planets",
-      "title": "The Brown Dwarf Desert is a Mass-Ratio Desert: Astrometric Demographics of 63,254 Stars",
-      "authors": "W. Thompson et al.",
-      "category": "astro-ph.EP",
-      "published": "2026-11-09",
-      "url": "https://arxiv.org/abs/2611.12881"
+      "id": "2611.14479",
+      "headline": "Learning a model of non-stationary nuisances with non-local correlations for object detection",
+      "summary": "We tackle the problem of detecting faint objects in multivariate data corrupted by a strong and spatially correlated nuisance component in the low-sample regime.",
+      "topic": "Instruments",
+      "title": "Learning a model of non-stationary nuisances with non-local correlations for object detection",
+      "authors": "O. Flasseur et al.",
+      "category": "astro-ph.IM",
+      "published": "2026-11-10",
+      "url": "https://arxiv.org/abs/2611.14479"
     },
     {
-      "id": "2611.12861",
-      "headline": "Little Red Dots from Primordial Black Holes: Non-Gaussianity and Accretion Evade μ-Distortion Constraints",
-      "summary": "Recent JWST observations of \"Little Red Dots\" (LRDs) at z ≳ 4 suggest the existence of early supermassive black holes (SMBHs) with masses ≳ 10⁶ M☉.",
-      "topic": "Cosmology",
-      "title": "Little Red Dots from Primordial Black Holes: Non-Gaussianity and Accretion Evade μ-Distortion Constraints",
-      "authors": "S. Balaji et al.",
-      "category": "astro-ph.CO",
-      "published": "2026-11-09",
-      "url": "https://arxiv.org/abs/2611.12861"
-    },
-    {
-      "id": "2611.12860",
-      "headline": "Search for a Dispersion Measure Excess Toward Nearby Galaxy Halos Using Fast Radio Bursts from the Second CHIME/FRB Baseband Catalog",
-      "summary": "Fast radio bursts (FRBs) probe foreground ionized baryons via their dispersion measures (DM).",
+      "id": "2611.14472",
+      "headline": "r-Process Abundance Variations in Globular Clusters as Fossils of Turbulent Mixing",
+      "summary": "Several metal-poor Galactic globular clusters exhibit substantial star-to-star r-process abundance variations at nearly fixed [Fe/H], with the ensemble suggesting smaller variations toward increasing metallicity.",
       "topic": "Galaxies",
-      "title": "Search for a Dispersion Measure Excess Toward Nearby Galaxy Halos Using Fast Radio Bursts from the Second CHIME/FRB Baseband Catalog",
-      "authors": "A. Khadir et al.",
+      "title": "r-Process Abundance Variations in Globular Clusters as Fossils of Turbulent Mixing",
+      "authors": "L. Kenoly et al.",
       "category": "astro-ph.GA",
-      "published": "2026-11-09",
-      "url": "https://arxiv.org/abs/2611.12860"
+      "published": "2026-11-10",
+      "url": "https://arxiv.org/abs/2611.14472"
+    },
+    {
+      "id": "2611.14456",
+      "headline": "Connecting field-level and n-point function measurements of galaxy bias",
+      "summary": "Precise measurements of galaxy bias parameters are essential for extracting cosmological information from galaxy surveys.",
+      "topic": "Cosmology",
+      "title": "Connecting field-level and n-point function measurements of galaxy bias",
+      "authors": "H. Huang, H. Rubira, F. Schmidt",
+      "category": "astro-ph.CO",
+      "published": "2026-11-10",
+      "url": "https://arxiv.org/abs/2611.14456"
     }
   ]
 }
