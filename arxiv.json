@@ -1,41 +1,41 @@
 {
-  "updated": "2026-11-11T08:11:55Z",
-  "newest": "2611.14479",
+  "updated": "2026-11-13T08:37:42Z",
+  "newest": "2611.17337",
   "plain": false,
   "summarised_by": null,
   "papers": [
     {
-      "id": "2611.14479",
-      "headline": "Learning a model of non-stationary nuisances with non-local correlations for object detection",
-      "summary": "We tackle the problem of detecting faint objects in multivariate data corrupted by a strong and spatially correlated nuisance component in the low-sample regime.",
-      "topic": "Instruments",
-      "title": "Learning a model of non-stationary nuisances with non-local correlations for object detection",
-      "authors": "O. Flasseur et al.",
-      "category": "astro-ph.IM",
-      "published": "2026-11-10",
-      "url": "https://arxiv.org/abs/2611.14479"
-    },
-    {
-      "id": "2611.14472",
-      "headline": "r-Process Abundance Variations in Globular Clusters as Fossils of Turbulent Mixing",
-      "summary": "Several metal-poor Galactic globular clusters exhibit substantial star-to-star r-process abundance variations at nearly fixed [Fe/H], with the ensemble suggesting smaller variations toward increasing metallicity.",
+      "id": "2611.17337",
+      "headline": "The full Gaia colour-magnitude diagram with white dwarfs reveals a declining Milky Way star formation history",
+      "summary": "White dwarfs (WDs) provide a fossil record of the Milky Way star formation history (SFH) through the combined effects of stellar evolution and cooling.",
       "topic": "Galaxies",
-      "title": "r-Process Abundance Variations in Globular Clusters as Fossils of Turbulent Mixing",
-      "authors": "L. Kenoly et al.",
+      "title": "The full Gaia colour-magnitude diagram with white dwarfs reveals a declining Milky Way star formation history",
+      "authors": "K. Sysoliatina, A. Vani",
       "category": "astro-ph.GA",
-      "published": "2026-11-10",
-      "url": "https://arxiv.org/abs/2611.14472"
+      "published": "2026-11-12",
+      "url": "https://arxiv.org/abs/2611.17337"
     },
     {
-      "id": "2611.14456",
-      "headline": "Connecting field-level and n-point function measurements of galaxy bias",
-      "summary": "Precise measurements of galaxy bias parameters are essential for extracting cosmological information from galaxy surveys.",
-      "topic": "Cosmology",
-      "title": "Connecting field-level and n-point function measurements of galaxy bias",
-      "authors": "H. Huang, H. Rubira, F. Schmidt",
-      "category": "astro-ph.CO",
-      "published": "2026-11-10",
-      "url": "https://arxiv.org/abs/2611.14456"
+      "id": "2611.17305",
+      "headline": "Euclid data release 1 (DR1) - SIR spectroscopic calibration",
+      "summary": "The Euclid space mission is dedicated to probing the nature of dark energy and dark matter, through a comprehensive mapping of the Universe's large-scale structure.",
+      "topic": "Instruments",
+      "title": "Euclid data release 1 (DR1) - SIR spectroscopic calibration",
+      "authors": "E. Collaboration et al.",
+      "category": "astro-ph.IM",
+      "published": "2026-11-12",
+      "url": "https://arxiv.org/abs/2611.17305"
+    },
+    {
+      "id": "2611.17300",
+      "headline": "JWST Rocky Worlds DDT Observations of LTT 1445 A b and c in Secondary Eclipse Using MIRI/F1500W",
+      "summary": "The JWST Rocky Worlds Director's Discretionary Time (RWDDT) program uses secondary eclipse observations to determine the conditions under which rocky exoplanets around M dwarfs retain their atmospheres.",
+      "topic": "Planets",
+      "title": "JWST Rocky Worlds DDT Observations of LTT 1445 A b and c in Secondary Eclipse Using MIRI/F1500W",
+      "authors": "J. Ih et al.",
+      "category": "astro-ph.EP",
+      "published": "2026-11-12",
+      "url": "https://arxiv.org/abs/2611.17300"
     }
   ]
 }
