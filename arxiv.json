@@ -1,41 +1,41 @@
 {
-  "updated": "2026-11-13T08:37:42Z",
-  "newest": "2611.17337",
+  "updated": "2026-11-16T08:28:16Z",
+  "newest": "2611.18558",
   "plain": false,
   "summarised_by": null,
   "papers": [
     {
-      "id": "2611.17337",
-      "headline": "The full Gaia colour-magnitude diagram with white dwarfs reveals a declining Milky Way star formation history",
-      "summary": "White dwarfs (WDs) provide a fossil record of the Milky Way star formation history (SFH) through the combined effects of stellar evolution and cooling.",
-      "topic": "Galaxies",
-      "title": "The full Gaia colour-magnitude diagram with white dwarfs reveals a declining Milky Way star formation history",
-      "authors": "K. Sysoliatina, A. Vani",
-      "category": "astro-ph.GA",
-      "published": "2026-11-12",
-      "url": "https://arxiv.org/abs/2611.17337"
+      "id": "2611.18558",
+      "headline": "Reconstruction of Dynamical Dark Energy and Gravity from latest cosmological data",
+      "summary": "Recent cosmological observations have renewed interest in non-standard late-time evolution.",
+      "topic": "Cosmology",
+      "title": "Reconstruction of Dynamical Dark Energy and Gravity from latest cosmological data",
+      "authors": "M. L. Gallavotti, A. Silvestri",
+      "category": "astro-ph.CO",
+      "published": "2026-11-13",
+      "url": "https://arxiv.org/abs/2611.18558"
     },
     {
-      "id": "2611.17305",
-      "headline": "Euclid data release 1 (DR1) - SIR spectroscopic calibration",
-      "summary": "The Euclid space mission is dedicated to probing the nature of dark energy and dark matter, through a comprehensive mapping of the Universe's large-scale structure.",
-      "topic": "Instruments",
-      "title": "Euclid data release 1 (DR1) - SIR spectroscopic calibration",
-      "authors": "E. Collaboration et al.",
-      "category": "astro-ph.IM",
-      "published": "2026-11-12",
-      "url": "https://arxiv.org/abs/2611.17305"
-    },
-    {
-      "id": "2611.17300",
-      "headline": "JWST Rocky Worlds DDT Observations of LTT 1445 A b and c in Secondary Eclipse Using MIRI/F1500W",
-      "summary": "The JWST Rocky Worlds Director's Discretionary Time (RWDDT) program uses secondary eclipse observations to determine the conditions under which rocky exoplanets around M dwarfs retain their atmospheres.",
+      "id": "2611.18481",
+      "headline": "TOI-1699A: a sub-Neptune and a super-Jovian in an S-type planetary system",
+      "summary": "We present the detection and characterization of the TOI-1699A (TYC 3415-00428-1) S-type planetary system, hosted by the G5 V primary of a wide binary with an M3 V stellar companion at a projected separation of ∼348 au.",
       "topic": "Planets",
-      "title": "JWST Rocky Worlds DDT Observations of LTT 1445 A b and c in Secondary Eclipse Using MIRI/F1500W",
-      "authors": "J. Ih et al.",
+      "title": "TOI-1699A: a sub-Neptune and a super-Jovian in an S-type planetary system",
+      "authors": "A. Psaridi et al.",
       "category": "astro-ph.EP",
-      "published": "2026-11-12",
-      "url": "https://arxiv.org/abs/2611.17300"
+      "published": "2026-11-13",
+      "url": "https://arxiv.org/abs/2611.18481"
+    },
+    {
+      "id": "2611.18478",
+      "headline": "Quantum Efficiency Measurements of a Low-Cost, Commercial CMOS Sensor in the Soft X-ray Bandpass",
+      "summary": "Complementary metal-oxide semiconductor (CMOS) image sensors offer distinct advantages as imaging detectors for space-based X-ray observatories, being low-power, radiation-resistant, and operable at room temperature.",
+      "topic": "Instruments",
+      "title": "Quantum Efficiency Measurements of a Low-Cost, Commercial CMOS Sensor in the Soft X-ray Bandpass",
+      "authors": "C. T. DeRoo et al.",
+      "category": "astro-ph.IM",
+      "published": "2026-11-13",
+      "url": "https://arxiv.org/abs/2611.18478"
     }
   ]
 }
