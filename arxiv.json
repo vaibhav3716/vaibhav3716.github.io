@@ -1,41 +1,41 @@
 {
-  "updated": "2026-11-17T09:40:00Z",
-  "newest": "2611.21595",
+  "updated": "2026-11-18T08:58:40Z",
+  "newest": "2611.23217",
   "plain": false,
   "summarised_by": null,
   "papers": [
     {
-      "id": "2611.21595",
-      "headline": "Rest-frame annihilation lines of ∼70 GeV WIMPs in 23,000 stacked galaxy clusters",
-      "summary": "Weakly interacting massive particle (WIMP) annihilation features were reported as a 43 GeV line in three Fermi-LAT galaxy clusters (mathttS₃), as triad γγ, γZ,γh lines from ∼70 GeV WIMPs in LAT data cross-correlated (mathttC_mathttW) with western eROSITA…",
-      "topic": "Black holes",
-      "title": "Rest-frame annihilation lines of ∼70 GeV WIMPs in 23,000 stacked galaxy clusters",
-      "authors": "U. Keshet",
-      "category": "astro-ph.HE",
-      "published": "2026-11-16",
-      "url": "https://arxiv.org/abs/2611.21595"
-    },
-    {
-      "id": "2611.21583",
-      "headline": "Compositions of Exoplanetary Debris Shaped by Milky Way Stellar Abundance Patterns",
-      "summary": "Galactic chemical evolution (GCE) predicts large-scale variations in exoplanet compositions with host star elemental abundances, reflecting the Milky Way's history of star formation and elemental enrichment from stellar feedback.",
+      "id": "2611.23217",
+      "headline": "Near Resonance, Less Ordered: Radius and Mass Ordering in Compact Multi-planet Systems",
+      "summary": "Compact multi-planet systems exhibit a tendency for planetary radii to follow ordered sequences with orbital position, suggesting that these non-random patterns preserve a fossil record of their formation.",
       "topic": "Planets",
-      "title": "Compositions of Exoplanetary Debris Shaped by Milky Way Stellar Abundance Patterns",
-      "authors": "I. L. Trierweiler et al.",
+      "title": "Near Resonance, Less Ordered: Radius and Mass Ordering in Compact Multi-planet Systems",
+      "authors": "A. Heron, S. Wang, C. Petrovich",
       "category": "astro-ph.EP",
-      "published": "2026-11-16",
-      "url": "https://arxiv.org/abs/2611.21583"
+      "published": "2026-11-17",
+      "url": "https://arxiv.org/abs/2611.23217"
     },
     {
-      "id": "2611.21580",
-      "headline": "Gravitational Waves from Population III Black Hole Mergers in Primordial Gas Disks: Constraining Astrophysical Scenarios with the Laser Interferometer Space Antenna and the Einstein Telescope",
-      "summary": "The first generation of metal-free Population III (Pop III) stars provides a possible formation channel for the black hole (BH) seeds in the early Universe.",
+      "id": "2611.23200",
+      "headline": "A Universal Ratio Linking Cosmic Expansion and the Growth of Structure",
+      "summary": "We identify a universal relation between the onset of cosmic acceleration (z_t) and the turnover (z_pk) of the linear growth observable fσ₈.",
+      "topic": "Cosmology",
+      "title": "A Universal Ratio Linking Cosmic Expansion and the Growth of Structure",
+      "authors": "A. A. Sen, P. Mukherjee",
+      "category": "astro-ph.CO",
+      "published": "2026-11-17",
+      "url": "https://arxiv.org/abs/2611.23200"
+    },
+    {
+      "id": "2611.23150",
+      "headline": "oMEGACat-JWST I.: Project description and photometric data release",
+      "summary": "Omega Centauri (NGC 5139, ω Cen) is the most massive globular cluster in the Milky Way and the likely stripped nucleus of an accreted dwarf galaxy.",
       "topic": "Galaxies",
-      "title": "Gravitational Waves from Population III Black Hole Mergers in Primordial Gas Disks: Constraining Astrophysical Scenarios with the Laser Interferometer Space Antenna and the Einstein Telescope",
-      "authors": "M. Bhatt et al.",
+      "title": "oMEGACat-JWST I.: Project description and photometric data release",
+      "authors": "M. Häberle et al.",
       "category": "astro-ph.GA",
-      "published": "2026-11-16",
-      "url": "https://arxiv.org/abs/2611.21580"
+      "published": "2026-11-17",
+      "url": "https://arxiv.org/abs/2611.23150"
     }
   ]
 }
