@@ -1,41 +1,41 @@
 {
-  "updated": "2026-11-18T08:58:40Z",
-  "newest": "2611.23217",
+  "updated": "2026-11-19T09:18:05Z",
+  "newest": "2611.24939",
   "plain": false,
   "summarised_by": null,
   "papers": [
     {
-      "id": "2611.23217",
-      "headline": "Near Resonance, Less Ordered: Radius and Mass Ordering in Compact Multi-planet Systems",
-      "summary": "Compact multi-planet systems exhibit a tendency for planetary radii to follow ordered sequences with orbital position, suggesting that these non-random patterns preserve a fossil record of their formation.",
-      "topic": "Planets",
-      "title": "Near Resonance, Less Ordered: Radius and Mass Ordering in Compact Multi-planet Systems",
-      "authors": "A. Heron, S. Wang, C. Petrovich",
-      "category": "astro-ph.EP",
-      "published": "2026-11-17",
-      "url": "https://arxiv.org/abs/2611.23217"
-    },
-    {
-      "id": "2611.23200",
-      "headline": "A Universal Ratio Linking Cosmic Expansion and the Growth of Structure",
-      "summary": "We identify a universal relation between the onset of cosmic acceleration (z_t) and the turnover (z_pk) of the linear growth observable fσ₈.",
+      "id": "2611.24939",
+      "headline": "Map-Level Inference of Primordial Gravitational Waves from the CMB with Spherical Neural Networks",
+      "summary": "We train a spherical graph convolutional network to infer the tensor-to-scalar ratio r directly from multifrequency cosmic microwave background (CMB) B-mode maps on the cut sky.",
       "topic": "Cosmology",
-      "title": "A Universal Ratio Linking Cosmic Expansion and the Growth of Structure",
-      "authors": "A. A. Sen, P. Mukherjee",
+      "title": "Map-Level Inference of Primordial Gravitational Waves from the CMB with Spherical Neural Networks",
+      "authors": "A. I. Lonappan et al.",
       "category": "astro-ph.CO",
-      "published": "2026-11-17",
-      "url": "https://arxiv.org/abs/2611.23200"
+      "published": "2026-11-18",
+      "url": "https://arxiv.org/abs/2611.24939"
     },
     {
-      "id": "2611.23150",
-      "headline": "oMEGACat-JWST I.: Project description and photometric data release",
-      "summary": "Omega Centauri (NGC 5139, ω Cen) is the most massive globular cluster in the Milky Way and the likely stripped nucleus of an accreted dwarf galaxy.",
+      "id": "2611.24937",
+      "headline": "LEMUR: A Searchable Web Archive of Deep Chandra Images of Galaxies and Galaxy Clusters",
+      "summary": "We present LEMUR, a publicly accessible archive of uniformly reduced, deep Chandra images of 2,569 galaxies and galaxy clusters (including groups), comprising 5,505 ACIS observations and 138.8 Ms of exposure.",
       "topic": "Galaxies",
-      "title": "oMEGACat-JWST I.: Project description and photometric data release",
-      "authors": "M. Häberle et al.",
+      "title": "LEMUR: A Searchable Web Archive of Deep Chandra Images of Galaxies and Galaxy Clusters",
+      "authors": "C. L. Rhea et al.",
       "category": "astro-ph.GA",
-      "published": "2026-11-17",
-      "url": "https://arxiv.org/abs/2611.23150"
+      "published": "2026-11-18",
+      "url": "https://arxiv.org/abs/2611.24937"
+    },
+    {
+      "id": "2611.24854",
+      "headline": "Discovery of a Massive Outer Companion to the TOI-178 Resonant Chain",
+      "summary": "We report the discovery of a massive outer companion around TOI-178, a known planetary system with six inner small planets within 0.15 AU, five of which are in a 2:4:6:9:12 resonant chain.",
+      "topic": "Planets",
+      "title": "Discovery of a Massive Outer Companion to the TOI-178 Resonant Chain",
+      "authors": "E. V. Turtelboom et al.",
+      "category": "astro-ph.EP",
+      "published": "2026-11-18",
+      "url": "https://arxiv.org/abs/2611.24854"
     }
   ]
 }
