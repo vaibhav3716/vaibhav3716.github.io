@@ -1,41 +1,41 @@
 {
-  "updated": "2026-11-19T09:18:05Z",
-  "newest": "2611.24939",
+  "updated": "2026-11-20T08:59:54Z",
+  "newest": "2611.26620",
   "plain": false,
   "summarised_by": null,
   "papers": [
     {
-      "id": "2611.24939",
-      "headline": "Map-Level Inference of Primordial Gravitational Waves from the CMB with Spherical Neural Networks",
-      "summary": "We train a spherical graph convolutional network to infer the tensor-to-scalar ratio r directly from multifrequency cosmic microwave background (CMB) B-mode maps on the cut sky.",
+      "id": "2611.26620",
+      "headline": "Little Red Dots from Primordial Vacuum Bubbles",
+      "summary": "Quantum tunneling transverse to the inflaton trajectory can produce 10⁶–10⁸M☉ primordial black holes at the abundance of JWST's little red dots, without the enhanced curvature perturbations excluded by limits on CMB spectral distortions.",
       "topic": "Cosmology",
-      "title": "Map-Level Inference of Primordial Gravitational Waves from the CMB with Spherical Neural Networks",
-      "authors": "A. I. Lonappan et al.",
+      "title": "Little Red Dots from Primordial Vacuum Bubbles",
+      "authors": "M. B. Varela et al.",
       "category": "astro-ph.CO",
-      "published": "2026-11-18",
-      "url": "https://arxiv.org/abs/2611.24939"
+      "published": "2026-11-19",
+      "url": "https://arxiv.org/abs/2611.26620"
     },
     {
-      "id": "2611.24937",
-      "headline": "LEMUR: A Searchable Web Archive of Deep Chandra Images of Galaxies and Galaxy Clusters",
-      "summary": "We present LEMUR, a publicly accessible archive of uniformly reduced, deep Chandra images of 2,569 galaxies and galaxy clusters (including groups), comprising 5,505 ACIS observations and 138.8 Ms of exposure.",
+      "id": "2611.26618",
+      "headline": "Every galaxy is a radio source: a stellar-mass dependent minimum 150 MHz luminosity identified in the LoTSS Deep Fields",
+      "summary": "The second data release of the LOFAR Two-metre Sky Survey (LoTSS) Deep Fields includes the deepest wide-field 150 MHz mosaics in existence, covering the ELAIS-N1 field.",
       "topic": "Galaxies",
-      "title": "LEMUR: A Searchable Web Archive of Deep Chandra Images of Galaxies and Galaxy Clusters",
-      "authors": "C. L. Rhea et al.",
+      "title": "Every galaxy is a radio source: a stellar-mass dependent minimum 150 MHz luminosity identified in the LoTSS Deep Fields",
+      "authors": "S. Shenoy et al.",
       "category": "astro-ph.GA",
-      "published": "2026-11-18",
-      "url": "https://arxiv.org/abs/2611.24937"
+      "published": "2026-11-19",
+      "url": "https://arxiv.org/abs/2611.26618"
     },
     {
-      "id": "2611.24854",
-      "headline": "Discovery of a Massive Outer Companion to the TOI-178 Resonant Chain",
-      "summary": "We report the discovery of a massive outer companion around TOI-178, a known planetary system with six inner small planets within 0.15 AU, five of which are in a 2:4:6:9:12 resonant chain.",
+      "id": "2611.26548",
+      "headline": "Demographic inference in exoplanet chemistry is shaped by retrieval assumptions",
+      "summary": "Understanding the chemical diversity of exoplanet atmospheres is crucial for linking atmospheric composition to planetary formation history.",
       "topic": "Planets",
-      "title": "Discovery of a Massive Outer Companion to the TOI-178 Resonant Chain",
-      "authors": "E. V. Turtelboom et al.",
+      "title": "Demographic inference in exoplanet chemistry is shaped by retrieval assumptions",
+      "authors": "D. Dubey et al.",
       "category": "astro-ph.EP",
-      "published": "2026-11-18",
-      "url": "https://arxiv.org/abs/2611.24854"
+      "published": "2026-11-19",
+      "url": "https://arxiv.org/abs/2611.26548"
     }
   ]
 }
